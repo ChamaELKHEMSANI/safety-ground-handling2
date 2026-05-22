@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 29 : L'ambassadeur sécurité jeune</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-st-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-st);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-st);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-st);
+      background: var(--c-st-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-st-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-st-bg);
+      color: var(--c-st);
+      border: 1px solid var(--c-st-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-st);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-st);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-st);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-st-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-st);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-st-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-st);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-st);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-st);
+      color: var(--c-st);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-st);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .ambassador-badge {
+      display: inline-block;
+      background: #70AD47;
+      color: white;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      text-align: center;
+      line-height: 80px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: 3px solid silver;
+      box-shadow: var(--shadow);
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> La transmission est descendante (anciens → jeunes). Les jeunes ont des compétences (numérique, créativité, regard neuf) non exploitées.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#d97706;">100%</span><br>jeunes ont un smartphone</div>
+          <div><span class="stat-value" style="color:#d97706;">0%</span><br>les forment aux anciens</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-st);"></i> Notre solution : des <strong>ambassadeurs sécurité jeunes</strong> pour inverser le regard.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-st-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Nommer dans chaque équipe un ambassadeur jeune (<25 ans ou <2 ans d'ancienneté) volontaire, formé, pour faire remonter les idées, co-animer les points sécurité, tester les outils, former les anciens au numérique, créer des contenus.</p>
+        <p><strong>Valorisation :</strong> Badge officiel, formation 3 jours, prime 50€/mois, participation aux groupes de travail.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-user-check"></i> 3. Profil et sélection</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Niveau requis</th></tr></thead>
+        <tbody>
+          <tr><td>Âge / ancienneté</td><td>< 25 ans OU < 2 ans d'ancienneté</td></tr>
+          <tr><td>Volontariat</td><td>Candidature spontanée</td></tr>
+          <tr><td>Discipline</td><td>0 accident responsable</td></tr>
+          <tr><td>Aisance relationnelle</td><td>Capacité à s'exprimer en public</td></tr>
+          <tr><td>Appétence numérique</td><td>Utilisation courante des outils</td></tr>
+          <tr><td>Parité</td><td>Mixité recherchée</td></tr>
+        </tbody>
+      </table>
+
+      <div style="display: flex; align-items: center; gap: 20px; margin-top:15px;">
+        <div class="ambassador-badge">👤<br>AMB</div>
+        <div><strong>Badge "Ambassadeur jeune"</strong> - 3,50 €, émail vert et blanc, fermoir magnétique.</div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-graduation-cap"></i> 4. Formation (3 jours)</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Module</th><th>Contenu</th><th>Durée</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Module 1</strong></td><td>Prise de parole et animation (techniques, gestion objections)</td><td>1 jour</td></tr>
+          <tr><td><strong>Module 2</strong></td><td>Outils numériques (appli Safety Hub, création contenus)</td><td>1 jour</td></tr>
+          <tr><td><strong>Module 3</strong></td><td>Pédagogie inversée (former les anciens, posture)</td><td>1 jour</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Coût :</strong> 800 € par ambassadeur.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-list-check"></i> 5. Missions des ambassadeurs</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">📢 REMONTER</span>Idées jeunes, boîte à idées GenZ, réunion mensuelle avec sécurité</div>
+        <div class="stat-card"><span class="stat-title">🎤 CO-ANIMER</span>Rubrique "Le regard du jeune" en points sécurité</div>
+        <div class="stat-card"><span class="stat-title">🧪 TESTER</span>Bêta-testeurs des nouveaux outils (appli, VR, IA)</div>
+        <div class="stat-card"><span class="stat-title">👨‍🏫 FORMER</span>Ateliers numériques pour les anciens</div>
+        <div class="stat-card"><span class="stat-title">🎬 CRÉER</span>Vidéos courtes, quiz, infographies pour l'appli</div>
+        <div class="stat-card"><span class="stat-title">🗣️ INCARNER</span>Porte-parole de la génération</div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 6. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Pilote (4 mois)</strong></td><td>10 ambassadeurs, formation, expérimentation</td><td>17 k€</td></tr>
+          <tr><td><strong>Phase 2 - CDG (12 mois)</strong></td><td>40 ambassadeurs, badges, conseil des jeunes</td><td>43 k€</td></tr>
+          <tr><td><strong>Phase 3 - Généralisation (24-36 mois)</strong></td><td>100 ambassadeurs, Orly, province, réseau national</td><td>61 k€ + 8k€/an</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>121 k€</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par ambassadeur formé : <strong>~1 000 €</strong> (formation + badge + suivi).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 7. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Ambassadeurs actifs</span><span class="stat-value">100</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Idées jeunes remontées</span><span class="stat-value">250</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Anciens formés numérique</span><span class="stat-value">400</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction jeunes</span><span class="stat-value">75%</span><span class="stat-desc">vs 25%</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 8. vs Buddy system (P4)</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Buddy (P4)</th><th>Ambassadeur jeune (P29)</th></tr></thead>
+        <tbody>
+          <tr><td>Profil</td><td>Ancien (>5 ans)</td><td>Jeune (<25 ans)</td></tr>
+          <tr><td>Sens transmission</td><td>Descendant</td><td>Ascendant</td></tr>
+          <tr><td>Mission principale</td><td>Former aux gestes</td><td>Former aux outils / idées</td></tr>
+          <tr><td>Statut</td><td>Mentor</td><td>Porte-parole</td></tr>
+          <tr><td>Relation</td><td>Hiérarchique naturelle</td><td>Réciproque</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Complémentarité :</strong> Le binôme buddy/ambassadeur forme un duo intergénérationnel idéal.</p>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 9. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Sincérité</strong> - ne pas faire semblant d'écouter</li>
+        <li><strong>Visibilité</strong> - ambassadeurs identifiés, reconnus</li>
+        <li><strong>Formation</strong> - ne pas les lancer sans préparation</li>
+        <li><strong>Accompagnement</strong> - référent dédié (manager, buddy)</li>
+        <li><strong>Actions concrètes</strong> - leurs idées suivies d'effets</li>
+        <li><strong>Valorisation</strong> - statut, badge, prime, perspectives</li>
+      </ul>
+    </section>
+
+ 
+  </div> 
+</div> 
+
+
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 28 : Le Musée de la sécurité</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-lt-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-lt);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-lt);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-lt);
+      background: var(--c-lt-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-lt-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-lt-bg);
+      color: var(--c-lt);
+      border: 1px solid var(--c-lt-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-lt);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-lt);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-lt);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-lt-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-lt);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-lt-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-lt);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-lt);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-lt);
+      color: var(--c-lt);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-lt);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .museum-space {
+      background: #2d3e50;
+      color: #e0e7ff;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin: 15px 0;
+      border-left: 8px solid var(--c-lt);
+    }
+    .timeline-event {
+      display: flex;
+      margin: 15px 0;
+      padding: 10px;
+      background: var(--c-surface-alt);
+      border-radius: var(--radius);
+      border-left: 4px solid var(--c-lt);
+    }
+    .event-year {
+      font-weight: 700;
+      font-size: 1.2rem;
+      min-width: 80px;
+      color: var(--c-lt);
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> Les jeunes conducteurs n'ont pas connu le passé. Ils ne mesurent pas le chemin parcouru. Perte de mémoire accidentologique, ingratitude inconsciente.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#7c3aed;">100</span><br>accidents/an (avant)</div>
+          <div><span class="stat-value" style="color:#7c3aed;">0</span><br>lieu de mémoire</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-lt);"></i> Notre solution : un <strong>musée de la sécurité</strong> pour transmettre la mémoire et valoriser le progrès.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-lt-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>4 espaces :</strong></p>
+        <ul style="margin-left:20px;">
+          <li><span class="gain-badge">1</span> <strong>Les engins d'hier</strong> - collection d'engins historiques (PUSH 80's, LOADER 1ère génération, etc.)</li>
+          <li><span class="gain-badge">2</span> <strong>La mémoire des accidents</strong> - chronologie des grands accidents et leurs leçons</li>
+          <li><span class="gain-badge">3</span> <strong>Le progrès en marche</strong> - évolution des équipements de sécurité</li>
+          <li><span class="gain-badge">4</span> <strong>Témoignages et transmission</strong> - portraits d'anciens, bornes audio</li>
+        </ul>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-truck"></i> 3. Espace 1 - Les engins d'hier</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Engin</th><th>Période</th><th>Intérêt pédagogique</th></tr></thead>
+        <tbody>
+          <tr><td>PUSH thermique années 80</td><td>1980-1995</td><td>Visibilité quasi nulle, aucun système d'aide</td></tr>
+          <tr><td>LOADER première génération</td><td>1985-2000</td><td>Stabilité précaire, aucun capteur</td></tr>
+          <tr><td>TRACTEUR BAGAGES années 70</td><td>1970-1985</td><td>Pas de cabine, exposition intempéries</td></tr>
+          <tr><td>BUS des années 90</td><td>1990-2005</td><td>Angles morts critiques, aucun détecteur</td></tr>
+        </tbody>
+      </table>
+      
+      <p><strong>Mise en scène :</strong> Engins accessibles (on peut monter dedans), panneaux comparatifs, QR code pour vidéos d'archives.</p>
+      <p><strong>Coût :</strong> 15 k€ (restauration + mise en place).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> 4. Espace 2 - La mémoire des accidents</div>
+      
+      <div class="timeline-event">
+        <div class="event-year">15 MARS 1987</div>
+        <div>Collision PUSH / Avion - Parking T2. 2 blessés graves. Création de la première procédure push.</div>
+      </div>
+      <div class="timeline-event">
+        <div class="event-year">12 OCT 1995</div>
+        <div>LOADER bascule - Zone Fret. 1 blessé, 450 000 €. Renforcement formation stabilité.</div>
+      </div>
+      <div class="timeline-event">
+        <div class="event-year">22 JAN 2002</div>
+        <div>Piéton heurté par BUS - Catering. Fracture bassin. Généralisation des caméras de recul.</div>
+      </div>
+
+      <p><strong>Scénographie :</strong> Bornes audio avec témoignages d'anciens, focus sur les leçons tirées.</p>
+      <p><strong>Coût :</strong> 8 k€ (panneaux, bornes audio).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 5. Espace 3 - Le progrès en marche</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Équipement</th><th>Hier</th><th>Aujourd'hui</th></tr></thead>
+        <tbody>
+          <tr><td>Visibilité</td><td>Rétroviseurs simples</td><td>Caméras 360°</td></tr>
+          <tr><td>Alerte</td><td>Bip strident unique</td><td>Sons intelligents (P12)</td></tr>
+          <tr><td>Confort</td><td>Siège métal, pas de suspension</td><td>Siège ergo, clim</td></tr>
+          <tr><td>Protection</td><td>Casque basique</td><td>Équipement complet</td></tr>
+        </tbody>
+      </table>
+      
+      <p><strong>Vitrines thématiques :</strong> Évolution des casques (1960→2026), des gilets, des chaussures, des outils de communication.</p>
+      <p><strong>Coût :</strong> 5 k€.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-microphone"></i> 6. Espace 4 - Témoignages et transmission</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Mur des portraits</strong> - Anciens conducteurs, leur parcours, leur fierté</li>
+        <li><strong>Bornes audio</strong> - "Mon plus beau souvenir", "Mon accident", "Mon conseil aux jeunes"</li>
+        <li><strong>Livre d'or</strong> des conducteurs</li>
+        <li><strong>Arbre des carrières</strong> - visualisation des parcours</li>
+      </ul>
+      
+      <p><strong>Projet "100 ans de carrières" :</strong> 100 témoignages d'anciens enregistrés.</p>
+      <p><strong>Coût :</strong> 10 k€.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 7. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Collecte & conception (6 mois)</strong></td><td>Appel aux dons, collecte témoignages, restauration 1er engin, site web</td><td>33 k€</td></tr>
+          <tr><td><strong>Phase 2 - Installation CDG (12 mois)</strong></td><td>Aménagement 150m², restauration 3 engins, vitrines, bornes, inauguration</td><td>73 k€</td></tr>
+          <tr><td><strong>Phase 3 - Itinérance & pérennisation (24-36 mois)</strong></td><td>Exposition itinérante, tournée Orly/province, enrichissement</td><td>62 k€ + 3k€/an</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>168 k€</strong></td></tr>
+        </tbody>
+      </table>
+      <p><strong>Option recommandée :</strong> Espace au centre de formation + exposition itinérante.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 8. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Visiteurs/an</span><span class="stat-value">3 500</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Nouveaux conducteurs</span><span class="stat-value">1 500</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Témoignages collectés</span><span class="stat-value">100</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction visiteurs</span><span class="stat-value">92%</span><span class="stat-desc">cible M36</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 9. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Authenticité</strong> - de vrais objets, de vraies histoires, de vraies personnes</li>
+        <li><strong>Scénographie soignée</strong> - pas un hangar à poussière, un lieu digne</li>
+        <li><strong>Accessibilité</strong> - gratuit, ouvert, intégré aux formations</li>
+        <li><strong>Participation des anciens</strong> - ils sont les acteurs du projet</li>
+        <li><strong>Évolution</strong> - le musée doit vivre, s'enrichir, se renouveler</li>
+      </ul>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

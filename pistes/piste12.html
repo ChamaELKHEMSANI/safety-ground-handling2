@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 12 : Alerte sonore intelligente</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-qw-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-qw);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-qw);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-qw);
+      background: var(--c-qw-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-qw-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-qw-bg);
+      color: var(--c-qw);
+      border: 1px solid var(--c-qw-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-qw);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-qw);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-qw);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-qw-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-qw);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-qw-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-qw);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-qw);
+      color: var(--c-qw);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .urgency-level {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    .level-info { background: #3b82f6; }
+    .level-warning { background: #eab308; }
+    .level-alert { background: #f97316; }
+    .level-emergency { background: #ef4444; }
+    .sound-example {
+      background: #1e293b;
+      color: #a3d0ff;
+      padding: 10px 15px;
+      border-radius: var(--radius);
+      font-family: monospace;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> Les alarmes actuelles sont archaïques : même son pour tous les dangers, volume excessif, aucune information.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#b91c1c;">72%</span><br>conducteurs ignorent alarmes</div>
+          <div><span class="stat-value" style="color:#b91c1c;">68%</span><br>stressés par le bruit</div>
+          <div><span class="stat-value" style="color:#b91c1c;">47s</span><br>temps d'habituation</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-qw);"></i> Notre solution : un système sonore <strong>contextuel, hiérarchisé, intelligent</strong>.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-qw-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Remplacer le bip unique par un système qui :</p>
+        <ul style="margin-left:20px;">
+          <li>Distingue les types de danger (obstacle, vitesse, angle mort)</li>
+          <li>Informe sur la nature et localisation du danger</li>
+          <li>Gradue l'urgence (info → vigilance → danger immédiat)</li>
+          <li>S'éteint quand le danger est écarté</li>
+          <li>Préserve l'environnement sonore</li>
+        </ul>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-music"></i> 3. Bibliothèque de sons intelligents</div>
+      
+      <h3>Matrice sonore par type de danger</h3>
+      <table class="bar-table">
+        <thead><tr><th>Situation</th><th>Son</th><th>Message vocal</th><th>Urgence</th></tr></thead>
+        <tbody>
+          <tr><td>Recul standard</td><td>Bip lent grave (1/s)</td><td>-</td><td><span class="level-info"></span> Info</td></tr>
+          <tr><td>Obstacle proche</td><td>Bip rapide (3/s)</td><td>"Obstacle 3 mètres"</td><td><span class="level-warning"></span> Vigilance</td></tr>
+          <tr><td>Obstacle critique</td><td>Continu descendant</td><td>"DANGER - Arrêt immédiat"</td><td><span class="level-emergency"></span> Urgence</td></tr>
+          <tr><td>Angle mort droit</td><td>3 tons (do-mi-sol)</td><td>"Vérifiez angle droit"</td><td><span class="level-warning"></span> Action</td></tr>
+          <tr><td>Vitesse excessive</td><td>Glissando descendant</td><td>"Ralentissez, zone parking"</td><td><span class="level-alert"></span> Alerte</td></tr>
+          <tr><td>Départ sécurisé</td><td>Arpège majeur</td><td>"Bonne journée"</td><td><span class="level-info"></span> Confirmation</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sound-example" style="margin-top:15px;">
+        <i class="fa-solid fa-volume-high"></i> <strong>Son "danger critique"</strong> : balayage 2000→500 Hz, 0,5s, répétition rapide
+      </div>
+      <div class="sound-example">
+        <i class="fa-solid fa-volume-high"></i> <strong>Son "angle mort"</strong> : accord parfait 440-554-659 Hz (association positive)
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-layer-group"></i> 4. Hiérarchie sonore (psychoacoustique)</div>
+      
+      <div style="margin:10px 0;">
+        <p><span class="level-info"></span> <strong>NIVEAU 1 - INFORMATION</strong> (bleu, 65 dB) - Recul standard, départ sécurisé</p>
+        <p><span class="level-warning"></span> <strong>NIVEAU 2 - VIGILANCE</strong> (jaune, 75 dB) - Obstacle proche, angle mort</p>
+        <p><span class="level-alert"></span> <strong>NIVEAU 3 - ALERTE</strong> (orange, 80 dB) - Vitesse excessive</p>
+        <p><span class="level-emergency"></span> <strong>NIVEAU 4 - URGENCE</strong> (rouge, 85 dB) - Obstacle critique, zone interdite</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-volume-low"></i> 5. Volume adaptatif contextuel</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Condition ambiante</th><th>Volume alarme</th><th>Volume vocal</th></tr></thead>
+        <tbody>
+          <tr><td>Jour - Cabine fermée</td><td>65 dB</td><td>60 dB</td></tr>
+          <tr><td>Nuit - Calme</td><td>55 dB</td><td>50 dB</td></tr>
+          <tr><td>Casque anti-bruit</td><td>85 dB</td><td>80 dB</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Bénéfice :</strong> -60% fatigue auditive, préservation environnement nocturne.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 6. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Conception (4 mois)</strong></td><td>Étude psychoacoustique, co-conception, 15 sons, prototype</td><td>68 k€</td></tr>
+          <tr><td><strong>Phase 2 - Pilote (6 mois)</strong></td><td>20 PUSH équipés, tests 4 mois, mesure impact</td><td>61 k€</td></tr>
+          <tr><td><strong>Phase 3 - Déploiement CDG (12 mois)</strong></td><td>900 PUSH+LOADER + 130 BUS/DÉGIVREUSE</td><td>425 k€</td></tr>
+          <tr><td><strong>TOTAL</strong></td><td></td><td><strong>554 k€</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par engin en série : <strong>450 €</strong> (kit complet).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 7. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Collisions recul</span><br/><span class="stat-value">-50%</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Angles morts</span><br/><span class="stat-value">-45%</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Alarmes ignorées</span><br/><span class="stat-value">15%</span><span class="stat-desc">vs 72%</span></div>
+        <div class="stat-card"><span class="stat-title">Temps réaction</span><br/><span class="stat-value">0,9s</span><span class="stat-desc">vs 2,1s</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-calendar-alt"></i> 8. Déploiement</div>
+      
+      <div class="phase-timeline">
+        <div class="phase-item">
+          <div class="phase-titre">Phase 1 - Conception (4 mois)</div>
+          <small>Étude psychoacoustique, 15 sons, prototype - 68 k€</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 2 - Pilote (6 mois)</div>
+          <small>20 PUSH, tests 4 mois, ajustements - 61 k€</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 3 - CDG (12 mois)</div>
+          <small>1 030 engins critiques équipés - 425 k€</small>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-gauge"></i> 9. Indicateurs de suivi</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Indicateur</th><th>Cible M24</th></tr></thead>
+        <tbody>
+          <tr><td>Engins équipés</td><td>1 500</td></tr>
+          <tr><td>Satisfaction conducteurs</td><td>90%</td></tr>
+          <tr><td>Alarmes ignorées</td><td>20%</td></tr>
+          <tr><td>Collisions recul</td><td>-40%</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

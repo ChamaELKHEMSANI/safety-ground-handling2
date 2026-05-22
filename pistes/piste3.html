@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 3 : Application Safety Hub & campagnes choc</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-cp-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-cp);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-cp);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-cp);
+      background: var(--c-cp-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-cp-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-cp-bg);
+      color: var(--c-cp);
+      border: 1px solid var(--c-cp-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-cp);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-cp);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-cp);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-cp-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-cp);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .badge-positif {
+      background: #fee2e2;
+      color: #b91c1c;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+    }
+    .badge-negatif {
+      background: #dcfce7;
+      color: #166534;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-cp-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-cp);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-cp);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-cp);
+      color: var(--c-cp);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .mockup-phone {
+      background: #1e1e2f;
+      color: white;
+      border-radius: 30px;
+      padding: 20px 15px;
+      max-width: 300px;
+      margin: 0 auto;
+      box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+    }
+    .mockup-screen {
+      background: #f0f2f7;
+      color: #0d1117;
+      border-radius: 20px;
+      padding: 15px;
+      min-height: 400px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #fff1f0;">
+        <p><strong>Constat :</strong> Campagnes génériques, descendantes, peu mémorables - les accidents continuent d'augmenter.</p>
+        <div style="display: flex; gap: 20px; margin-top: 15px; flex-wrap: wrap;">
+          <div><span class="stat-value" style="color:#b91c1c;">+100%</span><br>accidents corporels</div>
+          <div><span class="stat-value" style="color:#b91c1c;">0</span><br>personnalisation</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-cp);"></i> Notre hypothèse : communication personnalisée + feedback = impact durable.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-circle-nodes"></i> 2. Stratégie intégrée 360°</div>
+      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div style="flex:1; background: var(--c-primary-light); padding:20px; border-radius:var(--radius);">
+          <h3 style="color:var(--c-primary); margin-bottom:10px;"><i class="fa-solid fa-video"></i> Campagnes choc</h3>
+          <ul style="margin-left:20px;">
+            <li>Vidéos réelles d'accidents</li>
+            <li>Témoignages anonymisés</li>
+            <li>Affichage ciblé local</li>
+            <li>Immersion VR</li>
+          </ul>
+        </div>
+        <div style="flex:1; background: var(--c-cp-bg); padding:20px; border-radius:var(--radius);">
+          <h3 style="color:var(--c-cp); margin-bottom:10px;"><i class="fa-solid fa-mobile"></i> Application Safety Hub</h3>
+          <ul style="margin-left:20px;">
+            <li>Reporting instantané</li>
+            <li>Feedback individuel</li>
+            <li>Quiz & défis</li>
+            <li>Badges & gamification</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-film"></i> 3. Campagnes choc personnalisées</div>
+      
+      <h3 style="margin:15px 0 5px;">Principe</h3>
+      <p><strong>"Montrer la réalité, ne pas l'édulcorer"</strong> - L'émotion est le vecteur de mémorisation.</p>
+
+      <h3 style="margin:20px 0 10px;">Typologie des campagnes</h3>
+      <table class="bar-table">
+        <thead><tr><th>Type</th><th>Support</th><th>Fréquence</th></tr></thead>
+        <tbody>
+          <tr><td>Vidéos réelles</td><td>Formation, affichage numérique</td><td>Trimestrielle</td></tr>
+          <tr><td>Témoignages</td><td>Intranet, app, réunions</td><td>Mensuelle</td></tr>
+          <tr><td>Affichage choc</td><td>Vestiaires, salles de pause</td><td>Permanente</td></tr>
+          <tr><td>Immersion VR</td><td>Formation initiale/continue</td><td>Ponctuelle</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin:20px 0 10px;">Exemple d'affichage</h3>
+      <div style="background: #111; color: white; padding: 20px; border-radius: var(--radius); font-family: monospace; margin-bottom:15px;">
+        <p style="font-size:1.2rem;">"IL A VOULU GAGNER 30 SECONDES.<br>L'AVION EST RESTÉ 3 HEURES AU SOL.<br>12 TECHNICIENS, 4 JOURS DE RÉPARATION."</p>
+      </div>
+
+      <h3 style="margin:20px 0 10px;">Immersion VR - scénarios</h3>
+      <table class="bar-table">
+        <thead><tr><th>Scénario</th><th>Durée</th><th>Public</th></tr></thead>
+        <tbody>
+          <tr><td>Le push trop rapide</td><td>8 min</td><td>Conducteurs PUSH</td></tr>
+          <tr><td>Le tapis qui recule</td><td>6 min</td><td>Conducteurs TAPIS</td></tr>
+          <tr><td>Le piéton invisible</td><td>5 min</td><td>Conducteurs BUS</td></tr>
+          <tr><td>La charge instable</td><td>7 min</td><td>Conducteurs LOADER</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Investissement VR :</strong> ~150 000€ (50 casques + contenus)</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-mobile-screen"></i> 4. Application Safety Hub</div>
+
+      <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start;">
+        <div style="flex:2; min-width:300px;">
+          <h3>Fonctionnalités principales</h3>
+          <ul style="margin-left:20px;">
+            <li><strong>📱 JE SIGNALE :</strong> Déclaration near-miss < 60s - +1 point</li>
+            <li><strong>📨 FEEDBACK :</strong> Réponse sous 48h - "boucle fermée"</li>
+            <li><strong>📚 MA FORMATION :</strong> Quiz, vidéos, défis personnalisés</li>
+            <li><strong>🔔 ALERTES :</strong> Hotspots, météo, infos trafic</li>
+          </ul>
+
+          <h3 style="margin-top:20px;">Gamification</h3>
+          <ul style="margin-left:20px;">
+            <li>Points XP, badges ("Œil de lynx", "Sentinelle")</li>
+            <li>Classements équipes</li>
+            <li>Défis quotidiens</li>
+          </ul>
+
+          <h3 style="margin-top:20px;">Budget mutualisé</h3>
+          <table class="bar-table">
+            <thead><tr><th>Phase</th><th>Coût</th></tr></thead>
+            <tbody>
+              <tr><td>MVP (3 mois)</td><td>80 000€</td></tr>
+              <tr><td>Gamification (3 mois)</td><td>50 000€</td></tr>
+              <tr><td>Connecteurs SI (3 mois)</td><td>40 000€</td></tr>
+              <tr><td><strong>Total initial</strong></td><td><strong>170 000€</strong></td></tr>
+            </tbody>
+          </table>
+          <p>Coût par entreprise (sur 10) : 17 000€ + 4 000€/an</p>
+        </div>
+
+        
+        <div style="flex:1; min-width:220px;">
+          <div class="mockup-phone">
+            <div class="mockup-screen">
+              <p><i class="fa-solid fa-shield" style="color:var(--c-cp);"></i> <strong>Safety Hub</strong></p>
+              <p>👋 Bonjour Thomas</p>
+              <div style="background:var(--c-cp); height:8px; width:75%; border-radius:4px;"></div>
+              <p style="font-size:0.8rem; margin-top:10px;">Points : 9/12</p>
+              <div style="background: #e2e5ef; height:1px; margin:10px 0;"></div>
+              <p><i class="fa-regular fa-flag"></i> Signaler</p>
+              <p><i class="fa-regular fa-bell"></i> Quiz du jour</p>
+              <p><i class="fa-regular fa-star"></i> Défi équipe</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-gauge"></i> 5. Indicateurs de suivi</div>
+      <div class="card-grid">
+        <div class="stat-card">
+          <span class="stat-title">Signalements near-miss</span><br/>
+          <span class="stat-value">>100/mois</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Taux d'ouverture notif</span><br/>
+          <span class="stat-value">>70%</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Quiz complétés</span><br/>
+          <span class="stat-value">>500/mois</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Satisfaction utilisateurs</span><br/>
+          <span class="stat-value">>4,2/5</span>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-calendar-alt"></i> 6. Déploiement</div>
+      <div class="phase-timeline">
+        <div class="phase-item">
+          <div class="phase-titre">Phase 1 - Conception & pilote (3-4 mois)</div>
+          <small>Ateliers utilisateurs, MVP signalement, test 50 conducteurs</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 2 - Campagnes choc (4-8 mois)</div>
+          <small>Vidéos réelles, affichage choc, lancement V1</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 3 - Généralisation (8-12 mois)</div>
+          <small>Extension Orly, VR, évaluation impact</small>
+        </div>
+      </div>
+    </section>
+
+ 
+  </div> 
+</div> 
+
+
+</body>
+</html>

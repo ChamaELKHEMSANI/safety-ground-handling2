@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 8 : Intelligence Artificielle prédictive</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-lt-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-lt);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-lt);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-lt);
+      background: var(--c-lt-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-lt-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-lt-bg);
+      color: var(--c-lt);
+      border: 1px solid var(--c-lt-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-lt);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-lt);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-lt);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-lt-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-lt);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-lt-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-lt);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-lt);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-lt);
+      color: var(--c-lt);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .mockup-terminal {
+      background: #0b1a33;
+      color: #a3d0ff;
+      border-radius: 8px;
+      padding: 15px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .risk-bar {
+      height: 10px;
+      background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
+      border-radius: 5px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+ 
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> La détection des risques est aujourd'hui <strong>réactive</strong> (après l'accident). Trop tard, trop lent, trop partiel.</p>
+        <p><strong>Notre hypothèse :</strong> L'accident est l'aboutissement de <strong>signaux faibles</strong>. L'IA prédictive permet de passer du réactif au proactif.</p>
+        <div style="display: flex; gap: 20px; margin-top: 15px;">
+          <div><span class="stat-value" style="color:#7c3aed;">78%</span><br>probabilité détectée avant collision</div>
+          <div><span class="stat-value" style="color:#7c3aed;">-45%</span><br>cible accidents vitesse</div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-brain"></i> 2. Principe général</div>
+      <div style="background: var(--c-lt-bg); padding: 20px; border-radius: var(--radius);">
+        <p style="text-align: center;"><strong>DONNÉES HISTORIQUES (apprentissage) + DONNÉES TEMPS RÉEL → ALGORITHME IA → ALERTES / ACTIONS PRÉVENTIVES</strong></p>
+        <p style="margin-top: 10px;">Analyse en temps réel : vitesse, trajectoires, freinages, proximité, fatigue, conditions opérationnelles → calcul d'un score de risque individuel.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-bolt"></i> 3. Cas d'usage concrets</div>
+      
+      <div class="mockup-terminal" style="margin-bottom:20px;">
+        <strong>🔴 CAS 1 - CONDUITE À RISQUE</strong><br>
+        Jean D. - PUSH #247 - 08:47<br>
+        Vitesse zone parking : 18 km/h (+20%)<br>
+        Accélérations brusques : 12 (moyenne équipe 4)<br>
+        <div class="risk-bar" style="width:78%"></div>
+        RISQUE PRÉDIT COLLISION : 78%<br>
+        → Alerte superviseur, module e-learning, suivi renforcé
+      </div>
+
+      <div class="mockup-terminal" style="margin-bottom:20px;">
+        <strong>🟠 CAS 2 - FATIGUE CRITIQUE</strong><br>
+        Sarah K. - LOADER #89 - 04:22 (6ème nuit)<br>
+        Écarts trajectoire : +340%, micro-corrections : -60%<br>
+        <div class="risk-bar" style="width:82%"></div>
+        RISQUE ENDORMISSEMENT : 82%<br>
+        → Alerte cabine "PAUSE OBLIGATOIRE", relève programmée
+      </div>
+
+      <div class="mockup-terminal" style="margin-bottom:20px;">
+        <strong>🟢 CAS 3 - PRÉDICTION HOTSPOT</strong><br>
+        ZONE FRET NORD - PROCHAINES 24H<br>
+        06h-09h : 78% - PIC MÉTRO + TRAFIC<br>
+        18h-21h : 71% - PIC SOIR + NUIT<br>
+        → Renforcement signalétique, contrôles ciblés, déport convois
+      </div>
+
+      <div class="mockup-terminal">
+        <strong>🔵 CAS 4 - MAINTENANCE PRÉDICTIVE</strong><br>
+        PUSH #247 - 12450h<br>
+        Distance freinage : +18%, vibrations anormales<br>
+        <div class="risk-bar" style="width:94%"></div>
+        PROBABILITÉ PANNE FREINS : 94%<br>
+        → Maintenance anticipée J+2, réduction vitesse temporaire
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-sitemap"></i> 4. Architecture technique</div>
+      <div style="background: #f3f4f6; padding:15px; border-radius: var(--radius); font-family: monospace;">
+        COUCHE 1 - COLLECTE : boîtier télématique, capteurs, caméras, données météo/trafic<br>
+        ↓<br>
+        COUCHE 2 - STOCKAGE : Data Lake centralisé (cloud privé HDS), anonymisation<br>
+        ↓<br>
+        COUCHE 3 - TRAITEMENT : modèles supervisés, détection d'anomalies, LSTM<br>
+        ↓<br>
+        COUCHE 4 - ALERTE & ACTION : alertes embarquées, notifications superviseurs, API GMAO
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-database"></i> 5. Données nécessaires</div>
+      <table class="bar-table">
+        <thead><tr><th>Type</th><th>Source</th><th>Disponibilité</th></tr></thead>
+        <tbody>
+          <tr><td>Vitesse instantanée</td><td>Géolocalisation / CAN bus</td><td> Partielle</td></tr>
+          <tr><td>Accélérations / Freinages</td><td>Centrale inertielle</td><td> Non équipé</td></tr>
+          <tr><td>Position GPS</td><td>Géolocalisation</td><td> Partielle</td></tr>
+          <tr><td>Données fatigue</td><td>Caméra / Capteurs volant</td><td> Non équipé</td></tr>
+          <tr><td>Maintenance</td><td>GMAO</td><td> Disponible</td></tr>
+        </tbody>
+      </table>
+      <p class="gain-badge" style="margin-top:10px;">Prérequis : équiper les engins de boîtiers télématiques.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 6. Déploiement et budget</div>
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - POC (6 mois)</strong></td><td>50 PUSH, modèle "conduite à risque", dashboard superviseur</td><td>150 k€</td></tr>
+          <tr><td><strong>Phase 2 - Déploiement CDG (12-18 mois)</strong></td><td>1 000 PUSH+LOADER+BUS, modèles fatigue + hotspots, intégration P3</td><td>650 k€</td></tr>
+          <tr><td><strong>Phase 3 - IA avancée (24-36 mois)</strong></td><td>Modèle prédictif, maintenance prédictive, extension Orly/province</td><td>550 k€</td></tr>
+          <tr><td><strong>TOTAL</strong></td><td></td><td><strong>1,35 M€ (Ph1+2) → 2,0 M€ (avec Ph3)</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 7. Bénéfices attendus</div>
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Accidents vitesse</span><br/><span class="stat-value">-45%</span><span class="stat-desc">M36</span></div>
+        <div class="stat-card"><span class="stat-title">Accidents nuit</span><br/><span class="stat-value">-50%</span><span class="stat-desc">M36</span></div>
+        <div class="stat-card"><span class="stat-title">Near-miss signalés</span><br/><span class="stat-value">+300%</span><span class="stat-desc">M36</span></div>
+        <div class="stat-card"><span class="stat-title">Maintenance curative</span><br/><span class="stat-value">-35%</span><span class="stat-desc">M36</span></div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-globe"></i> 8. Retours d'expérience</div>
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">XPO Logistics</span><br/>-42% accidents corporels, ROI 22 mois</div>
+        <div class="stat-card"><span class="stat-title">Rio Tinto</span><br/>0 accident grave depuis 2022</div>
+        <div class="stat-card"><span class="stat-title">Changi Airport</span><br/>-28% incidents parking, 89% satisfaction</div>
+      </div>
+    </section>
+
+ 
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-gauge"></i> 10. Indicateurs de suivi</div>
+      <table class="bar-table">
+        <thead><tr><th>Indicateur</th><th>Cible M24</th></tr></thead>
+        <tbody>
+          <tr><td>Engins équipés</td><td>1 500</td></tr>
+          <tr><td>Précision alertes</td><td>>90%</td></tr>
+          <tr><td>Conducteurs ayant consulté score</td><td>85%</td></tr>
+          <tr><td>Satisfaction conducteurs</td><td>4,3/5</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+   
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 12. Ce que l'IA apporte de radicalement nouveau</div>
+      <table class="bar-table">
+        <thead><tr><th>Approche classique</th><th>IA prédictive</th></tr></thead>
+        <tbody>
+          <tr><td>On agit après l'accident</td><td>On agit avant l'accident</td></tr>
+          <tr><td>Sanction du comportement passé</td><td>Correction du comportement futur</td></tr>
+          <tr><td>Déclaration volontaire</td><td>Détection automatique</td></tr>
+          <tr><td>Statistiques annuelles</td><td>Alertes en temps réel</td></tr>
+          <tr><td>Maintenance calendaire</td><td>Maintenance prédictive</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 11 : Observatoire de la fatigue</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-st-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-st);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-st);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-st);
+      background: var(--c-st-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-st-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-st-bg);
+      color: var(--c-st);
+      border: 1px solid var(--c-st-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-st);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-st);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-st);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-st-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-st);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-st-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-st);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-st);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-st);
+      color: var(--c-st);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .kss-level {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    .level-green { background: #22c55e; }
+    .level-yellow { background: #eab308; }
+    .level-orange { background: #f97316; }
+    .level-red { background: #ef4444; }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-st);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .sleep-room {
+      background: #2b3b4c;
+      color: #e2e8f0;
+      padding: 15px;
+      border-radius: var(--radius);
+      border-left: 4px solid #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #fff1f0;">
+        <p><strong>Constat :</strong> La fatigue est le facteur invisible de l'accidentologie.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#b91c1c;">×3</span><br>risque travail de nuit</div>
+          <div><span class="stat-value" style="color:#b91c1c;">×2</span><br>7e heure de travail</div>
+          <div><span class="stat-value" style="color:#b91c1c;">×5</span><br>3e nuit consécutive</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-st);"></i> Aujourd'hui à CDG : aucune mesure, aucune formation, aucune salle de sieste, aucune alerte.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-st-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Observatoire pluridisciplinaire avec 3 axes :</strong></p>
+        <ul style="margin-left:20px;">
+          <li><span class="gain-badge">1</span> <strong>Mesure</strong> : échelle Karolinska, tests PVT, analyse horaires</li>
+          <li><span class="gain-badge">2</span> <strong>Prévention</strong> : formation sommeil, salles sieste, éclairage, hydratation</li>
+          <li><span class="gain-badge">3</span> <strong>Organisation</strong> : limitation nuits consécutives, pauses, covoiturage</li>
+        </ul>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-simple"></i> 3. Axe 1 - Mesure de la fatigue</div>
+      
+      <h3>Échelle de somnolence de Karolinska (KSS)</h3>
+      <table class="bar-table">
+        <thead><tr><th>Niveau</th><th>État</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>1-5</td><td>Normal</td><td>-</td></tr>
+          <tr><td>6-7</td><td>Signes de somnolence</td><td>Information</td></tr>
+          <tr><td>8</td><td>Somnolent, effort</td><td><span class="level-orange">⚠️ Alerte</span></td></tr>
+          <tr><td>9</td><td>Très somnolent</td><td><span class="level-red">🔴 Alerte critique</span></td></tr>
+          <tr><td>10</td><td>Extrêmement somnolent</td><td><span class="level-red">⛔ Poste interdit</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:20px;">Test de vigilance psychomotrice (PVT)</h3>
+      <div style="background: #1e293b; color: #a3d0ff; padding:15px; border-radius:var(--radius); font-family: monospace;">
+        CONDUCTEUR : Jean D. - NUIT - 22h00<br>
+        Temps de réaction moyen : 0,42s (seuil 0,45s)<br>
+        Laps (>500ms) : 1 | Anticipations : 0<br>
+        <strong>SCORE DE VIGILANCE : 84/100</strong> 
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-shield-heart"></i> 4. Axe 2 - Prévention</div>
+      
+      <h3>Formation "Sommeil et vigilance" (1h30)</h3>
+      <ul style="margin-left:20px;">
+        <li>Mécanismes du sommeil, cycles, dettes</li>
+        <li>Conséquences sur la vigilance</li>
+        <li>Auto-évaluation (Karolinska)</li>
+        <li>Hygiène du sommeil, sieste, alimentation</li>
+      </ul>
+
+      <h3 style="margin-top:15px;">Salles de sieste</h3>
+      <div class="sleep-room">
+        <i class="fa-solid fa-bed"></i> <strong>Fauteuil relax inclinable</strong> • Obscurité totale • Silence • Casque anti-bruit<br>
+        ⏱️ 20 min max (minuteur) • Réservation appli • Nettoyage après chaque usage
+      </div>
+
+      <h3 style="margin-top:15px;">Autres actions</h3>
+      <ul style="margin-left:20px;">
+        <li><strong>Éclairage dynamique</strong> : bleu (prise poste nuit) → blanc → chaud (fin)</li>
+        <li><strong>Hydratation</strong> : fontaines, gourdes, collation nuit (fruits secs)</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-calendar-alt"></i> 5. Axe 3 - Organisation du travail</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Action</th><th>Proposition</th></tr></thead>
+        <tbody>
+          <tr><td>Nuits consécutives</td><td><strong>Maximum 3 nuits d'affilée</strong> (-50% accidents de nuit)</td></tr>
+          <tr><td>Pauses obligatoires</td><td>15 min à 4h, 30 min à 6h, 45 min à 8h</td></tr>
+          <tr><td>Covoiturage</td><td>Plateforme interne, places réservées, navettes nuit</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-flask"></i> 6. Étude scientifique (6 mois)</div>
+      
+      <p><strong>Protocole :</strong> 200 conducteurs volontaires (100 nuit, 100 jour). Mesures : Karolinska, PVT, actimétrie, corrélation incidents.</p>
+      <p><strong>Budget :</strong> 65 k€</p>
+      <p><strong>Livrable :</strong> Rapport "Fatigue et sécurité en piste"</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 7. Budget estimé</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Poste</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td>Formation "Sommeil"</td><td>15 k€</td></tr>
+          <tr><td>Salles sieste (5 salles)</td><td>65 k€</td></tr>
+          <tr><td>Éclairage dynamique (zones pilotes)</td><td>15 k€</td></tr>
+          <tr><td>Fontaines + gourdes</td><td>15 k€</td></tr>
+          <tr><td>Étude scientifique</td><td>65 k€</td></tr>
+          <tr><td>Plateforme covoiturage</td><td>5 k€</td></tr>
+          <tr><td><strong>INVESTISSEMENT TOTAL</strong></td><td><strong>185 k€</strong></td></tr>
+          <tr><td>Fonctionnement annuel</td><td>40 k€/an</td></tr>
+        </tbody>
+      </table>
+      <p>Coût par conducteur : <strong>moins de 10 €/an</strong></p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 8. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Accidents de nuit</span><br/><span class="stat-value">-50%</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">3e nuit consécutive</span><br/><span class="stat-value">-70%</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction</span><br/><span class="stat-value">75%</span><span class="stat-desc">vs 23%</span></div>
+        <div class="stat-card"><span class="stat-title">Économie annuelle</span><br/><span class="stat-value">810 k€</span><span class="stat-desc">ROI 3-4 mois</span></div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-calendar-alt"></i> 9. Déploiement</div>
+      
+      <div class="phase-timeline">
+        <div class="phase-item">
+          <div class="phase-titre">Phase 1 - Pilote (6 mois)</div>
+          <small>1 salle sieste, 50 conducteurs formés, étude 6 mois - 93 k€</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 2 - CDG (12 mois)</div>
+          <small>4 salles supplémentaires, généralisation formation, covoiturage - 97 k€</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 3 - Pérennisation (12-36 mois)</div>
+          <small>Orly, province, éclairage généralisé - 195 k€</small>
+        </div>
+      </div>
+      <p><strong>Budget total 3 ans :</strong> 385 k€</p>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-gauge"></i> 10. Indicateurs de suivi</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Indicateur</th><th>Cible M36</th></tr></thead>
+        <tbody>
+          <tr><td>Conducteurs formés "Sommeil"</td><td>2 500</td></tr>
+          <tr><td>Salles de sieste déployées</td><td>10</td></tr>
+          <tr><td>Score Karolinska moyen (nuit)</td><td>4,5 (vs 6,2)</td></tr>
+          <tr><td>Nuits consécutives >3</td><td>10% (vs 40%)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+ 
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 11. Ce que l'observatoire apporte</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Approche</th><th>Objet</th><th>Limite</th></tr></thead>
+        <tbody>
+          <tr><td>Médecine du travail</td><td>Visite périodique</td><td>Pas de suivi continu</td></tr>
+          <tr><td>DPT (dépistage)</td><td>Alcool/stupéfiants</td><td>Ne mesure pas la fatigue</td></tr>
+          <tr><td>Audits sécurité</td><td>Comportements</td><td>Post-accident</td></tr>
+          <tr><td><strong>Observatoire fatigue</strong></td><td>État du conducteur</td><td><strong>Préventif, continu</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

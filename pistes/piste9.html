@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 9 : Label sécurité entreprise</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-cp-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-cp);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-cp);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-cp);
+      background: var(--c-cp-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-cp-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-cp-bg);
+      color: var(--c-cp);
+      border: 1px solid var(--c-cp-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .label-level {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px;
+      border-radius: var(--radius);
+      margin-bottom: 10px;
+      border-left: 5px solid;
+    }
+    .level-bronze { background: #f8f4e5; border-left-color: #b08d57; }
+    .level-argent { background: #f0f4fa; border-left-color: #a0a0a0; }
+    .level-or { background: #fcf3e0; border-left-color: #ffb347; }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-cp);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-cp);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-cp);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-cp-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-cp);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-cp-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-cp);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-cp);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-cp);
+      color: var(--c-cp);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+ 
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #e8f0fe;">
+        <p><strong>Constat :</strong> La sécurité est perçue comme une contrainte et un coût. Les compagnies aériennes n'ont aucune visibilité sur le niveau de sécurité des handlers.</p>
+        <p><strong>Paradoxe :</strong> Un handler qui investit dans la sécurité n'est pas récompensé commercialement ; un concurrent moins vertueux n'est pas pénalisé.</p>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-cp);"></i> Notre solution : créer un <strong>label objectif</strong> qui transforme la sécurité en avantage concurrentiel.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-medal"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-cp-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Un label "Sécurité GSE" décerné par le CSCA, avec plusieurs niveaux de reconnaissance (Bronze, Argent, Or).</p>
+        <p><strong>Objectifs :</strong> Valoriser les entreprises vertueuses, orienter les compagnies aériennes, créer une émulation positive.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-layer-group"></i> 3. Les 3 niveaux de reconnaissance</div>
+      
+      <div class="label-level level-bronze">
+        <div style="font-size:2rem;">🥉</div>
+        <div>
+          <strong style="font-size:1.2rem;">BRONZE</strong><br>
+          Engagement dans la démarche, respect des fondamentaux.
+        </div>
+      </div>
+
+      <div class="label-level level-argent">
+        <div style="font-size:2rem;">🥈</div>
+        <div>
+          <strong style="font-size:1.2rem;">ARGENT</strong><br>
+          Mise en œuvre des bonnes pratiques, résultats en amélioration.
+        </div>
+      </div>
+
+      <div class="label-level level-or">
+        <div style="font-size:2rem;">🥇</div>
+        <div>
+          <strong style="font-size:1.2rem;">OR</strong><br>
+          Excellence reconnue, culture sécurité déployée, innovation.
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-list-check"></i> 4. Référentiel - 4 piliers</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Pilier</th><th>Critères clés</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Résultats sécurité</strong></td><td>Réduction des accidents, évolution sinistralité</td></tr>
+          <tr><td><strong>Moyens humains</strong></td><td>Formation conducteurs, buddy system, permis à points interne</td></tr>
+          <tr><td><strong>Moyens matériels</strong></td><td>Âge moyen parc, taux électrification, rétrofit sécurité</td></tr>
+          <tr><td><strong>Culture & innovation</strong></td><td>Signalements near-miss, participation audits, innovations</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-arrow-trend-up"></i> 5. Processus d'attribution</div>
+      <div style="background: var(--c-surface-alt); padding:20px; border-radius:var(--radius);">
+        <ol style="margin-left:20px;">
+          <li><strong>Auto-évaluation</strong> par l'entreprise sur la base du référentiel</li>
+          <li><strong>Audit sur pièces</strong> par la commission CSCA</li>
+          <li><strong>Visite terrain</strong> par un auditeur indépendant</li>
+          <li><strong>Délibération du comité de labellisation</strong></li>
+          <li><strong>Attribution du label</strong> valable 2 ans, renouvelable</li>
+        </ol>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-gift"></i> 6. Bénéfices pour les entreprises labellisées</div>
+      <div class="card-grid">
+        <div class="stat-card">
+          <span class="stat-title">Visibilité commerciale</span>
+          Communication auprès des compagnies aériennes, critère différenciant dans les appels d'offres.
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Reconnaissance institutionnelle</span>
+          Cérémonie annuelle, trophée, communication CSCA/FNAM.
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Accès privilégié</span>
+          Participation aux groupes de travail, veille sécurité, événements.
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Fierté des équipes</span>
+          Valorisation des conducteurs et managers, attractivité pour les recrutements.
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-diagram-project"></i> 7. Gouvernance</div>
+      <table class="bar-table">
+        <thead><tr><th>Instance</th><th>Rôle</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Comité de labellisation</strong></td><td>Décide de l'attribution, indépendant (CSCA, experts, compagnies)</td></tr>
+          <tr><td><strong>Commission d'audit</strong></td><td>Réalise les audits, propose les niveaux</td></tr>
+          <tr><td><strong>Groupe de travail référentiel</strong></td><td>Met à jour les critères annuellement</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 8. Budget estimé</div>
+      <table class="bar-table">
+        <thead><tr><th>Poste</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td>Conception référentiel (AMO)</td><td>25 000€</td></tr>
+          <tr><td>Formation des auditeurs</td><td>15 000€</td></tr>
+          <tr><td>Audits (forfait par entreprise)</td><td>2 000€/an/entreprise</td></tr>
+          <tr><td>Communication / trophées</td><td>10 000€/an</td></tr>
+          <tr><td>Cérémonie annuelle</td><td>15 000€</td></tr>
+          <tr><td><strong>Total annuel (mutualisé)</strong></td><td><strong>~70 000€/an</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par entreprise (sur 20) : 3 500€/an - un investissement très faible au regard des bénéfices.</p>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-calendar-alt"></i> 9. Déploiement</div>
+      <div class="phase-timeline">
+        <div class="phase-item">
+          <div class="phase-titre">Phase 1 - Conception (6 mois)</div>
+          <small>Groupe de travail, rédaction référentiel, validation CSCA</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 2 - Pilote (6 mois)</div>
+          <small>3 entreprises volontaires, audits tests, ajustements</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 3 - Lancement (12 mois)</div>
+          <small>Ouverture à toutes entreprises, 1ère cérémonie Semaine Sécurité</small>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-gauge"></i> 10. Indicateurs de suivi</div>
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Entreprises labellisées</span><br/><span class="stat-value">10</span><span class="stat-desc">cible M12</span></div>
+        <div class="stat-card"><span class="stat-title">Niveau OR atteint</span><br/><span class="stat-value">3</span><span class="stat-desc">cible M24</span></div>
+        <div class="stat-card"><span class="stat-title">Compagnies utilisant le label</span><br/><span class="stat-value">5</span><span class="stat-desc">cible M24</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction entreprises</span><br/><span class="stat-value">4,5/5</span><span class="stat-desc">cible M24</span></div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 11. Conditions de réussite</div>
+      <ul style="margin-left:20px;">
+        <li><strong>Crédibilité</strong> - Audits réalisés par des experts indépendants</li>
+        <li><strong>Simplicité</strong> - Référentiel clair, critères objectifs</li>
+        <li><strong>Valorisation</strong> - Communication forte auprès des compagnies</li>
+        <li><strong>Évolution</strong> - Mise à jour annuelle du référentiel</li>
+        <li><strong>Neutralité</strong> - Gouvernance équilibrée (handlers, compagnies, experts)</li>
+      </ul>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 17 : Tatouage sécurité</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-cp-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-cp);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-cp);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-cp);
+      background: var(--c-cp-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-cp-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-cp-bg);
+      color: var(--c-cp);
+      border: 1px solid var(--c-cp-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-cp);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-cp);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-cp);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-cp-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-cp);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-cp-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-cp);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-cp);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-cp);
+      color: var(--c-cp);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-cp);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .marqueur-demo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: var(--c-surface-alt);
+      padding: 10px 15px;
+      border-radius: var(--radius);
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> Dans le monde professionnel, la sécurité est invisible. 20 ans sans accident ? Personne ne le sait. Un conducteur exemplaire ? Rien ne le distingue.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#2563eb;">0</span><br>visibilité de l'exemplarité</div>
+          <div><span class="stat-value" style="color:#2563eb;">30%</span><br>fierté déclarée</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-cp);"></i> Notre solution : des <strong>marqueurs visuels</strong> (pin's, galons, bracelets) pour rendre la sécurité visible et désirable.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-cp-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Un système de marqueurs visuels, volontaires, mérités, évolutifs, portés sur la tenue ou le casque.</p>
+        <p><strong>Objectifs :</strong> Valoriser l'exemplarité, créer des modèles identificatoires, rendre la sécurité désirable, favoriser la transmission.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-tag"></i> 3. Les supports - Catalogue</div>
+      
+      <div class="marqueur-demo">
+        <div><span style="font-size:2rem;">⭐</span></div>
+        <div><strong>Pin's émaillé</strong> - 1 an (argent), 5 ans (or), 10 ans (couronne), 15 ans (laurier), 20 ans (trophée). 3,50 €</div>
+      </div>
+
+      <div class="marqueur-demo">
+        <div><span style="font-size:2rem;">🟦</span></div>
+        <div><strong>Bandeau de casque</strong> - Blanc (débutant), Vert (confirmé), Bleu (expert), Argent (formateur), Or (légende). 1,20 €</div>
+      </div>
+
+      <div class="marqueur-demo">
+        <div><span style="font-size:2rem;">🛩️</span></div>
+        <div><strong>Écusson thermocollant</strong> - Spécialités : PUSH, LOADER, BUS, DÉGIVREUSE, Formateur, Buddy, Auditeur, Innovateur. 4,50 €</div>
+      </div>
+
+      <div class="marqueur-demo">
+        <div><span style="font-size:2rem;">🔵</span></div>
+        <div><strong>Bracelet silicone</strong> - 10 sign. (Œil de lynx), 25 (Sentinelle), 50 (Vigie), 100 (Légende). 2,00 €</div>
+      </div>
+
+      <div class="marqueur-demo">
+        <div><span style="font-size:2rem;">〽️</span></div>
+        <div><strong>Galon de manche</strong> - Chevrons d'ancienneté sécurité : 3,6,9 ans (argent) / 12,15,18 ans (or). 2,80 €</div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-list-check"></i> 4. Barème des accomplissements</div>
+      
+      <h3>Expérience sécurité</h3>
+      <table class="bar-table">
+        <thead><tr><th>Accomplissement</th><th>Marqueur</th></tr></thead>
+        <tbody>
+          <tr><td>1 an sans accident</td><td>⭐ Étoile argent</td></tr>
+          <tr><td>3 ans sans accident</td><td>Chevron argent (1)</td></tr>
+          <tr><td>5 ans sans accident</td><td>⭐⭐ Étoiles or</td></tr>
+          <tr><td>10 ans sans accident</td><td>👑 Couronne</td></tr>
+          <tr><td>20 ans sans accident</td><td>🏆 Trophée</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:15px;">Vigilance</h3>
+      <table class="bar-table">
+        <thead><tr><th>Seuil</th><th>Bracelet</th></tr></thead>
+        <tbody>
+          <tr><td>10 signalements</td><td>ŒIL DE LYNX (bleu clair)</td></tr>
+          <tr><td>25 signalements</td><td>SENTINELLE (bleu foncé)</td></tr>
+          <tr><td>50 signalements</td><td>VIGIE (violet)</td></tr>
+          <tr><td>100 signalements</td><td>LÉGENDE (or)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-ruler"></i> 5. Règles du dispositif</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Volontariat</strong> - Personne n'est obligé de porter</li>
+        <li><strong>Véracité</strong> - Attribution sur preuve traçable</li>
+        <li><strong>Progressivité</strong> - On commence petit, on accumule</li>
+        <li><strong>Visibilité</strong> - Faits pour être vus</li>
+        <li><strong>Non-cumul systématique</strong> - Maximum 3 pin's, 2 écussons, etc.</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 6. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Conception & pilote (6 mois)</strong></td><td>Co-conception, prototypes, test 50 conducteurs</td><td>25 k€</td></tr>
+          <tr><td><strong>Phase 2 - Déploiement CDG (12 mois)</strong></td><td>Commande 10 000 marqueurs, déploiement entreprises</td><td>72 k€</td></tr>
+          <tr><td><strong>Phase 3 - Généralisation (24-36 mois)</strong></td><td>CDG, Orly, province, renouvellement annuel</td><td>175 k€ + 30 k€/an</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>272 k€</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par conducteur (kit de base) : <strong>~25 €</strong></p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 8. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Taux d'adoption</span><span class="stat-value">75%</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Fierté déclarée</span><span class="stat-value">70%</span><span class="stat-desc">vs 30%</span></div>
+        <div class="stat-card"><span class="stat-title">Reconnaissance perçue</span><span class="stat-value">65%</span><span class="stat-desc">vs 22%</span></div>
+        <div class="stat-card"><span class="stat-title">Signalements near-miss</span><span class="stat-value">+60%</span><span class="stat-desc">cible M36</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 9. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Désirabilité</strong> - Marqueurs beaux, bien conçus</li>
+        <li><strong>Légitimité</strong> - Critères objectifs, vérifiables</li>
+        <li><strong>Progressivité</strong> - On peut commencer petit</li>
+        <li><strong>Visibilité</strong> - Portés là où on peut les voir</li>
+        <li><strong>Cérémonial</strong> - La remise est un moment de reconnaissance</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 10. vs Gamification (P5)</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Gamification (P5)</th><th>Tatouage sécurité (P17)</th></tr></thead>
+        <tbody>
+          <tr><td>Support</td><td>Virtuel (application)</td><td>Physique (tenue, casque)</td></tr>
+          <tr><td>Visibilité</td><td>Individuelle (écran)</td><td>Collective (terrain)</td></tr>
+          <tr><td>Effet</td><td>Motivation personnelle</td><td>Reconnaissance sociale</td></tr>
+          <tr><td>Temporalité</td><td>Temps réel</td><td>Durable</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Complémentarité :</strong> Le virtuel motive, le physique incarne.</p>
+    </section>
+
+ 
+  </div> 
+</div> 
+
+
+</body>
+</html>

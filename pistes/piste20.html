@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 20 : Crash test pédagogique</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-cp-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-cp);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-cp);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-cp);
+      background: var(--c-cp-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-cp-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-cp-bg);
+      color: var(--c-cp);
+      border: 1px solid var(--c-cp-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-cp);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-cp);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-cp);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-cp-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-cp);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-cp-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-cp);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-cp);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-cp);
+      color: var(--c-cp);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-cp);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .scenario-box {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: var(--radius);
+      margin: 15px 0;
+      border-left: 4px solid var(--c-cp);
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> La formation sécurité est théorique, abstraite, déconnectée des émotions.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#2563eb;">20%</span><br>mémorisation à 3 mois</div>
+          <div><span class="stat-value" style="color:#2563eb;">vs 85%</span><br>après un choc émotionnel</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-cp);"></i> Notre solution : un <strong>crash test grandeur nature</strong> pour créer une trace mnésique indélébile.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-cp-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Une fois par an, reconstitution grandeur nature d'un accident de piste avec épaves, maquillage, secours, témoignages.</p>
+        <p><strong>4 phases :</strong> Reconstitution (30 min) → Intervention secours (20 min) → Analyse pédagogique (40 min) → Échanges (30 min)</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-film"></i> 3. Les 3 scénarios prioritaires</div>
+      
+      <div class="scenario-box">
+        <strong>🔴 SCÉNARIO 1 - LE PUSH TROP RAPIDE</strong><br>
+        Vol retardé, conducteur pressé, PUSH heurte un loader.<br>
+        Dommages : 180 000 €, 6 mois d'ITT.<br>
+        Causes : vitesse excessive (18 km/h), angle mort non vérifié.
+      </div>
+
+      <div class="scenario-box">
+        <strong>🔴 SCÉNARIO 2 - LE PIÉTON INVISIBLE</strong><br>
+        Zone catering, bus en marche arrière heurte un agent.<br>
+        Conséquences : fracture bassin, 8 mois d'arrêt, séquelles.<br>
+        Causes : angle mort non vérifié, signalétique insuffisante.
+      </div>
+
+      <div class="scenario-box">
+        <strong>🔴 SCÉNARIO 3 - LA CHARGE INSTABLE</strong><br>
+        Loader bascule, conteneur écrase le pied d'un agent.<br>
+        Conséquences : amputation partielle, invalidité, 450 000 €.<br>
+        Causes : non-respect procédure de chargement.
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-clock"></i> 4. Déroulé type (4h)</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Horaire</th><th>Activité</th></tr></thead>
+        <tbody>
+          <tr><td>08h30</td><td>Accueil participants</td></tr>
+          <tr><td>09h15</td><td>Présentation scénario</td></tr>
+          <tr><td>09h30</td><td>Reconstitution (30 min)</td></tr>
+          <tr><td>10h00</td><td>Intervention secours (20 min)</td></tr>
+          <tr><td>10h35</td><td>Analyse pédagogique</td></tr>
+          <tr><td>11h15</td><td>Témoignage conducteur</td></tr>
+          <tr><td>11h35</td><td>Questions-réponses</td></tr>
+          <tr><td>12h05</td><td>Engagement collectif</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Équipe mobilisée :</strong> 23 personnes (pompiers, SAMU, gendarmerie, maquilleurs, etc.)</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 5. Budget par événement</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Poste</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td>Véhicules (épaves récupérées)</td><td>1 000 €</td></tr>
+          <tr><td>Mise en scène (maquillage, fumée, son)</td><td>4 600 €</td></tr>
+          <tr><td>Prestations (régie, maquilleurs, animateur, traiteur)</td><td>9 500 €</td></tr>
+          <tr><td>Communication + imprévus</td><td>3 100 €</td></tr>
+          <tr><td><strong>TOTAL PAR CRASH TEST</strong></td><td><strong>18 200 €</strong></td></tr>
+        </tbody>
+      </table>
+      <p><strong>Objectif :</strong> 1 crash test par an → ~20 000 €/an</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 6. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Mémorisation à 3 mois</span><span class="stat-value">85%</span><span class="stat-desc">vs 20%</span></div>
+        <div class="stat-card"><span class="stat-title">Impact émotionnel</span><span class="stat-value">9/10</span><span class="stat-desc">vs 2/10</span></div>
+        <div class="stat-card"><span class="stat-title">Modification comportement</span><span class="stat-value">80%</span><span class="stat-desc">vs 35%</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction</span><span class="stat-value">95%</span><span class="stat-desc">vs 65%</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 7. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Authenticité</strong> - vraies épaves, vrais secours, vrais témoignages</li>
+        <li><strong>Intensité</strong> - ne pas édulcorer, ne pas "faire semblant"</li>
+        <li><strong>Encadrement</strong> - psychologue présent, briefing/débriefing</li>
+        <li><strong>Volontariat</strong> - ne pas imposer la participation</li>
+        <li><strong>Rituel</strong> - 1 fois par an, date fixe</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 8. vs Formation VR (P10)</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Formation VR (P10)</th><th>Crash test (P20)</th></tr></thead>
+        <tbody>
+          <tr><td>Support</td><td>Virtuel</td><td>Réel</td></tr>
+          <tr><td>Émotion</td><td>Simulation</td><td>Authentique</td></tr>
+          <tr><td>Fréquence</td><td>Quotidienne</td><td>Annuelle</td></tr>
+          <tr><td>Public</td><td>Individuel</td><td>Collectif</td></tr>
+          <tr><td>Objectif</td><td>Apprentissage</td><td>Prise de conscience</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Complémentarité :</strong> La VR forme, le crash test marque.</p>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

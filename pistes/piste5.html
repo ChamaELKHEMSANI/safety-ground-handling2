@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 5 : Gamification de la sécurité</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-st-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-st);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-st);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-st);
+      background: var(--c-st-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-st-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-st-bg);
+      color: var(--c-st);
+      border: 1px solid var(--c-st-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-st);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-st);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-st);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-st-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-st);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .badge-emoji {
+      background: var(--c-st-bg);
+      border: 1px solid var(--c-st-border);
+      padding: 2px 8px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin: 2px;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-st-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-st);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-st);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-st);
+      color: var(--c-st);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .mockup-phone {
+      background: #1e1e2f;
+      color: white;
+      border-radius: 30px;
+      padding: 20px 15px;
+      max-width: 300px;
+      margin: 0 auto;
+      box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+    }
+    .mockup-screen {
+      background: #f0f2f7;
+      color: #0d1117;
+      border-radius: 20px;
+      padding: 15px;
+      min-height: 400px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #fff1f0;">
+        <p><strong>Constat :</strong> La sécurité est perçue comme une contrainte, une obligation, un coût, invisible quand ça va bien.</p>
+        <p><strong>Paradoxe :</strong> Les conducteurs jouent sur smartphone (Strava, jeux) mais la sécurité reste hors de cette dynamique.</p>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-st);"></i> Notre hypothèse : rendre la sécurité visible, mesurable, comparable et valorisante crée un engagement volontaire puissant.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Architecture du dispositif</div>
+      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div style="flex:1; background: var(--c-st-bg); padding:20px; border-radius:var(--radius);">
+          <h3 style="color:var(--c-st);"><i class="fa-solid fa-user"></i> Niveau individuel</h3>
+          <ul>
+            <li>Points d'expérience (XP)</li>
+            <li>Badges de compétences</li>
+            <li>Niveaux (stagiaire → légende)</li>
+            <li>Reconnaissance nominative</li>
+          </ul>
+        </div>
+        <div style="flex:1; background: var(--c-st-bg); padding:20px; border-radius:var(--radius);">
+          <h3 style="color:var(--c-st);"><i class="fa-solid fa-users"></i> Niveau collectif</h3>
+          <ul>
+            <li>Classement équipes</li>
+            <li>Challenges mensuels</li>
+            <li>Compétition inter-entreprises</li>
+            <li>Trophées annuels</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-arrow-trend-up"></i> 3. Points d'expérience (XP) et niveaux</div>
+      
+      <h3>Actions rapportant des XP</h3>
+      <table class="bar-table">
+        <thead><tr><th>Action</th><th>XP</th><th>Fréquence max</th></tr></thead>
+        <tbody>
+          <tr><td>Journée sans incident</td><td>+10</td><td>Quotidienne</td></tr>
+          <tr><td>Semaine sans infraction</td><td>+50</td><td>Hebdomadaire</td></tr>
+          <tr><td>Signalement near-miss</td><td>+25</td><td>Par signalement</td></tr>
+          <tr><td>Quiz sécurité complété</td><td>+15</td><td>Hebdomadaire</td></tr>
+          <tr><td>Formation volontaire</td><td>+100</td><td>Mensuelle</td></tr>
+          <tr><td>Mentorat d'un nouveau</td><td>+200</td><td>Par binôme</td></tr>
+          <tr><td>Proposition amélioration retenue</td><td>+300</td><td>Annuelle</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:20px;">Niveaux de progression</h3>
+      <table class="bar-table">
+        <thead><tr><th>Niveau</th><th>Titre</th><th>XP requis</th><th>Privilège</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Conducteur stagiaire</td><td>0</td><td>Parcours d'intégration</td></tr>
+          <tr><td>2</td><td>Conducteur confirmé</td><td>500</td><td>Badge nominatif</td></tr>
+          <tr><td>3</td><td>Conducteur expert</td><td>1 500</td><td>Casquette siglée</td></tr>
+          <tr><td>4</td><td>Conducteur d'élite</td><td>3 000</td><td>Étoile sur le casque</td></tr>
+          <tr><td>5</td><td>Légende sécurité</td><td>5 000</td><td>Plaque nominative vestiaire</td></tr>
+          <tr><td>6</td><td>Ambassadeur</td><td>8 000</td><td>Mentorat, conseil sécurité</td></tr>
+        </tbody>
+      </table>
+      <p><em>Temps estimé niveau 5 : ~18 mois avec engagement régulier.</em></p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-medal"></i> 4. Badges de compétences</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">🦅 Œil de lynx</span><br/>10 signalements near-miss validés</div>
+        <div class="stat-card"><span class="stat-title">🌿 Main verte</span><br/>6 mois sans aucun incident</div>
+        <div class="stat-card"><span class="stat-title">🛑 Silence d'or</span><br/>Zéro infraction vitesse sur l'année</div>
+        <div class="stat-card"><span class="stat-title">🤝 Compagnon</span><br/>3 nouveaux conducteurs parrainés</div>
+        <div class="stat-card"><span class="stat-title">🌙 Pilote de nuit</span>1<br/>00h de conduite de nuit sans incident</div>
+        <div class="stat-card"><span class="stat-title">🚛 Toutes zones</span><br/>Conduite validée sur 5 types d'engins</div>
+        <div class="stat-card"><span class="stat-title">🚑 Sauveteur</span><br/>Intervention lors d'un incident (1er secours)</div>
+        <div class="stat-card"><span class="stat-title">💡 Innovateur</span><br/>Proposition d'amélioration retenue</div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-ranking-star"></i> 5. Classements et compétitions</div>
+      
+      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div style="flex:1;">
+          <h3>Individuel</h3>
+          <table class="bar-table">
+            <tr><td>Top 10 journée</td><td>Félicitations manager</td></tr>
+            <tr><td>Top 10 semaine</td><td>Prime 50€</td></tr>
+            <tr><td>Top 10 mois</td><td>Prime 150€ + place parking</td></tr>
+            <tr><td>Top 10 année</td><td>Trophée + voyage d'étude</td></tr>
+          </table>
+        </div>
+        <div style="flex:1;">
+          <h3>Collectif</h3>
+          <table class="bar-table">
+            <tr><td>Challenge équipes</td><td>Journée team building</td></tr>
+            <tr><td>Trophée des handlers</td><td>Trophée tournant</td></tr>
+            <tr><td>Coupe des plateformes</td><td>Reconnaissance DSAC/FNAM</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-mobile-screen"></i> 6. Interface gamifiée (Safety Hub)</div>
+      <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+        <div style="flex:1;">
+          <p><strong>Fonctionnalités :</strong></p>
+          <ul>
+            <li>Profil : progression, badges, statistiques</li>
+            <li>Classements temps réel (équipe, entreprise, CDG)</li>
+            <li>Défis quotidiens avec bonus XP</li>
+            <li>Notifications de records battus</li>
+            <li>Réactions entre pairs</li>
+          </ul>
+        </div>
+        <div style="flex:1;">
+          <div class="mockup-phone">
+            <div class="mockup-screen">
+              <p><i class="fa-solid fa-shield" style="color:var(--c-st);"></i> <strong>Thomas • 2340 XP</strong></p>
+              <div style="background:var(--c-st); height:8px; width:80%; border-radius:4px;"></div>
+              <p style="font-size:0.8rem;">Niveau : Conducteur expert</p>
+              <div style="display: flex; gap: 5px; flex-wrap: wrap;">🏅 🦅 🌿 🤝</div>
+              <hr style="margin:5px 0;">
+              <p>📊 Équipe : 3e ▲ +2</p>
+              <p>🏆 Défi du jour : angle mort (+25 XP)</p>
+              <p>🔔 Félicitations à Sarah !</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-gift"></i> 7. Récompenses</div>
+      <table class="bar-table">
+        <thead><tr><th>Type</th><th>Exemples</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td>Symbolique</td><td>Badge, pin's, casquette, étoile</td><td>5-20€</td></tr>
+          <tr><td>Fonctionnelle</td><td>Place parking, horaires flexibles</td><td>0€</td></tr>
+          <tr><td>Financière</td><td>Prime 50-500€, chèque cadeau</td><td>Variable</td></tr>
+          <tr><td>Expérientielle</td><td>Visite tour de contrôle, vol découverte</td><td>150-300€</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Budget annuel pour 500 conducteurs :</strong> ~14 000€ (28€/conducteur)</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 8. Budget estimé</div>
+      <table class="bar-table">
+        <thead><tr><th>Poste</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td>Conception système (AMO)</td><td>20 000€</td></tr>
+          <tr><td>Développement module application</td><td>40 000€</td></tr>
+          <tr><td>Création identité visuelle</td><td>10 000€</td></tr>
+          <tr><td>Campagne de lancement</td><td>15 000€</td></tr>
+          <tr><td><strong>Total investissement initial</strong></td><td><strong>85 000€</strong></td></tr>
+          <tr><td>Maintenance annuelle</td><td>15 000€</td></tr>
+          <tr><td>Récompenses (par entreprise)</td><td>14 000€/an</td></tr>
+          <tr><td>Événement annuel CSCA</td><td>25 000€</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-calendar-alt"></i> 9. Déploiement</div>
+      <div class="phase-timeline">
+        <div class="phase-item">
+          <div class="phase-titre">Phase 1 - Conception & pilote (3 mois)</div>
+          <small>Ateliers de co-conception, MVP, test 50 conducteurs</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 2 - Expérimentation (6 mois)</div>
+          <small>300 conducteurs, challenges mensuels, enquêtes</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 3 - Généralisation (12 mois)</div>
+          <small>Déploiement CDG, Orly, province, trophée annuel</small>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-gauge"></i> 10. Indicateurs de suivi</div>
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Utilisation hebdo</span><br/><span class="stat-value">70%</span><span class="stat-desc">cible M24</span></div>
+        <div class="stat-card"><span class="stat-title">Complétion défis</span><br/><span class="stat-value">60%</span><span class="stat-desc">cible M24</span></div>
+        <div class="stat-card"><span class="stat-title">Signalements near-miss</span><br/><span class="stat-value">+200%</span><span class="stat-desc">cible M24</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction</span><br/><span class="stat-value">4,5/5</span><span class="stat-desc">cible M24</span></div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-shield"></i> 11. Risques et mitigation</div>
+      <div class="alert-box">
+        <p><span class="gain-badge">Élevé</span> Effet "boy scout" (infantilisant) → co-conception, ton sobre</p>
+        <p><span class="gain-badge">Moyen</span> Compétition malsaine → pondération, bonus signalement</p>
+        <p><span class="gain-badge">Élevé</span> Lassitude → renouvellement défis, événements spéciaux</p>
+        <p><span class="gain-badge">Moyen</span> Iniquité jour/nuit → catégories distinctes, bonus nuit</p>
+        <p><span class="gain-badge">Faible</span> Surinvestissement (conduite risquée) → plafonds, contrôle</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 12. Conditions de réussite</div>
+      <div style="background: var(--c-st-bg); padding:20px; border-radius:var(--radius);">
+        <p> <strong>CO-CONCEPTION</strong> - Ne pas imposer un système déconnecté</p>
+        <p> <strong>SIMPLICITÉ</strong> - Règles claires en 2 minutes</p>
+        <p> <strong>ÉQUITÉ</strong> - Mêmes chances pour tous</p>
+        <p> <strong>AUTHENTICITÉ</strong> - Récompenses sincères, pas de gadgets</p>
+        <p> <strong>CONSTANCE</strong> - Ne pas abandonner après l'effet de nouveauté</p>
+      </div>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

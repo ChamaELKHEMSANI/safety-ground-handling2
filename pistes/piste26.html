@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 26 : Le comptoir des râleurs</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-qw-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-qw);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-qw);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-qw);
+      background: var(--c-qw-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-qw-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-qw-bg);
+      color: var(--c-qw);
+      border: 1px solid var(--c-qw-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-qw);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-qw);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-qw);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-qw-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-qw);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-qw-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-qw);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-qw);
+      color: var(--c-qw);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .voice-box {
+      background: #2d3e50;
+      color: #e0e7ff;
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      margin: 15px 0;
+      text-align: center;
+      border-left: 8px solid var(--c-qw);
+    }
+    .feedback-board {
+      background: #f5f5f5;
+      border: 2px solid var(--c-qw);
+      border-radius: var(--radius-lg);
+      padding: 15px;
+      margin: 15px 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .grumbling-card {
+      background: #fff9c4;
+      border-left: 4px solid #f59e0b;
+      padding: 10px;
+      margin: 5px;
+      border-radius: var(--radius);
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> Les conducteurs râlent beaucoup (matériel, organisation, procédures, collègues, hiérarchie, conditions), mais ces râles restent confinés et ignorés.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#059669;">100%</span><br>râlent</div>
+          <div><span class="stat-value" style="color:#059669;">0%</span><br>sont écoutés</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-qw);"></i> Notre solution : transformer le râle en <strong>signal utile</strong> avec un espace dédié et une boucle de retour.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-qw-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Installer dans chaque vestiaire un espace d'expression libre et anonyme, avec une boucle de retour systématique et visible.</p>
+        <p><strong>4 étapes :</strong> Expression → Collecte → Traitement → Retour visible ("Vous avez râlé - Nous avons agi").</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-layer-group"></i> 3. Les 3 formules du comptoir</div>
+      
+      <div class="voice-box">
+        <div style="font-size: 4rem;">🎤</div>
+        <div style="font-size: 1.5rem; font-weight: 700;">FORMULE 1 - Boîte vocale</div>
+        <div>Gros bouton rouge, 30 secondes d'enregistrement, anonyme, réinitialisation auto.</div>
+        <div style="margin-top:10px;"><strong>Coût :</strong> 300 € (boîtier) + 50 €/mois traitement</div>
+      </div>
+
+      <div style="background: #f5f5f5; border-radius: var(--radius-lg); padding: 20px; margin:15px 0;">
+        <div style="font-size: 2rem; text-align:center;">📢 J'RÂLE !</div>
+        <div><strong>FORMULE 2 - Cartons "J'râle"</strong> (A5)</div>
+        <div>☐ Matériel ☐ Organisation ☐ Procédure ☐ Collègues ☐ Conditions ☐ Autre</div>
+        <div>En deux mots : _________________________</div>
+        <div>Idée : _________________________</div>
+        <div style="margin-top:10px;"><strong>Coût :</strong> 0,10 €/carton</div>
+      </div>
+
+      <div class="feedback-board">
+        <div style="font-size: 1.5rem; font-weight:700; text-align:center;">📌 À LA BONNE HEURE !</div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top:10px;">
+          <span class="grumbling-card">🔴 Push 247 freine mal</span>
+          <span class="grumbling-card">🟠 Pas de relais</span>
+          <span class="grumbling-card">🟡 Check-list trop longue</span>
+          <span class="grumbling-card">🟢 Froid dans cabine</span>
+          <span class="grumbling-card">🔵 Catering se gare n'importe comment</span>
+        </div>
+        <div style="margin-top:10px;"><strong>FORMULE 3 - Tableau magnétique</strong> - 150 €</div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-rotate-left"></i> 4. La boucle de retour</div>
+      
+      <p><strong>Principe essentiel :</strong> Un râle qui n'a pas de réponse est pire qu'un râle qui n'a pas été émis.</p>
+      
+      <div class="feedback-board">
+        <div style="font-weight:700; font-size:1.2rem;">📢 VOUS AVEZ RÂLÉ - NOUS AVONS AGI !</div>
+        <table style="width:100%; margin-top:10px;">
+          <tr><th>Votre râle</th><th>Notre réponse</th></tr>
+          <tr><td>"Le push 247 freine mal"</td><td>Diagnostic réalisé, plaquettes changées (J+2). Merci !</td></tr>
+          <tr><td>"Check-list trop longue"</td><td>Groupe de travail constitué, nouvelle version testée M9.</td></tr>
+          <tr><td>"Froid dans les cabines"</td><td>Réglage consigne effectué, vérification hebdo ajoutée.</td></tr>
+        </table>
+      </div>
+      
+      <p><strong>Mise à jour :</strong> hebdomadaire, à côté du comptoir.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 5. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Pilote (3 mois)</strong></td><td>1 site, 3 formules, évaluation</td><td>4 500 €</td></tr>
+          <tr><td><strong>Phase 2 - CDG (12 mois)</strong></td><td>20 sites, 20 boîtiers, 20 000 cartons, formation</td><td>20 000 €</td></tr>
+          <tr><td><strong>Phase 3 - Généralisation (24-36 mois)</strong></td><td>CDG, Orly, province, renouvellement</td><td>39 000 € + 3k€/an</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>63 500 €</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par site équipé : <strong>~1 500 €</strong> (investissement) + 150 €/an consommables.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 6. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Sites équipés</span><span class="stat-value">60</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Râles collectés/mois</span><span class="stat-value">300</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Actions correctives</span><span class="stat-value">120</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction "être écouté"</span><span class="stat-value">65%</span><span class="stat-desc">vs 22%</span></div>
+      </div>
+    </section>
+
+ 
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 7. vs Boîte à idées classique</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Boîte à idées</th><th>Comptoir des râleurs</th></tr></thead>
+        <tbody>
+          <tr><td>Ton</td><td>Positif, constructif</td><td>Libre, spontané</td></tr>
+          <tr><td>Format</td><td>Formulaire papier</td><td>Vocal, carton, post-it</td></tr>
+          <tr><td>Anonymat</td><td>Souvent nominatif</td><td>Total</td></tr>
+          <tr><td>Temps</td><td>Réflexion</td><td>Immédiateté</td></tr>
+          <tr><td>Émotion</td><td>Contrôlée</td><td>Authentique</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Complémentarité :</strong> Le comptoir est l'amont de la boîte à idées. On râle d'abord, on propose ensuite.</p>
+    </section>
+
+ 
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 8. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Sincérité</strong> - retour authentique, pas de réponse corporate</li>
+        <li><strong>Rapidité</strong> - < 7 jours, idéalement < 48h</li>
+        <li><strong>Visibilité</strong> - tableau de retour à côté du comptoir</li>
+        <li><strong>Anonymat</strong> - garanti, sans exception</li>
+        <li><strong>Animation</strong> - une personne référente formée</li>
+        <li><strong>Proportionnalité</strong> - ne pas promettre monts et merveilles</li>
+      </ul>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

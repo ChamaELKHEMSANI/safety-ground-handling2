@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 4 : Buddy System & parrainage</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-qw-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-qw);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-qw);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-qw);
+      background: var(--c-qw-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-qw-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-qw-bg);
+      color: var(--c-qw);
+      border: 1px solid var(--c-qw-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-qw);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-qw);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-qw);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-qw-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-qw);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .badge-positif {
+      background: #fee2e2;
+      color: #b91c1c;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+    }
+    .badge-negatif {
+      background: #dcfce7;
+      color: #166534;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-qw-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-qw);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-qw);
+      color: var(--c-qw);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #fff1f0;">
+        <p><strong>Constat :</strong> Départs massifs post-COVID → perte de mémoire accidentologique ; nouveaux embauchés techniquement formés mais peu acculturés.</p>
+        <div style="display: flex; gap: 20px; margin-top: 15px; flex-wrap: wrap;">
+          <div><span class="stat-value" style="color:#b91c1c;">>25%</span><br>turnover estimé</div>
+          <div><span class="stat-value" style="color:#b91c1c;">↑</span><br>nouveaux sans culture sécurité</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-qw);"></i> Notre hypothèse : la <strong>transmission par le compagnonnage</strong> est plus efficace que la seule formation technique.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-handshake"></i> 2. Concept général</div>
+      <div style="background: var(--c-qw-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Chaque nouvel embauché conducteur se voit attribuer un <strong>buddy</strong> : conducteur expérimenté, volontaire, formé, exemplaire, pour un accompagnement de <strong>3 mois</strong>.</p>
+        <div style="display: flex; gap: 20px; margin-top: 15px;">
+          <div style="flex:1;"><i class="fa-solid fa-user-graduate"></i> Nouveau : < 6 mois, permis T, motivé</div>
+          <div style="flex:1;"><i class="fa-solid fa-crown"></i> Buddy : > 5 ans, 0 accident, formé</div>
+        </div>
+        <p style="margin-top:10px;"><strong>Objectifs :</strong> transmettre les savoir-faire non écrits, incarner l'exemplarité, rassurer, détecter les difficultés, créer du lien intergénérationnel.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-user-check"></i> 3. Profil et sélection des buddies</div>
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Niveau requis</th></tr></thead>
+        <tbody>
+          <tr><td>Ancienneté</td><td>> 5 ans</td></tr>
+          <tr><td>Discipline</td><td>0 accident responsable sur 3 ans</td></tr>
+          <tr><td>Assiduité</td><td>< 3 jours d'absence/an</td></tr>
+          <tr><td>Pédagogie</td><td>Formation tutorat obligatoire</td></tr>
+          <tr><td>Relationnel</td><td>Évaluation manager</td></tr>
+          <tr><td>Volontariat</td><td>Oui (pas de désignation forcée)</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px;"><span class="gain-badge">Valorisation</span> Prime 150€/mois, badge distinctif, temps dédié, trophée annuel</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-road"></i> 4. Parcours du nouvel embauché (3 mois)</div>
+      <table class="bar-table">
+        <thead><tr><th>Semaine</th><th>Phase</th><th>Activités</th></tr></thead>
+        <tbody>
+          <tr><td>S1</td><td>Accueil</td><td>Visite plateforme, présentation équipes, hotspots</td></tr>
+          <tr><td>S2</td><td>Observation</td><td>Double commande (buddy conduit, nouveau observe)</td></tr>
+          <tr><td>S3-4</td><td>Imitation</td><td>Conduite supervisée, correction immédiate</td></tr>
+          <tr><td>S5-8</td><td>Autonomie progressive</td><td>Solo + débrief quotidien, points hebdo</td></tr>
+          <tr><td>S9-12</td><td>Consolidation</td><td>Autonome, buddy en appui, évaluation finale</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Livret de suivi buddy :</strong> objectifs, points de vigilance, difficultés, signatures.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chalkboard-user"></i> 5. Formation "Tuteur sécurité" (2 jours)</div>
+      <ul style="margin-left:20px;">
+        <li><strong>Module 1 - Rôle et posture :</strong> mission, limites, éthique (3h)</li>
+        <li><strong>Module 2 - Pédagogie pour adultes :</strong> transmettre, feedback constructif (4h)</li>
+        <li><strong>Module 3 - Gestion de situations difficiles :</strong> détection, alerte manager (3h)</li>
+        <li><strong>Module 4 - Outils et traçabilité :</strong> livret, évaluation, reporting (2h)</li>
+        <li><strong>Module 5 - Retours d'expérience :</strong> témoignages, cas pratiques (4h)</li>
+      </ul>
+      <p><strong>Validation :</strong> quiz + mise en situation → certificat "Buddy - Tuteur sécurité". Coût : 800€/stagiaire.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-diagram-project"></i> 6. Rôles et indicateurs</div>
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Taux de couverture</span><br/><span class="stat-value">100%</span><span class="stat-desc">nouveaux avec buddy</span></div>
+        <div class="stat-card"><span class="stat-title">Taux de buddies actifs</span><br/><span class="stat-value">>15%</span><span class="stat-desc">des effectifs</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction nouveaux</span><br/><span class="stat-value">>4,5/5</span><span class="stat-desc">enquête</span></div>
+        <div class="stat-card"><span class="stat-title">Accidents -1 an</span><br/><span class="stat-value">-50%</span><span class="stat-desc">cible M24</span></div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 7. Budget estimé</div>
+      <table class="bar-table">
+        <thead><tr><th>Poste (pour 100 nouveaux/an)</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td>Prime buddy (3 mois)</td><td>45 000 €</td></tr>
+          <tr><td>Formation 25 buddies</td><td>20 000 €</td></tr>
+          <tr><td>Livrets + badges</td><td>2 000 €</td></tr>
+          <tr><td><strong>Total annuel variable</strong></td><td><strong>67 000 €</strong></td></tr>
+          <tr><td>+ Coûts fixes mutualisés</td><td>58 000 €</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Économies potentielles :</strong> ~175 000 €/an (réduction accidents nouveaux). <strong>ROI :</strong> 12-18 mois.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-shield"></i> 8. Risques et mitigation</div>
+      <div class="alert-box">
+        <p><span class="gain-badge">Moyen</span> Buddy non exemplaire → audit aléatoire, retrait immédiat</p>
+        <p><span class="gain-badge">Élevé</span> Buddy non disponible (pression production) → engagement direction, 1h/semaine protégée</p>
+        <p><span class="gain-badge">Moyen</span> Dérive en contremaître → formation posture, supervision manager</p>
+        <p><span class="gain-badge">Faible</span> Nouveau rejette le dispositif → possibilité de changer de buddy</p>
+        <p><span class="gain-badge">Élevé</span> Turnover des buddies → vivier élargi, reconnaissance forte</p>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-calendar-alt"></i> 9. Déploiement</div>
+      <div class="phase-timeline">
+        <div class="phase-item">
+          <div class="phase-titre">Phase 1 - Pilote (3 mois)</div>
+          <small>1 entreprise, 1 catégorie (PUSH), 5 binômes</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 2 - Extension (6 mois)</div>
+          <small>2-3 entreprises, 50 buddies formés, 50 binômes</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 3 - Généralisation (12 mois)</div>
+          <small>Tous signataires CSCA, CDG/Orly/province</small>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-list-check"></i> 10. Avantages comparatifs</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+        <div style="flex:1; min-width:150px; background:var(--c-surface-alt); padding:15px; border-radius:var(--radius);">
+          <strong>Pour le nouveau</strong> : intégration accélérée, référent unique, transmission des secrets du métier, confiance.
+        </div>
+        <div style="flex:1; min-width:150px; background:var(--c-surface-alt); padding:15px; border-radius:var(--radius);">
+          <strong>Pour le buddy</strong> : valorisation, transmission, reconnaissance, sens renouvelé.
+        </div>
+        <div style="flex:1; min-width:150px; background:var(--c-surface-alt); padding:15px; border-radius:var(--radius);">
+          <strong>Pour l'entreprise</strong> : acculturation dès l'arrivée, détection précoce, réduction accidents/turnover.
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 13. Conditions de réussite</div>
+      <div style="background: var(--c-surface-alt); padding:20px; border-radius:var(--radius);">
+        <p><span class="gain-badge">Clé 1</span> Exemplarité absolue des buddies → retrait immédiat en cas d'infraction</p>
+        <p><span class="gain-badge">Clé 2</span> Engagement direction → temps buddy objectivé et protégé</p>
+        <p><span class="gain-badge">Clé 3</span> Reconnaissance tangible → prime, visibilité</p>
+        <p><span class="gain-badge">Clé 4</span> Formation solide des buddies</p>
+        <p><span class="gain-badge">Clé 5</span> Suivi dans la durée → pas d'abandon après 3 mois</p>
+      </div>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

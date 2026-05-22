@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 6 : Jumeau numérique & optimisation des flux</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-lt-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-lt);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-lt);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-lt);
+      background: var(--c-lt-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-lt-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-lt-bg);
+      color: var(--c-lt);
+      border: 1px solid var(--c-lt-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-lt);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-lt);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-lt);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-lt-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-lt);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-lt-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-lt);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-lt);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-lt);
+      color: var(--c-lt);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .mockup-terminal {
+      background: #0b1a33;
+      color: #a3d0ff;
+      border-radius: 8px;
+      padding: 15px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .heatmap-demo {
+      background: linear-gradient(90deg, #22c55e 0%, #eab308 50%, #ef4444 100%);
+      height: 30px;
+      border-radius: 20px;
+      margin: 10px 0;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> Les accidents ne sont pas seulement comportementaux, mais aussi structurels : densité de trafic, chevauchement des flux, conflits d'usage, visibilité réduite.</p>
+        <div style="display: flex; gap: 20px; margin-top: 15px; flex-wrap: wrap;">
+          <div><span class="stat-value" style="color:#7c3aed;">23</span><br>engins simultanés zone T2E</div>
+          <div><span class="stat-value" style="color:#7c3aed;">0</span><br>vision globale des flux</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-lt);"></i> Notre hypothèse : optimiser les flux et l'infrastructure peut éviter des accidents sans changer le comportement.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Qu'est-ce qu'un jumeau numérique ?</div>
+      <div style="background: var(--c-lt-bg); padding: 20px; border-radius: var(--radius);">
+        <p style="text-align: center; font-weight: 600;">RÉALITÉ PHYSIQUE ← (données temps réel) → RÉALITÉ NUMÉRIQUE (modèle 3D dynamique)</p>
+        <p style="margin-top: 10px;"><strong>Définition :</strong> Réplique virtuelle dynamique de la plateforme, alimentée en temps réel, permettant de simuler, prédire et optimiser les opérations.</p>
+      </div>
+      <div class="card-grid" style="margin-top: 15px;">
+        <div class="stat-card"><span class="stat-title">Visualiser</span>Identifier les zones de saturation avant l'accident</div>
+        <div class="stat-card"><span class="stat-title">Simuler</span>Tester virtuellement l'impact sur la sécurité</div>
+        <div class="stat-card"><span class="stat-title">Optimiser</span>Réduire distances et conflits</div>
+        <div class="stat-card"><span class="stat-title">Prédire</span>Anticiper les hotspots selon trafic</div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-layer-group"></i> 3. Niveaux de maturité</div>
+      <table class="bar-table">
+        <thead><tr><th>Niveau</th><th>Description</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td><strong>N1 - Statique</strong></td><td>Modélisation 3D infrastructure, plans interactifs</td><td>Formation, documentation</td></tr>
+          <tr><td><strong>N2 - Dynamique</strong></td><td>Flux historiques, identification points de congestion</td><td>Analyse, planification</td></tr>
+          <tr><td><strong>N3 - Temps réel</strong></td><td>Visualisation live, alertes anomalies</td><td>Supervision, gestion</td></tr>
+          <tr><td><strong>N4 - Prédictif</strong></td><td>Simulation de scénarios futurs, recommandations auto</td><td>Aide à la décision stratégique</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Objectif :</strong> Niveau 2 à 24 mois, préparer niveau 3 à 36 mois.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-bolt"></i> 4. Cas d'usage concrets</div>
+      
+      <div style="margin-bottom: 20px;">
+        <h3>🔴 Hotspots</h3>
+        <div class="heatmap-demo"></div>
+        <p>Carte de chaleur des accidents : Parking T2E (15), Fret Nord (12), Taxiway B (8), etc. Objectivation des zones à risque.</p>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h3>🟢 Optimisation des cheminements</h3>
+        <table class="bar-table">
+          <tr><th>Situation actuelle</th><th>Simulation proposée</th></tr>
+          <tr><td>Distance : 450 m, conflits : 4</td><td>Distance : 380 m (-15%), conflits : 1 (-75%)</td></tr>
+        </table>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h3>🟠 Gestion des pics de trafic (vague AF)</h3>
+        <div class="mockup-terminal">
+          DENSITÉ ACTUELLE : 23 engins / parking T2E<br>
+          ▶ SEUIL CRITIQUE : 20 engins [ DÉPASSÉ ]<br>
+          • Décalage convois : -18% densité<br>
+          • Reroutage fret : -25% densité<br>
+          • Zone tampon : -35% densité
+        </div>
+      </div>
+
+      <div>
+        <h3>🔵 Formation immersive</h3>
+        <p>Scénarios progressifs (normal → dense → dégradé) avec débriefing et score de sécurité.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-database"></i> 5. Données nécessaires</div>
+      <table class="bar-table">
+        <thead><tr><th>Type</th><th>Source</th><th>Disponibilité</th></tr></thead>
+        <tbody>
+          <tr><td>Infrastructure, zonage</td><td>ADP, DSAC</td><td>✅ Disponible</td></tr>
+          <tr><td>Trafic avions</td><td>ADP, DSAC</td><td>✅ Disponible</td></tr>
+          <tr><td>Flux GSE</td><td>Géolocalisation handlers</td><td>⚠️ Partielle</td></tr>
+          <tr><td>Accidents</td><td>Gendarmerie, CSCA</td><td>✅ Disponible</td></tr>
+          <tr><td>Données temps réel</td><td>Géolocalisation centralisée</td><td>❌ Non</td></tr>
+        </tbody>
+      </table>
+      <p class="gain-badge" style="margin-top: 10px;">Condition de réussite : mutualiser les données de géolocalisation (anonymisées et sécurisées).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-sitemap"></i> 6. Architecture technique</div>
+      <div style="background: #f3f4f6; padding:15px; border-radius: var(--radius); font-family: monospace;">
+        COUCHE DONNÉES : ADP (infra/trafic) ← Handlers (géoloc) ← Gendarmerie (accidents)<br>
+        ↓<br>
+        PLATEFORME SÉCURISÉE (HDS, anonymisation)<br>
+        ↓<br>
+        MOTEUR DE SIMULATION (3D, algorithmes, IA)<br>
+        ↓<br>
+        APPLICATIONS : Supervision, Simulation, Formation immersive
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 7. Budget estimé</div>
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Coût</th><th>Délai</th></tr></thead>
+        <tbody>
+          <tr><td>N1 - Statique</td><td>320 k€</td><td>6-12 mois</td></tr>
+          <tr><td>N2 - Dynamique</td><td>850 k€</td><td>12-24 mois</td></tr>
+          <tr><td>N3 - Temps réel</td><td>750 k€</td><td>24-36 mois</td></tr>
+          <tr><td>N4 - Prédictif</td><td>750 k€</td><td>36-48 mois</td></tr>
+          <tr><td><strong>TOTAL</strong></td><td><strong>2,67 M€</strong></td><td>4 ans</td></tr>
+        </tbody>
+      </table>
+      <p>Mutualisation : ADP (infra), handlers (données), CSCA (coordination), Europe (financements innovation).</p>
+    </section>
+
+ 
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-calendar-alt"></i> 8. Feuille de route</div>
+      <div class="phase-timeline">
+        <div class="phase-item">
+          <div class="phase-titre">Phase 1 - Fondations (0-12 mois)</div>
+          <small>Modélisation 3D, convention données, pilote géoloc 2 handlers, démonstrateur hotspots</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 2 - Industrialisation (12-24 mois)</div>
+          <small>Collecte généralisée, plateforme, module flux, déploiement N2</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 3 - Extension (24-36 mois)</div>
+          <small>Orly, temps réel, alertes automatiques, province</small>
+        </div>
+        <div class="phase-item">
+          <div class="phase-titre">Phase 4 - Innovation (36-48 mois)</div>
+          <small>IA prédictive, optimisation automatique, N4</small>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-gauge"></i> 9. Indicateurs de suivi</div>
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Zones CDG modélisées</span><br/><span class="stat-value">100%</span><span class="stat-desc">M36</span></div>
+        <div class="stat-card"><span class="stat-title">Handlers connectés</span><br/><span class="stat-value">100%</span><span class="stat-desc">M36</span></div>
+        <div class="stat-card"><span class="stat-title">Accidents zones critiques</span><br/><span class="stat-value">-35%</span><span class="stat-desc">M36</span></div>
+        <div class="stat-card"><span class="stat-title">Temps de parcours GSE</span><br/><span class="stat-value">-15%</span><span class="stat-desc">M36</span></div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 10. Conditions de réussite</div>
+      <ul style="margin-left:20px;">
+        <li><strong>Gouvernance des données</strong> - Prérequis absolu</li>
+        <li><strong>Phasage progressif</strong> - Commencer petit, prouver la valeur</li>
+        <li><strong>Co-conception</strong> - Impliquer opérationnels dès le début</li>
+        <li><strong>Anonymisation</strong> - Pas de contrôle individuel</li>
+        <li><strong>Financement mutualisé</strong> - Modèle économique à construire</li>
+      </ul>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

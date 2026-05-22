@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 19 : L'enquêteur mystère sécurité</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-st-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-st);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-st);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-st);
+      background: var(--c-st-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-st-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-st-bg);
+      color: var(--c-st);
+      border: 1px solid var(--c-st-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-st);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-st);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-st);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-st-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-st);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-st-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-st);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-st);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-st);
+      color: var(--c-st);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-st);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .observation-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 15px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #fff1f0;">
+        <p><strong>Constat :</strong> La remontée des comportements terrain est biaisée (managers, audits annoncés, auto-déclaration sous-utilisée).</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#b91c1c;">0</span><br>visibilité réelle terrain</div>
+          <div><span class="stat-value" style="color:#b91c1c;">40 ans</span><br>d'expérience perdus à la retraite</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-st);"></i> Notre solution : des <strong>enquêteurs mystères anciens conducteurs</strong>, légitimes et bienveillants.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-st-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Anciens conducteurs expérimentés (>20 ans, 0 accident) recrutés, formés, observent incognito les pratiques terrain et remontent une parole qualitative.</p>
+        <p><strong>Objectifs :</strong> Capturer la réalité, valoriser les anciens, transmettre la mémoire, identifier les écarts.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-user-check"></i> 3. Profil des enquêteurs</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Niveau requis</th></tr></thead>
+        <tbody>
+          <tr><td>Ancienneté</td><td>>20 ans sur plateforme</td></tr>
+          <tr><td>Expérience conduite</td><td>>15 ans d'engins</td></tr>
+          <tr><td>Discipline</td><td>0 accident grave sur carrière</td></tr>
+          <tr><td>Relationnel</td><td>Aisance verbale, écoute</td></tr>
+          <tr><td>Volontariat</td><td>Oui</td></tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top:15px;"><strong>Formation :</strong> 4 jours (observation, neutralité, rédaction, éthique) + stage terrain.<br>
+      <strong>Valorisation :</strong> 80 €/jour, carte professionnelle, pin's spécifique.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-clipboard-list"></i> 4. Méthodologie d'observation</div>
+      
+      <div class="observation-card">
+        <strong>📋 GRILLE D'OBSERVATION (extrait)</strong><br>
+        • Vitesse respectée : ☐ Oui ☐ Non ☐ Partiellement<br>
+        • Vérification angles morts : ☐ Oui ☐ Non<br>
+        • Port de la ceinture : ☐ Oui ☐ Non<br>
+        • Communication équipage : ☐ Bonne ☐ Insuffisante
+      </div>
+
+      <h3>Types de missions</h3>
+      <table class="bar-table">
+        <thead><tr><th>Type</th><th>Durée</th><th>Objectif</th></tr></thead>
+        <tbody>
+          <tr><td>Observation fixe</td><td>2h</td><td>Analyser un hotspot</td></tr>
+          <tr><td>Observation mobile</td><td>2h</td><td>Suivre un conducteur (accord)</td></tr>
+          <tr><td>Flash</td><td>30 min</td><td>Passage rapide</td></tr>
+          <tr><td>Enquête thématique</td><td>4h</td><td>Focus (angles morts, vitesse, nuit)</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>Règles d'or :</strong> incognito, bienveillance, neutralité, confidentialité, non-cumul (jamais dans ancienne entreprise).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-diagram-project"></i> 5. Circuit de l'information</div>
+      
+      <div style="background: #f3f4f6; padding:15px; border-radius:var(--radius); font-family: monospace;">
+        ENQUÊTEUR → Rapport anonymisé → COORDINATEUR CSCA → Analyse & agrégation<br>
+        ↓<br>
+        Synthèse mensuelle | Alertes ponctuelles | Bonnes pratiques | Tendances
+      </div>
+
+      <p><strong>Livrables :</strong> Flash terrain (hebdo), synthèse mensuelle, alerte sécurité (ponctuelle), cahier de bonnes pratiques (annuel).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 6. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Pilote (6 mois)</strong></td><td>3 enquêteurs, formation, test zone</td><td>23 k€</td></tr>
+          <tr><td><strong>Phase 2 - Déploiement CDG (12 mois)</strong></td><td>+10 enquêteurs, 5 entreprises, coordination</td><td>62 k€</td></tr>
+          <tr><td><strong>Phase 3 - Généralisation (24-36 mois)</strong></td><td>20 enquêteurs, Orly, province</td><td>60 k€</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>145 k€</strong></td></tr>
+        </tbody>
+      </table>
+      <p><strong>Coût annuel permanent :</strong> 20 enquêteurs × 80j × 80€ = 128 k€ + coordination 30 k€ = <strong>168 k€/an</strong></p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 7. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Observations/an</span><span class="stat-value">1 200</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Écarts identifiés</span><span class="stat-value">700</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Bonnes pratiques</span><span class="stat-value">250</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Accidents évités</span><span class="stat-value">10</span><span class="stat-desc">estimation M36</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 8. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Légitimité</strong> - Anciens reconnus, respectés</li>
+        <li><strong>Bienveillance</strong> - Posture d'observation, pas de sanction</li>
+        <li><strong>Confidentialité</strong> - Anonymat des rapports</li>
+        <li><strong>Utilité perçue</strong> - Observations suivies d'effets</li>
+        <li><strong>Indépendance</strong> - Rattachement CSCA</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 9. vs Dispositifs existants</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Dispositif</th><th>Limite</th><th>Complémentarité</th></tr></thead>
+        <tbody>
+          <tr><td>Audit CSCE</td><td>Annoncé, ponctuel</td><td>Observations en continu, non annoncées</td></tr>
+          <tr><td>Manager</td><td>Biais relationnel</td><td>Regard extérieur, neutre</td></tr>
+          <tr><td>Caméras</td><td>Pas d'analyse comportementale</td><td>Regard expert, interprétation</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

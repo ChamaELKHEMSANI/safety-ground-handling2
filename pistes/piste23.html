@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 23 : Le contrat de confiance</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-qw-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-qw);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-qw);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-qw);
+      background: var(--c-qw-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-qw-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-qw-bg);
+      color: var(--c-qw);
+      border: 1px solid var(--c-qw-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-qw);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-qw);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-qw);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-qw-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-qw);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-qw-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-qw);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-qw);
+      color: var(--c-qw);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .contract-box {
+      background: #fef9e7;
+      border: 2px solid var(--c-qw);
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      font-family: 'DM Sans', serif;
+      box-shadow: var(--shadow-lg);
+      margin: 15px 0;
+    }
+    .pin-demo {
+      display: inline-block;
+      background: #1f4e7a;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      line-height: 60px;
+      font-weight: bold;
+      border: 3px solid silver;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> L'arrivée d'un nouveau conducteur est administrative et technique, jamais symbolique ni engageante.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#059669;">0</span><br>moment fondateur</div>
+          <div><span class="stat-value" style="color:#059669;">30%</span><br>fierté déclarée</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-qw);"></i> Notre solution : un <strong>contrat de confiance</strong>, un rituel, un symbole.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-qw-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>4 piliers :</strong></p>
+        <ul style="margin-left:20px;">
+          <li><span class="gain-badge">1</span> <strong>Un texte</strong> - 5 règles d'or, engagement moral</li>
+          <li><span class="gain-badge">2</span> <strong>Un rituel</strong> - Cérémonie mensuelle d'accueil</li>
+          <li><span class="gain-badge">3</span> <strong>Un symbole</strong> - Pin's "Engagé sécurité" remis par un ancien</li>
+          <li><span class="gain-badge">4</span> <strong>Un suivi</strong> - Rappel annuel, évolution du pin's</li>
+        </ul>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-file-signature"></i> 3. Le contrat de confiance</div>
+      
+      <div class="contract-box">
+        <p style="text-align:center; font-weight:700; font-size:1.2rem;">🤝 CONTRAT DE CONFIANCE - ENGAGÉ SÉCURITÉ</p>
+        <p><em>Je soussigné(e) __________________________, conducteur(trice) d'engins de piste, m'engage librement et solennellement à :</em></p>
+        <ol style="margin:15px 0 15px 20px;">
+          <li><strong>RESPECTER LES RÈGLES</strong> - limitations, arrêts, signalisation</li>
+          <li><strong>VÉRIFIER AVANT D'AGIR</strong> - angles morts, état de l'engin</li>
+          <li><strong>PROTÉGER MES COLLÈGUES</strong> - piétons, signalement, alerte</li>
+          <li><strong>OSER DIRE NON</strong> - refus d'une tâche dangereuse</li>
+          <li><strong>TRANSMETTRE</strong> - exemplarité, partage des bonnes pratiques</li>
+        </ol>
+        <p style="text-align:right;">Fait à _______, le _______<br>Signature conducteur / manager / buddy</p>
+      </div>
+      
+      <p><strong>Caractéristiques :</strong> Engagement moral (pas juridique), signé devant pairs, renouvelé chaque année.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-calendar-check"></i> 4. La cérémonie d'engagement</div>
+      
+      <p><strong>Mensuelle - 30 minutes - en présence de l'équipe, du manager, du buddy.</strong></p>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Durée</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Accueil</td><td>3 min</td><td>Mot d'accueil</td></tr>
+          <tr><td>Lecture contrat</td><td>5 min</td><td>Par un nouveau</td></tr>
+          <tr><td>Témoignage</td><td>5 min</td><td>Un ancien raconte</td></tr>
+          <tr><td>Signature</td><td>5 min</td><td>Chaque nouveau signe</td></tr>
+          <tr><td>Remise pin's</td><td>5 min</td><td>Par le buddy</td></tr>
+          <tr><td>Photo / Verre</td><td>7 min</td><td>Moment convivial</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-circle-check"></i> 5. Le pin's "Engagé sécurité"</div>
+      
+      <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <div class="pin-demo">🤝</div>
+        <div>
+          <p><strong>Design :</strong> rond 25mm, métal argent brossé, émail bleu (#1F4E7A) et blanc, fermoir papillon.</p>
+          <p><strong>Coût unitaire :</strong> 3,50 € (pour 1000+ pièces).</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:15px;">Évolution dans le temps</h3>
+      <table class="bar-table">
+        <thead><tr><th>Année</th><th>Couleur</th><th>Signification</th></tr></thead>
+        <tbody>
+          <tr><td>1 an</td><td>Argent</td><td>Engagement initial</td></tr>
+          <tr><td>3 ans</td><td>Or</td><td>Engagement confirmé</td></tr>
+          <tr><td>5 ans</td><td>Or + étoile</td><td>Engagement exemplaire</td></tr>
+          <tr><td>10 ans</td><td>Or + couronne</td><td>Engagement d'excellence</td></tr>
+          <tr><td>15 ans</td><td>Platine</td><td>Légende vivante</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 6. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Pilote (3 mois)</strong></td><td>1 entreprise, 50 pin's, 1 cérémonie, évaluation</td><td>4 200 €</td></tr>
+          <tr><td><strong>Phase 2 - CDG (12 mois)</strong></td><td>2 000 pin's, déploiement, formation animateurs</td><td>20 000 €</td></tr>
+          <tr><td><strong>Phase 3 - Généralisation (24-36 mois)</strong></td><td>CDG, Orly, province, renouvellement annuel</td><td>35 000 € + 3k€/an</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>59 200 €</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par conducteur engagé : <strong>~12 €</strong> (pin's + cérémonie).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 7. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Nouveaux engagés</span><span class="stat-value">1 000</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Mémorisation règles</span><span class="stat-value">90%</span><span class="stat-desc">vs 35%</span></div>
+        <div class="stat-card"><span class="stat-title">Fierté déclarée</span><span class="stat-value">75%</span><span class="stat-desc">vs 30%</span></div>
+        <div class="stat-card"><span class="stat-title">Turnover à 1 an</span><span class="stat-value">18%</span><span class="stat-desc">vs 25%</span></div>
+      </div>
+    </section>
+
+ 
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 8. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Solennité</strong> - La cérémonie doit être un moment à part</li>
+        <li><strong>Transmission</strong> - Le pin's est remis par un ancien, pas par un manager</li>
+        <li><strong>Cohérence</strong> - Les actes doivent suivre les mots</li>
+        <li><strong>Simplicité</strong> - 5 règles d'or, pas 20</li>
+        <li><strong>Visibilité</strong> - Le pin's se porte, se voit, se reconnaît</li>
+        <li><strong>Pérennité</strong> - Renouvellement annuel, évolution du symbole</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 9. vs Contrat de travail</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Contrat travail</th><th>Contrat confiance</th></tr></thead>
+        <tbody>
+          <tr><td>Nature</td><td>Juridique</td><td>Moral</td></tr>
+          <tr><td>Objectif</td><td>Définir obligations</td><td>Susciter l'engagement</td></tr>
+          <tr><td>Signataires</td><td>Employeur / salarié</td><td>Conducteur / collectif</td></tr>
+          <tr><td>Sanction</td><td>Disciplinaire</td><td>Honneur</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Complémentarité :</strong> Le contrat de travail encadre, le contrat de confiance engage.</p>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

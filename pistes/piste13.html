@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 13 : Management visuel de la sécurité</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-qw-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-qw);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-qw);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-qw);
+      background: var(--c-qw-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-qw-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-qw-bg);
+      color: var(--c-qw);
+      border: 1px solid var(--c-qw-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-qw);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-qw);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-qw);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-qw-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-qw);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-qw-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-qw);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-qw);
+      color: var(--c-qw);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .dashboard-preview {
+      background: #f0f2f7;
+      border: 2px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: 15px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .progress-bar {
+      height: 20px;
+      background: #e2e5ef;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 5px 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--c-qw);
+      width: 60%;
+    }
+    .hero-box {
+      background: var(--c-qw-bg);
+      border: 2px solid var(--c-qw);
+      border-radius: var(--radius);
+      padding: 10px;
+      text-align: center;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+ 
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> La sécurité est invisible. Seuls les accidents, sanctions, pannes sont visibles.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#b91c1c;">0</span><br>visibilité des bons comportements</div>
+          <div><span class="stat-value" style="color:#b91c1c;">22%</span><br>satisfaction reconnaissance</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-qw);"></i> Notre solution : <strong>ce qui est visible est discuté, ce qui est discuté est amélioré, ce qui est amélioré est valorisé.</strong></p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-qw-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Objectifs :</strong> Rendre visible ce qui va bien, donner du sens aux indicateurs, créer de l'émulation, permettre à chacun de situer sa contribution.</p>
+        <p><strong>Trois supports :</strong> Tableau physique (vestiaires), Dashboard numérique (écrans dynamiques), Application mobile (P3).</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chalkboard"></i> 3. Tableau physique - Modèle cible</div>
+      
+      <div class="dashboard-preview">
+        <div style="display: flex; justify-content: space-between;">
+          <span><strong>TABLEAU SÉCURITÉ - ÉQUIPE ALPHA</strong></span>
+          <span>Semaine 8 - 2026</span>
+        </div>
+        
+        <div style="margin: 15px 0;">
+          🟢 <strong>JOURS SANS ACCIDENT</strong><br>
+          <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+          45 jours
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin:10px 0;">
+          <div>Signalements near-miss : 12 ▲+3</div>
+          <div>Conducteurs formés VR : 18/24 ████████░░ 75%</div>
+          <div>Permis à points moyen : 10,2/12</div>
+          <div>Badges "Œil de lynx" : 🦅🦅🦅🦅🦅🦅🦅</div>
+        </div>
+
+        <div style="margin: 15px 0; background: var(--c-surface-alt); padding:10px; border-radius: var(--radius);">
+          <strong>🏆 DÉFI SEMAINE : Opération angle mort</strong><br>
+          Progression : ████████░░ 12/20
+        </div>
+
+        <div class="hero-box">
+          🌟 HÉROS DU MOIS : THOMAS D. !<br>
+          3 signalements, 0 incident - Badge "Œil de lynx"
+        </div>
+      </div>
+
+      <p style="margin-top:15px;"><strong>5 zones fonctionnelles :</strong> Compteur, Indicateurs, Défi, Alertes, Reconnaissance.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-palette"></i> 4. Sémiologie graphique</div>
+      
+      <h3>Code couleur universel</h3>
+      <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom:15px;">
+        <div><span style="color:#22c55e;">🟢 Vert</span> - Objectif atteint, favorable</div>
+        <div><span style="color:#eab308;">🟡 Jaune</span> - Attention, proche objectif</div>
+        <div><span style="color:#f97316;">🟠 Orange</span> - Dégradation, action requise</div>
+        <div><span style="color:#ef4444;">🔴 Rouge</span> - Alerte, situation critique</div>
+      </div>
+
+      <h3>Jauges et pictogrammes</h3>
+      <div style="background: var(--c-surface-alt); padding:15px; border-radius:var(--radius);">
+        <p>Objectif signalements : ████████░░ 12/15 - plus lisible qu'un nombre abstrait</p>
+        <p>⚠️ Accident | 👁️ Near-miss | 🎓 Formation | 🏅 Badge | 🤝 Buddy | 💡 Innovation</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-digital-tiling"></i> 5. Dashboard numérique (écrans dynamiques)</div>
+      
+      <div style="background: #1e293b; color: #e2e8f0; padding:20px; border-radius:var(--radius); font-family: monospace;">
+        📊 SÉCURITÉ EN PISTE - CDG - HANDLER A - 12/02/2026<br>
+        ─────────────────────────────────────<br>
+        JOURS SANS ACCIDENT : 45 🟢 (record 52)<br>
+        <br>
+        ÉQUIPE      SIGNALEMENT  FORMATION  PERMIS<br>
+        ALPHA       12 ▲+3       75% ████   10.2 ████<br>
+        BRAVO       8 ▼-2        62% ███    9.8 ███<br>
+        CHARLIE     15 ▲+5       90% ████   11.2 ████<br>
+        <br>
+        🏆 LEADER : ÉQUIPE CHARLIE - 85 points
+      </div>
+      <p style="margin-top:10px;"><strong>Avantages :</strong> temps réel, données détaillées, interactif.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-clock"></i> 6. Animation et rituels</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Rituel</th><th>Fréquence</th><th>Durée</th></tr></thead>
+        <tbody>
+          <tr><td>Mise à jour tableau</td><td>Hebdomadaire</td><td>15 min</td></tr>
+          <tr><td>Point sécurité équipe</td><td>Hebdomadaire</td><td>10 min</td></tr>
+          <tr><td>Revue indicateurs</td><td>Mensuelle</td><td>30 min</td></tr>
+          <tr><td>Cérémonie héros du mois</td><td>Mensuelle</td><td>15 min</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:15px;">Formation managers (1/2 journée)</h3>
+      <ul style="margin-left:20px;">
+        <li>Pourquoi le management visuel ?</li>
+        <li>Comment mettre à jour le tableau</li>
+        <li>Animation d'un point sécurité</li>
+        <li>Cas pratiques / jeux de rôle</li>
+      </ul>
+      <p><strong>Coût formation :</strong> 12 k€ (conception) + 5 k€/an</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 7. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Pilote (4 mois)</strong></td><td>1 équipe, co-conception, tableau, formation</td><td>4,5 k€</td></tr>
+          <tr><td><strong>Phase 2 - CDG (12 mois)</strong></td><td>50 tableaux, 10 écrans, formation managers</td><td>53 k€</td></tr>
+          <tr><td><strong>Phase 3 - Généralisation (24-36 mois)</strong></td><td>CDG, Orly, province, dashboard temps réel</td><td>140 k€</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>197,5 k€</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par équipe en régime permanent : 300€ (investissement) + 50€/an consommables.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 8. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Connaissance objectifs</span><br/><span class="stat-value">95%</span><span class="stat-desc">vs 35%</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction reconnaissance</span><br/><span class="stat-value">80%</span><span class="stat-desc">vs 22%</span></div>
+        <div class="stat-card"><span class="stat-title">Signalements near-miss</span><br/><span class="stat-value">+100%</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Accidents (effet indirect)</span><br/><span class="stat-value">-15%</span><span class="stat-desc">cible M36</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 9. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Visibilité</strong> - Passage obligatoire</li>
+        <li><strong>Simplicité</strong> - 5 indicateurs max, compréhensibles en 30s</li>
+        <li><strong>Actualisation</strong> - Rituel jour/heure fixe</li>
+        <li><strong>Animation</strong> - Manager formé, relais motivé</li>
+        <li><strong>Équité</strong> - Règles claires et partagées</li>
+        <li><strong>Reconnaissance</strong> - Des gagnants, pas de perdants humiliés</li>
+      </ul>
+    </section>
+
+ 
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 10. Tableau physique vs Écran dynamique</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Tableau physique</th><th>Écran dynamique</th></tr></thead>
+        <tbody>
+          <tr><td>Mise à jour</td><td>Manuelle (hebdo)</td><td>Automatique (temps réel)</td></tr>
+          <tr><td>Données</td><td>Agrégées</td><td>Détaillées, historiques</td></tr>
+          <tr><td>Interactivité</td><td>Non</td><td>Possible (tactile)</td></tr>
+          <tr><td>Coût</td><td>500 €</td><td>1 500 €</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Recommandation :</strong> Mixte (physique pour l'équipe, numérique pour consolidation).</p>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

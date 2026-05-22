@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 18 : Le Miroir à émotions</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-lt-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-lt);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-lt);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-lt);
+      background: var(--c-lt-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-lt-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-lt-bg);
+      color: var(--c-lt);
+      border: 1px solid var(--c-lt-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-lt);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-lt);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-lt);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-lt-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-lt);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-lt-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-lt);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-lt);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-lt);
+      color: var(--c-lt);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-lt);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .mirror-demo {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      margin: 15px 0;
+      border-left: 4px solid var(--c-lt);
+    }
+    .emotion-tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 2px;
+    }
+    .emotion-positive { background: #22c55e; color: white; }
+    .emotion-neutral { background: #94a3b8; color: white; }
+    .emotion-fatigue { background: #eab308; color: black; }
+    .emotion-stress { background: #f97316; color: white; }
+    .emotion-tristesse { background: #3b82f6; color: white; }
+    .emotion-colere { background: #ef4444; color: white; }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> Un conducteur fatigué, stressé ou préoccupé est dangereux. Mais personne ne lui demande comment il va.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#7c3aed;">+40%</span><br>temps réaction fatigue</div>
+          <div><span class="stat-value" style="color:#7c3aed;">0</span><br>outil de détection précoce</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-lt);"></i> Notre solution : un <strong>miroir intelligent et bienveillant</strong> qui aide à prendre conscience de son état émotionnel.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-lt-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Miroirs interactifs dans les vestiaires analysant discrètement les expressions faciales (sans enregistrement) pour proposer des ressources adaptées.</p>
+        <p><strong>Confidentialité absolue :</strong> Capteur 3D (pas de caméra), traitement local, aucun stockage, données agrégées uniquement.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-microchip"></i> 3. Fonctionnement détaillé</div>
+      
+      <h3>Analyse émotionnelle (1 seconde)</h3>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin:10px 0;">
+        <span class="emotion-tag emotion-positive">😊 Positif (≥70%)</span>
+        <span class="emotion-tag emotion-neutral">😐 Neutre (≥60%)</span>
+        <span class="emotion-tag emotion-fatigue">😴 Fatigue (≥65%)</span>
+        <span class="emotion-tag emotion-stress">😟 Stress (≥65%)</span>
+        <span class="emotion-tag emotion-tristesse">😔 Tristesse (≥60%)</span>
+        <span class="emotion-tag emotion-colere">😠 Colère (≥70%)</span>
+      </div>
+
+      <div class="mirror-demo">
+        <strong>📱 SCÉNARIO A - ÉTAT POSITIF</strong><br>
+        [Miroir] Bonjour Thomas ! Vous avez l'air en forme aujourd'hui.<br>
+        [Thomas] Oui, ça va bien !<br>
+        [Miroir] Parfait ! N'oubliez pas votre pause café dans 2 heures. Bonne journée !
+      </div>
+
+      <div class="mirror-demo">
+        <strong>📱 SCÉNARIO B - FATIGUE DÉTECTÉE</strong><br>
+        [Miroir] Je détecte que vous semblez fatigué. Est-ce que ça va ?<br>
+        [Thomas] J'ai juste mal dormi.<br>
+        [Miroir] Voulez-vous : 1. Un café offert ? 2. 5 minutes de pause ? 3. Parler au relais bien-être ?<br>
+        → Code café : ☕ CAFE-8F3Z
+      </div>
+
+      <div class="mirror-demo">
+        <strong>📱 SCÉNARIO C - STRESS DÉTECTÉ</strong><br>
+        [Miroir] Vous semblez stressée. Quelque chose vous préoccupe ?<br>
+        [Sarah] J'ai un contrôle hiérarchique à 10h.<br>
+        [Miroir] Exercice de respiration guidée (1 min) ? Pause calme ? Parler à votre manager ?
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-layer-group"></i> 4. Les 3 niveaux d'intervention</div>
+      
+      <div style="background: var(--c-surface-alt); padding:15px; border-radius:var(--radius); margin:10px 0;">
+        <span class="gain-badge">NIVEAU 1</span> <strong>Prévention immédiate</strong> - Café offert, pause, exercice respiration, étirements
+      </div>
+      <div style="background: var(--c-surface-alt); padding:15px; border-radius:var(--radius); margin:10px 0;">
+        <span class="gain-badge">NIVEAU 2</span> <strong>Accompagnement</strong> - Relais bien-être, manager, services sociaux, méditation
+      </div>
+      <div style="background: var(--c-surface-alt); padding:15px; border-radius:var(--radius); margin:10px 0;">
+        <span class="gain-badge">NIVEAU 3</span> <strong>Alerte silencieuse</strong> - Signalement anonyme au service santé si détection répétée
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 5. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Conception & prototype (6 mois)</strong></td><td>Étude éthique, algorithme IA, 2 prototypes</td><td>81 k€</td></tr>
+          <tr><td><strong>Phase 2 - Pilote terrain (6 mois)</strong></td><td>1 entreprise, 2 miroirs, 200 conducteurs</td><td>25 k€</td></tr>
+          <tr><td><strong>Phase 3 - Déploiement CDG (18 mois)</strong></td><td>20 miroirs, formation relais, communication</td><td>155 k€</td></tr>
+          <tr><td><strong>Phase 4 - Extension (24-36 mois)</strong></td><td>Orly (10), province (20)</td><td>195 k€</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>456 k€</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par miroir (série) : 5 000 € + 500 €/an maintenance.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 6. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Conducteurs soutenus</span><span class="stat-value">75%</span><span class="stat-desc">vs 35%</span></div>
+        <div class="stat-card"><span class="stat-title">Stress perçu</span><span class="stat-value">5,0/10</span><span class="stat-desc">vs 6,2</span></div>
+        <div class="stat-card"><span class="stat-title">Accidents fatigue</span><span class="stat-value">-35%</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Accidents stress</span><span class="stat-value">-30%</span><span class="stat-desc">cible M36</span></div>
+      </div>
+    </section>
+
+ 
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-shield-heart"></i> 7. Éthique et confidentialité</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Absolu</strong> - Aucune image enregistrée, stockée ou transmise</li>
+        <li><strong>Anonymat</strong> - Aucune donnée nominative collectée</li>
+        <li><strong>Volontariat</strong> - Le conducteur est libre d'interagir</li>
+        <li><strong>Transparence</strong> - Fonctionnement expliqué, documenté</li>
+        <li><strong>Bienveillance</strong> - Finalité exclusive d'aide, jamais de sanction</li>
+      </ul>
+      <p><strong>Consultations préalables :</strong> CNIL, CSE, médecine du travail, DPO.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 8. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Confiance</strong> - Prouver qu'aucune donnée nominative n'est collectée</li>
+        <li><strong>Volontariat</strong> - Ne jamais obliger, toujours proposer</li>
+        <li><strong>Bienveillance</strong> - Ton chaleureux, jamais jugeant</li>
+        <li><strong>Simplicité</strong> - Interaction < 30 secondes</li>
+        <li><strong>Utilité perçue</strong> - Propositions concrètes et immédiates</li>
+        <li><strong>Discrétion</strong> - Espace confidentiel</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 9. vs Approches existantes</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Approche</th><th>Objet</th><th>Limite</th></tr></thead>
+        <tbody>
+          <tr><td>Médecine du travail</td><td>Visite périodique</td><td>Pas de suivi continu</td></tr>
+          <tr><td>DPT (dépistage)</td><td>Alcool/stupéfiants</td><td>Répressif</td></tr>
+          <tr><td>Enquête satisfaction</td><td>Annuelle</td><td>Pas d'action immédiate</td></tr>
+          <tr><td><strong>Miroir à émotions</strong></td><td>Santé émotionnelle</td><td>Prévention temps réel</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 22 : Le débrief à 360°</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-qw-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-qw);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-qw);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-qw);
+      background: var(--c-qw-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-qw-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-qw-bg);
+      color: var(--c-qw);
+      border: 1px solid var(--c-qw-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-qw);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-qw);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-qw);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-qw-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-qw);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-qw-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-qw);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-qw);
+      color: var(--c-qw);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .timeline-phase {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .timeline-marker {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--c-qw);
+      margin-right: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+ 
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> Après un incident, le processus est descendant, cloisonné, tardif. Le conducteur se sent jugé, les solutions sont hors-sol.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#059669;">8 jours</span><br>délai moyen analyse</div>
+          <div><span class="stat-value" style="color:#059669;">40%</span><br>taux mise en œuvre actions</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-qw);"></i> Notre solution : le <strong>débrief à 360°</strong> dans les 48h, avec tous les acteurs.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-qw-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Réunion dans les 48h après un incident, rassemblant tous les acteurs concernés, animée par un facilitateur neutre.</p>
+        <p><strong>Objectif :</strong> Comprendre collectivement, identifier les causes systémiques, co-construire des solutions - sans recherche de coupable.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-clipboard-list"></i> 3. Méthodologie du débrief</div>
+      
+      <h3>Règles d'or</h3>
+      <ul style="margin-left:20px;">
+        <li>🔹 Neutralité absolue de l'animateur</li>
+        <li>🔹 Bienveillance - pas de jugement</li>
+        <li>🔹 Confidentialité - ce qui se dit reste dans la salle</li>
+        <li>🔹 Non-sanction - aucune conséquence disciplinaire</li>
+        <li>🔹 Orientation solutions</li>
+      </ul>
+
+      <h3 style="margin-top:15px;">Déroulé type (2h)</h3>
+      <div class="timeline-phase"><span class="timeline-marker"></span> <strong>10 min</strong> - Introduction (règles, objectifs)</div>
+      <div class="timeline-phase"><span class="timeline-marker"></span> <strong>30 min</strong> - Reconstitution (tour de table)</div>
+      <div class="timeline-phase"><span class="timeline-marker"></span> <strong>20 min</strong> - Chronologie commune</div>
+      <div class="timeline-phase"><span class="timeline-marker"></span> <strong>30 min</strong> - Analyse des causes (grille 5M)</div>
+      <div class="timeline-phase"><span class="timeline-marker"></span> <strong>20 min</strong> - Recherche de solutions</div>
+      <div class="timeline-phase"><span class="timeline-marker"></span> <strong>10 min</strong> - Conclusion, engagements</div>
+
+      <h3 style="margin-top:15px;">Grille d'analyse 5M</h3>
+      <table class="bar-table">
+        <thead><tr><th>Facteur</th><th>Questions</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Milieu</strong></td><td>Météo ? Visibilité ? État piste ? Encombrement ?</td></tr>
+          <tr><td><strong>Matériel</strong></td><td>État engin ? Équipements sécurité ? Maintenance ?</td></tr>
+          <tr><td><strong>Méthode</strong></td><td>Procédure existante, adaptée, connue, respectée ?</td></tr>
+          <tr><td><strong>Main-d'œuvre</strong></td><td>Formation ? Expérience ? Fatigue ? Stress ?</td></tr>
+          <tr><td><strong>Management</strong></td><td>Pression temporelle ? Encadrement ? Consignes ?</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-user-tie"></i> 4. Rôle et formation des animateurs</div>
+      
+      <p><strong>Profil :</strong> Indépendant (pas le manager direct), formé aux techniques d'animation, légitime (ancien conducteur idéal).</p>
+      
+      <h3>Formation 2 jours</h3>
+      <table class="bar-table">
+        <thead><tr><th>Module</th><th>Contenu</th><th>Durée</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Posture et éthique (neutralité, confidentialité)</td><td>4h</td></tr>
+          <tr><td>2</td><td>Techniques d'animation (tour de table, gestion tensions)</td><td>4h</td></tr>
+          <tr><td>3</td><td>Grilles d'analyse (5M, arbre des causes)</td><td>3h</td></tr>
+          <tr><td>4</td><td>Jeux de rôle (simulations)</td><td>4h</td></tr>
+          <tr><td>5</td><td>Outils et reporting</td><td>1h</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Coût :</strong> 1 200 € par animateur → objectif 10 animateurs = 12 000 €</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-exclamation-triangle"></i> 5. Types d'incidents concernés</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Niveau</th><th>Type d'événement</th><th>Débrief</th></tr></thead>
+        <tbody>
+          <tr><td><span class="gain-badge">🔴 Grave</span></td><td>Accident corporel / Collision avion</td><td>Systématique (animateur expert)</td></tr>
+          <tr><td><span class="gain-badge">🟠 Significatif</span></td><td>Accident matériel / Near-miss grave</td><td>Systématique (animateur)</td></tr>
+          <tr><td><span class="gain-badge">🟡 Mineur</span></td><td>Incident sans dommage</td><td>Au choix (manager formé)</td></tr>
+          <tr><td><span class="gain-badge">🟢 Bénin</span></td><td>Écart de procédure</td><td>Ponctuel (auto-débrief équipe)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 6. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Pilote (6 mois)</strong></td><td>3 animateurs, 5 incidents, évaluation</td><td>8 600 €</td></tr>
+          <tr><td><strong>Phase 2 - CDG (12 mois)</strong></td><td>+7 animateurs, déploiement 5 entreprises, outil REX</td><td>30 400 €</td></tr>
+          <tr><td><strong>Phase 3 - Généralisation (24-36 mois)</strong></td><td>Orly, province, intégration CSCE</td><td>36 800 €</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>75 800 €</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par débrief (régime permanent) : <strong>~500 €</strong></p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 7. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Incidents avec débrief</span><span class="stat-value">90%</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Délai analyse</span><span class="stat-value">1 jour</span><span class="stat-desc">vs 8 jours</span></div>
+        <div class="stat-card"><span class="stat-title">Taux mise en œuvre</span><span class="stat-value">85%</span><span class="stat-desc">vs 40%</span></div>
+        <div class="stat-card"><span class="stat-title">Récurrence incidents</span><span class="stat-value">-50%</span><span class="stat-desc">cible M36</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 8. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Séparation stricte</strong> - Le débrief n'est PAS une procédure disciplinaire</li>
+        <li><strong>Animateur neutre</strong> - Pas le manager, pas l'enquêteur</li>
+        <li><strong>Confidentialité</strong> - Ce qui se dit au débrief reste au débrief</li>
+        <li><strong>Rapidité</strong> - Dans les 48h, mémoire fraîche</li>
+        <li><strong>Suivi</strong> - Chaque débrief donne lieu à des actions tracées</li>
+        <li><strong>Retour</strong> - Les participants savent ce que leurs idées sont devenues</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 9. vs Enquête classique</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Enquête classique</th><th>Débrief 360°</th></tr></thead>
+        <tbody>
+          <tr><td>Objectif</td><td>Sanction / Conformité</td><td>Apprentissage</td></tr>
+          <tr><td>Délai</td><td>Jours à semaines</td><td>48h</td></tr>
+          <tr><td>Participants</td><td>Enquêteur + conducteur</td><td>Tous les acteurs</td></tr>
+          <tr><td>Méthode</td><td>Interrogatoire</td><td>Échange collectif</td></tr>
+          <tr><td>Résultat</td><td>Rapport + sanction</td><td>Plan d'actions + capitalisation</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Complémentarité :</strong> Les deux sont nécessaires - l'enquête traite de la responsabilité, le débrief traite de l'apprentissage.</p>
+    </section>
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

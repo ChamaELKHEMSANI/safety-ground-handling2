@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 24 : Le parking à histoires</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-cp-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-cp);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-cp);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-cp);
+      background: var(--c-cp-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-cp-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-cp-bg);
+      color: var(--c-cp);
+      border: 1px solid var(--c-cp-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-cp);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-cp);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-cp);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-cp-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-cp);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-cp-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-cp);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-cp);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-cp);
+      color: var(--c-cp);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-cp);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .memorial-panel {
+      background: #2d3e50;
+      color: #e0e7ff;
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      margin: 20px 0;
+      border-left: 8px solid #f97316;
+      box-shadow: var(--shadow-lg);
+      font-family: 'DM Sans', sans-serif;
+    }
+    .lesson-badge {
+      background: var(--c-cp);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      font-size: 0.8rem;
+      margin: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> Les accidents se concentrent dans des hotspots, mais ces lieux n'ont pas de mémoire. Les nouveaux apprennent trop tard, l'histoire s'efface.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#2563eb;">15</span><br>accidents Parking T2E</div>
+          <div><span class="stat-value" style="color:#2563eb;">0</span><br>mémoire des lieux</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-cp);"></i> Notre solution : des <strong>panneaux mémoriels</strong> qui racontent les accidents et transmettent les leçons.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-cp-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Installer aux abords des hotspots des panneaux racontant un accident réel, avec date, causes, conséquences et leçons. QR code pour approfondir.</p>
+        <p><strong>3 niveaux :</strong> Panneau (30s) → QR code (3 min) → Application Safety Hub (10 min).</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-signs-post"></i> 3. Le panneau mémoriel - Modèle cible</div>
+      
+      <div class="memorial-panel">
+        <div style="display: flex; justify-content: space-between;">
+          <span style="font-weight:700;">⚠️ ZONE MÉMOIRE - HOTSPOT</span>
+          <span>15 JANVIER 2025 - 08h47</span>
+        </div>
+        <div style="margin:15px 0;">
+          <p><strong>CE JOUR-LÀ, UN PUSH A HEURTÉ UN LOADER EN MANŒUVRE DE RECUL.</strong></p>
+          <p>CAUSE : Vitesse excessive (18 km/h au lieu de 10) - Angle mort non vérifié</p>
+          <p>CONSÉQUENCES : Conducteur blessé (6 mois ITT) - Avion immobilisé 4h - 180 000 €</p>
+        </div>
+        <div>
+          <span class="lesson-badge">✔ RALENTISSEZ (10 KM/H MAX)</span>
+          <span class="lesson-badge">✔ VÉRIFIEZ VOS ANGLES MORTS</span>
+          <span class="lesson-badge">✔ PRENEZ VOTRE TEMPS</span>
+        </div>
+        <div style="margin-top:15px; text-align:right;">
+          [📱 QR CODE] Scannez pour en savoir plus
+        </div>
+      </div>
+
+      <p><strong>Format :</strong> Panneau aluminium 60x80 cm, rétroéclairé LED, hauteur 1,50 m.<br>
+      <strong>Coût unitaire :</strong> 850 € (panneau + structure + installation).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-layer-group"></i> 4. Les 3 niveaux d'information</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Niveau</th><th>Support</th><th>Durée</th><th>Contenu</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Niveau 1</strong></td><td>Panneau</td><td>30 s</td><td>Date, causes, conséquences, 3 règles d'or</td></tr>
+          <tr><td><strong>Niveau 2</strong></td><td>QR code</td><td>3 min</td><td>Récit détaillé, photos (anonymisées), témoignage audio, analyse 5M</td></tr>
+          <tr><td><strong>Niveau 3</strong></td><td>Appli Safety Hub</td><td>10 min</td><td>Module e-learning, quiz, engagement personnel</td></tr>
+        </tbody>
+      </table>
+      <p>Coût production par histoire (niveau 2) : <strong>500 €</strong> (rédaction, photos, audio).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-list-check"></i> 5. Sélection des histoires</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Pondération</th></tr></thead>
+        <tbody>
+          <tr><td>Gravité de l'accident</td><td>40%</td></tr>
+          <tr><td>Valeur pédagogique</td><td>30%</td></tr>
+          <tr><td>Représentativité du risque</td><td>20%</td></tr>
+          <tr><td>Diversité des scénarios</td><td>10%</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:15px;">Calendrier de déploiement</h3>
+      <table class="bar-table">
+        <thead><tr><th>Année</th><th>Thématique</th><th>Zones ciblées</th></tr></thead>
+        <tbody>
+          <tr><td>2026</td><td>Collisions PUSH/LOADER</td><td>Parking T2E, T3</td></tr>
+          <tr><td>2027</td><td>Piétons / Co-activité</td><td>Catering, Fret Nord</td></tr>
+          <tr><td>2028</td><td>Recul / Angles morts</td><td>Zones stationnement</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 6. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Pilote (6 mois)</strong></td><td>3 panneaux (T2E, Fret, Catering), récits, QR codes, évaluation</td><td>13 050 €</td></tr>
+          <tr><td><strong>Phase 2 - CDG (12 mois)</strong></td><td>10 panneaux supplémentaires, 13 au total</td><td>32 500 €</td></tr>
+          <tr><td><strong>Phase 3 - Généralisation (24-36 mois)</strong></td><td>Orly (5), province (10), renouvellement</td><td>70 000 € + 5k€/an</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>115 550 €</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par panneau installé (série) : <strong>~1 500 €</strong> (fabrication + installation + contenu).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 7. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Panneaux installés</span><span class="stat-value">28</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Connaissance hotspots</span><span class="stat-value">85%</span><span class="stat-desc">vs 35%</span></div>
+        <div class="stat-card"><span class="stat-title">Mémorisation accidents</span><span class="stat-value">75%</span><span class="stat-desc">vs 20%</span></div>
+        <div class="stat-card"><span class="stat-title">Accidents zones équipées</span><span class="stat-value">-30%</span><span class="stat-desc">cible M36</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 8. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Authenticité</strong> - histoires vraies, pas des fictions</li>
+        <li><strong>Sobriété</strong> - pas de pathos, pas de sensationnalisme</li>
+        <li><strong>Utilité</strong> - une leçon concrète à retenir</li>
+        <li><strong>Visibilité</strong> - panneau visible depuis l'engin</li>
+        <li><strong>Évolutivité</strong> - QR code = contenu vivant</li>
+        <li><strong>Acceptation</strong> - concertation avec les équipes</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 9. vs Signalétique classique</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Panneau classique</th><th>Panneau mémoire</th></tr></thead>
+        <tbody>
+          <tr><td>Objectif</td><td>Informer</td><td>Émouvoir</td></tr>
+          <tr><td>Contenu</td><td>Règle</td><td>Histoire</td></tr>
+          <tr><td>Ton</td><td>Impératif</td><td>Narratif</td></tr>
+          <tr><td>Impact</td><td>Cognitif</td><td>Émotionnel</td></tr>
+          <tr><td>Mémorisation</td><td>30%</td><td>80%</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Complémentarité :</strong> Le panneau mémoire ne remplace pas la signalétique, il la renforce.</p>
+    </section>
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

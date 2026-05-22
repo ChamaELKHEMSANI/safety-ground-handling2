@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 14 : Sécurité collaborative inter-entreprises</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-st-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-st);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-st);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-st);
+      background: var(--c-st-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-st-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-st-bg);
+      color: var(--c-st);
+      border: 1px solid var(--c-st-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-st);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-st);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-st);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-st-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-st);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-st-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-st);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-st);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-st);
+      color: var(--c-st);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .ficha {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 15px;
+      margin: 10px 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .ficha-header {
+      font-weight: 700;
+      color: var(--c-st);
+      margin-bottom: 10px;
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-st);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #fff1f0;">
+        <p><strong>Constat :</strong> 20+ entreprises de handling sur CDG, chacune dans son silo.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#b91c1c;">×20</span><br>bonnes pratiques confinées</div>
+          <div><span class="stat-value" style="color:#b91c1c;">537k€</span><br>économies potentielles achats groupés</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-st);"></i> Notre solution : créer une <strong>communauté de pratique</strong> transverse pour mutualiser l'intelligence collective.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-st-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Objectifs :</strong></p>
+        <ul style="margin-left:20px;">
+          <li>Partager les retours d'expérience</li>
+          <li>Mutualiser les bonnes pratiques</li>
+          <li>Harmoniser les standards</li>
+          <li>Mutualiser achats et formations</li>
+          <li>Créer une culture sécurité commune</li>
+        </ul>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-people-group"></i> 3. Axe 1 - Rencontres et échanges</div>
+      
+      <h3>Réseau sécurité trimestriel</h3>
+      <ul style="margin-left:20px;">
+        <li>4x/an, 2h30, 1 resp. sécurité + 1 conducteur par entreprise</li>
+        <li>Ordre du jour : tour de table, retour d'expérience, bonne pratique, atelier, actions communes</li>
+        <li>Coût annuel : 800 €</li>
+      </ul>
+
+      <h3 style="margin-top:15px;">Visites croisées terrain</h3>
+      <ul style="margin-left:20px;">
+        <li>1 visite par entreprise / an, 2h, grille d'observation</li>
+        <li>Coût : 0 € (temps interne)</li>
+      </ul>
+
+      <h3 style="margin-top:15px;">Ateliers thématiques</h3>
+      <ul style="margin-left:20px;">
+        <li>Angles morts, fatigue, rétrofit, VR, indicateurs</li>
+        <li>Coût annuel (4 ateliers) : 4 800 €</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-toolbox"></i> 4. Axe 2 - Outils partagés</div>
+      
+      <div class="ficha">
+        <div class="ficha-header">📋 Base REX partagée</div>
+        <div>Fiches anonymisées : contexte, causes, actions correctives, enseignements. Intégrée à l'appli Safety Hub (P3). Coût dev : 15 k€</div>
+      </div>
+
+      <div class="ficha">
+        <div class="ficha-header">📚 Bibliothèque bonnes pratiques</div>
+        <div>Catalogue d'initiatives innovantes, 1 page par fiche. Classement par catégories.</div>
+      </div>
+
+      <div class="ficha">
+        <div class="ficha-header">📞 Annuaire des compétences</div>
+        <div>Qui fait quoi ? Formateurs, experts, référents. Coût dev : 3 k€</div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-handshake"></i> 5. Axe 3 - Projets communs</div>
+      
+      <h3>Achats groupés - Économies potentielles</h3>
+      <table class="bar-table">
+        <thead><tr><th>Équipement</th><th>Volume</th><th>Économie</th></tr></thead>
+        <tbody>
+          <tr><td>Kit caméra 360°</td><td>1 000 engins</td><td>300 k€</td></tr>
+          <tr><td>Détecteurs proximité</td><td>1 000 engins</td><td>180 k€</td></tr>
+          <tr><td>Éthylotests portables</td><td>400 engins</td><td>32 k€</td></tr>
+          <tr><td>Casques VR</td><td>50 casques</td><td>10 k€</td></tr>
+          <tr><td><strong>TOTAL</strong></td><td></td><td><strong>537 k€</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:15px;">Formations mutualisées</h3>
+      <table class="bar-table">
+        <thead><tr><th>Formation</th><th>Coût interne</th><th>Coût mutualisé</th></tr></thead>
+        <tbody>
+          <tr><td>Permis T</td><td>1 200 €</td><td>800 € (-33%)</td></tr>
+          <tr><td>Conduite PUSH</td><td>1 500 €</td><td>1 000 € (-33%)</td></tr>
+          <tr><td>Formation formateurs</td><td>3 000 €</td><td>2 000 € (-33%)</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:15px;">Standards communs</h3>
+      <p>Signalétique, procédure pré-op, code couleur risques, définition "accident grave".</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-trophy"></i> 6. Axe 4 - Reconnaissance collective</div>
+      
+      <div class="card-grid">
+        <div class="stat-card">
+          <span class="stat-title">Trophée sécurité inter-entreprises</span>
+          Annuel, 5 critères (réduction accidents, signalements, électrification, innovations, participation)
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Prix de l'innovation</span>
+          4 catégories, 2 000 € + trophée, jury CSCA/CSAE/ENAC/conducteurs
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Label "Plateforme collaborative"</span>
+          Distinction spéciale du label P9 pour entreprises engagées
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 7. Budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Poste</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td>Développement base REX</td><td>15 k€</td></tr>
+          <tr><td>Développement annuaire compétences</td><td>3 k€</td></tr>
+          <tr><td>Kit de lancement</td><td>5 k€</td></tr>
+          <tr><td><strong>INVESTISSEMENT INITIAL</strong></td><td><strong>23 k€</strong></td></tr>
+          <tr><td>Rencontres + ateliers</td><td>5 600 €/an</td></tr>
+          <tr><td>Coordination + trophées + prix</td><td>22 000 €/an</td></tr>
+          <tr><td><strong>TOTAL ANNUEL</strong></td><td><strong>27 600 €/an</strong></td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td><strong>105 800 €</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par entreprise (20) : Année 1 : 2 530 €, Années 2-3 : 1 380 €/an.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 8. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Fiches REX partagées</span><br/><span class="stat-value">100</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Bonnes pratiques</span><br/><span class="stat-value">80</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Achats groupés</span><br/><span class="stat-value">5</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Économies réalisées</span><br/><span class="stat-value">500 k€</span><span class="stat-desc">cible M36</span></div>
+      </div>
+    </section>
+
+ 
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 9. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Engagement direction</strong> - objectifs des responsables sécurité</li>
+        <li><strong>Confidentialité</strong> - charte de non-divulgation</li>
+        <li><strong>Utilité perçue</strong> - sujets concrets, pas de réunions "gadget"</li>
+        <li><strong>Bienveillance</strong> - zéro jugement, zéro hiérarchie</li>
+        <li><strong>Équité</strong> - petits et grands handlers sur un pied d'égalité</li>
+      </ul>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

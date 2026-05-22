@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDG 2026 - Piste 21 : Parrainage d'engin</title>
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+  <style>
+    :root {
+      --c-bg: #f0f2f7;
+      --c-surface: #ffffff;
+      --c-surface-alt: #f7f8fc;
+      --c-border: #e2e5ef;
+      --c-text: #0d1117;
+      --c-text-muted: #6b7280;
+      --c-text-light: #9ca3af;
+      --c-primary: #1a56db;
+      --c-primary-light: #e8effe;
+      --c-primary-hover: #1447bc;
+      --c-star: #f59e0b;
+      --c-star-empty: #dde0eb;
+      --c-qw: #059669;
+      --c-qw-bg: #ecfdf5;
+      --c-qw-border: #6ee7b7;
+      --c-st: #d97706;
+      --c-st-bg: #fffbeb;
+      --c-st-border: #fcd34d;
+      --c-cp: #2563eb;
+      --c-cp-bg: #eff6ff;
+      --c-cp-border: #93c5fd;
+      --c-lt: #7c3aed;
+      --c-lt-bg: #f5f3ff;
+      --c-lt-border: #c4b5fd;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 20px rgba(0,0,0,.12);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+    .document-container {
+      margin: 0 auto;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+    .doc-header {
+      background: linear-gradient(135deg, var(--c-qw-bg) 0%, white 80%);
+      padding: 30px 30px 20px;
+      border-bottom: 2px solid var(--c-qw);
+    }
+    .doc-numero {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-qw);
+      margin-bottom: 8px;
+    }
+    .doc-titre {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .doc-slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--c-qw);
+      background: var(--c-qw-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--c-qw-border);
+      margin-bottom: 15px;
+    }
+    .badge-priorite {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-qw-bg);
+      color: var(--c-qw);
+      border: 1px solid var(--c-qw-border);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .doc-body {
+      padding: 30px;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--c-qw);
+      border-bottom: 2px solid var(--c-border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .stat-card {
+      background: var(--c-surface-alt);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--c-qw);
+      box-shadow: var(--shadow);
+    }
+    .stat-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-muted);
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-qw);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--c-text);
+    }
+    .bar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bar-table th {
+      text-align: left;
+      background: var(--c-qw-bg);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--c-qw);
+    }
+    .bar-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gain-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--c-qw-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-qw);
+    }
+    .phase-timeline {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .phase-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--c-surface-alt);
+      border-left: 5px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .phase-titre {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .btn-retour {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 30px 30px;
+    }
+    .btn-retour:hover {
+      background: var(--c-surface-alt);
+      border-color: var(--c-qw);
+      color: var(--c-qw);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 25px 0;
+    }
+    .alert-box {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+    }
+    .synergy-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      list-style: none;
+    }
+    .synergy-list li {
+      background: var(--c-surface-alt);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid var(--c-border);
+    }
+    .testimonial {
+      background: var(--c-surface-alt);
+      border-left: 4px solid var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .engin-card {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: var(--radius);
+      margin: 15px 0;
+      border-left: 4px solid var(--c-qw);
+      font-family: 'DM Sans', sans-serif;
+    }
+    .charter-box {
+      background: var(--c-surface-alt);
+      border: 2px dashed var(--c-qw);
+      padding: 15px;
+      border-radius: var(--radius);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+
+  <div class="doc-body">
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problématique adressée</div>
+      <div class="stat-card" style="background: #f3e8ff;">
+        <p><strong>Constat :</strong> Les engins de piste sont des outils anonymes et interchangeables. Aucun lien avec le conducteur, donc aucun soin particulier.</p>
+        <div class="card-grid" style="margin-top:15px;">
+          <div><span class="stat-value" style="color:#059669;">0</span><br>lien conducteur-engin</div>
+          <div><span class="stat-value" style="color:#059669;">3,2/5</span><br>note de propreté</div>
+        </div>
+        <p style="margin-top:15px;"><i class="fa-solid fa-arrow-right" style="color:var(--c-qw);"></i> Notre solution : le <strong>parrainage d'engin</strong> - un conducteur référent pour chaque engin.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-cubes"></i> 2. Concept d'ensemble</div>
+      <div style="background: var(--c-qw-bg); padding: 20px; border-radius: var(--radius);">
+        <p><strong>Principe :</strong> Chaque engin est confié en priorité à un conducteur référent (parrain) qui donne son prénom, assure sa propreté, remonte les anomalies et forme les utilisateurs occasionnels.</p>
+        <p><strong>Objectifs :</strong> Responsabiliser, créer de la fierté, améliorer l'entretien, détecter précocement les défauts.</p>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-clipboard-list"></i> 3. Modalités</div>
+      
+      <h3>Critères d'attribution</h3>
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Condition</th></tr></thead>
+        <tbody>
+          <tr><td>Volontariat</td><td>Oui</td></tr>
+          <tr><td>Ancienneté</td><td>> 1 an sur catégorie</td></tr>
+          <tr><td>Discipline</td><td>0 accident responsable sur 12 mois</td></tr>
+          <tr><td>Permis à points</td><td>Solde > 10/12 (si actif)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="engin-card" style="margin-top:15px;">
+        <strong>🚛 ENGIN N°247 - PUSH</strong><br>
+        ICI COMMENCE LE TRAVAIL DE THOMAS D.<br>
+        Parrain depuis 15/03/2026 • Propreté ⭐⭐⭐⭐⭐ 4,8/5
+      </div>
+
+      <div class="charter-box" style="margin-top:15px;">
+        <strong>📜 CHARTE DU PARRAIN</strong><br>
+        1. Maintenir mon engin propre (nettoyage hebdo/mensuel)<br>
+        2. Être exemplaire au volant (zéro accident)<br>
+        3. Transmettre aux autres utilisateurs<br>
+        4. Être fier de mon engin
+      </div>
+
+      <p><strong>Privilèges :</strong> Priorité d'usage, personnalisation (housse siège), visibilité du prénom, statut valorisé.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-tag"></i> 4. Signalétique</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Équipement</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td>Adhésif de porte (30x15 cm)</td><td>15 €</td></tr>
+          <tr><td>Plaque tableau de bord gravée</td><td>12 €</td></tr>
+          <tr><td>Housse de siège personnalisée</td><td>80 €</td></tr>
+          <tr><td><strong>Kit complet</strong></td><td><strong>107 €</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-trophy"></i> 5. Concours de l'engin le plus propre</div>
+      
+      <p><strong>2 fois par an</strong> - Jury mixte (managers, conducteurs, maintenance).</p>
+      
+      <table class="bar-table">
+        <thead><tr><th>Critère</th><th>Pondération</th></tr></thead>
+        <tbody>
+          <tr><td>Propreté intérieure</td><td>25%</td></tr>
+          <tr><td>Propreté extérieure</td><td>25%</td></tr>
+          <tr><td>État général (pas de dégradation)</td><td>30%</td></tr>
+          <tr><td>Détails / Fierté</td><td>20%</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>Récompenses :</strong> 1er : 300€ + place parking premium, 2e : 150€, 3e : 100€. Coût par concours : 1 500 €.</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-coins"></i> 6. Déploiement et budget</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Phase</th><th>Description</th><th>Coût</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 - Pilote (6 mois)</strong></td><td>20 engins, signalétique, 1 concours, évaluation</td><td>8 100 €</td></tr>
+          <tr><td><strong>Phase 2 - Déploiement CDG (12 mois)</strong></td><td>300 engins, 2 concours, communication</td><td>21 500 €</td></tr>
+          <tr><td><strong>Phase 3 - Généralisation (24-36 mois)</strong></td><td>1 000 engins, Orly, province</td><td>50 000 € + 3k€/an</td></tr>
+          <tr><td><strong>TOTAL 3 ANS</strong></td><td></td><td><strong>79 600 €</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Coût par engin parrainé : <strong>30 €</strong> (signalétique + suivi).</p>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-chart-line"></i> 7. Bénéfices attendus</div>
+      
+      <div class="card-grid">
+        <div class="stat-card"><span class="stat-title">Engins parrainés</span><span class="stat-value">1 000</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Note propreté</span><span class="stat-value">4,5/5</span><span class="stat-desc">vs 3,2</span></div>
+        <div class="stat-card"><span class="stat-title">Dégradations</span><span class="stat-value">-35%</span><span class="stat-desc">cible M36</span></div>
+        <div class="stat-card"><span class="stat-title">Satisfaction fierté</span><span class="stat-value">75%</span><span class="stat-desc">vs 30%</span></div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-star"></i> 8. Conditions de réussite</div>
+      
+      <ul style="margin-left:20px;">
+        <li><strong>Volontariat</strong> - Personne n'est obligé</li>
+        <li><strong>Visibilité</strong> - Le nom doit être vu et valorisé</li>
+        <li><strong>Équité</strong> - Solutions pour conducteurs sans affectation</li>
+        <li><strong>Simplicité</strong> - Kit signalétique prêt à poser</li>
+        <li><strong>Fierté</strong> - Concours, reconnaissance, petits privilèges</li>
+      </ul>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-title"><i class="fa-solid fa-scale-balanced"></i> 9. vs Approches existantes</div>
+      
+      <table class="bar-table">
+        <thead><tr><th>Approche</th><th>Limite</th><th>Complémentarité</th></tr></thead>
+        <tbody>
+          <tr><td>Affectation informelle</td><td>Pas de reconnaissance</td><td>Formalise et valorise</td></tr>
+          <tr><td>Check-list pré-post</td><td>Contrainte</td><td>Donne du sens</td></tr>
+          <tr><td>Maintenance préventive</td><td>Technique, froide</td><td>Humanise</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+
+  </div> 
+</div> 
+
+
+</body>
+</html>

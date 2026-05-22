@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 14 - Sécurité Collaborative Inter-entreprises</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-collab {
+            background: #05966920;
+            color: #059669;
+            border: 1px solid #059669;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-network {
+            background: #7c3aed20;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .network-model {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .network-level {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 8px;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+        .network-level.base { background: #e8effe; }
+        .network-level.app { background: #d1fae5; }
+        .network-level.decision { background: #fef3c7; }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-handshake"></i>
+            Piste n°14 : Sécurité Collaborative Inter-entreprises
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">REX partagé / Groupes de travail / Plateformes</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-people-arrows" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Sécurité collaborative :</strong> Mutualiser les retours d'expérience, les bonnes pratiques et les innovations entre entreprises d'un même secteur pour élever le niveau de sécurité de toute la plateforme.</p>
+                </div>
+            </div>
+            <div style="margin-top: 10px; font-style: italic; color: var(--c-text-muted);">
+                <i class="fa-solid fa-quote-left"></i> "Stronger Together" — AFPM
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-industry"></i> Programmes collaboratifs industriels (États-Unis)</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-oil-well"></i> AFPM <span class="badge-org">American Fuel & Petrochemical Manufacturers</span></h4>
+                <span class="badge-pays">États-Unis</span>
+                
+                <p><strong>Advancing Process Safety (APS)</strong> - Programme collaboratif majeur depuis 2012.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>7 réseaux régionaux</strong> d'échange pour professionnels terrain</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Sous-groupes spécialisés : identification dangers, intégrité mécanique, performance humaine</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Centaines de documents</strong> partagés : bulletins sécurité, compilations d'incidents, fiches bonnes pratiques</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Webinaires mensuels + conférence annuelle</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Approche :</strong> Structures régionales (proximité terrain) + groupes nationaux (expertise) = communauté de pratique complète.
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> La sécurité est la priorité absolue. Cet engagement est renforcé par la collaboration entre raffineurs et pétrochimistes américains.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.afpm.org/newsroom/blog/stronger-together-how-collaboration-enhances-safety" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> AFPM.org</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-certificate"></i> ASSP & Avetta <span class="badge-org">Standards-Based User Groups</span></h4>
+                <span class="badge-pays">États-Unis</span>
+                
+                <p><strong>SBUGs (Standards-Based User Groups)</strong> - Lancés janvier 2026 pour transformer la conformité en excellence mesurable.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Groupes collaboratifs pour traduire standards complexes en systèmes reproductibles</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Intégration normes <strong>ANSI/ASSP Z10</strong> (management) et <strong>Z16</strong> (investigation) dans un <strong>"Indice de Maturité Culturelle"</strong></li>
+                    <li><i class="fa-solid fa-check-circle"></i> Transformation perceptions qualitatives → résultats quantitatifs</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Boucle de rétroaction pour améliorer les futurs standards</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> C'est la preuve que les standards sont des outils vivants qui façonnent des entreprises plus sûres et plus intelligentes.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.assp.org/news-and-articles/sbugs-avetta-collaboration" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> ASSP.org</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-computer"></i> Plateformes numériques collaboratives</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-cloud"></i> SafewayNT (Chine) <span class="badge-org">Plateforme collaborative</span></h4>
+            
+            <div class="network-model">
+                <div class="network-level base"><strong>Base</strong><br>Partage docs</div>
+                <div class="network-level app"><strong>Applicatif</strong><br>Ordonnancement intelligent</div>
+                <div class="network-level decision"><strong>Décisionnel</strong><br>Data cockpit</div>
+            </div>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <p><strong>Caractéristiques :</strong></p>
+                    <ul>
+                        <li><strong>"Zone de collaboration sandbox"</strong> avec autorisations graduées</li>
+                        <li><strong>Tableau de bord de santé collaborative</strong> avec 15 indicateurs (temps réponse, taux résolution)</li>
+                        <li>Méthode de révision agile avec analyse <strong>5WHY</strong> des goulets</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Résultats :</strong></p>
+                    <ul>
+                        <li><strong>-42%</strong> écarts de progression entre services (équipementier auto)</li>
+                        <li><strong>-35%</strong> cycle test nouveaux produits, taux rebut → <strong>0,7%</strong></li>
+                        <li><strong>+300%</strong> propositions d'amélioration après "journées d'échange de rôles"</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Objectif :</strong> Construire un "écosystème de collaboration où les objectifs sont alignés, les données sont partagées, et les actions sont synchronisées".
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.safewaynt.com/news/2025052216242611090.html" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> SafewayNT</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-plane"></i> Applications aéroportuaires</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-suitcase"></i> Swissport <span class="badge-org">Aurrigo International</span></h4>
+                <span class="badge-pays">Suisse / Royaume-Uni</span>
+                
+                <p><strong>Partenariat stratégique pour l'innovation en handling</strong> (mai 2025).</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Plateforme de simulation <strong>Auto-Sim</strong> pour modéliser opérations</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Essai <strong>Auto-DollyTug</strong> (véhicule autonome électrique) avec détection obstacles 360°</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Accès anticipé au portefeuille autonome d'Aurrigo</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Ce partenariat marque une étape clé dans notre parcours d'innovation. Il souligne notre engagement commun en faveur de la collaboration à long terme.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.autonomousvehicleinternational.com/news/off-highway/swissport-and-aurrigo-to-test-autonomous-ground-handling-at-zurich-airport.html" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Autonomous Vehicle Intl</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-tower-observation"></i> SEA Milan Airports <span class="badge-org">Targa Telematics</span></h4>
+                <span class="badge-pays">Italie</span>
+                
+                <p><strong>Solution intégrée de gestion de flotte GSE</strong> pour tous les handlers et fournisseurs.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Tous les handlers et fournisseurs</strong> géolocalisés ou intégrés</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Dispositif <strong>plug&play rechargeable</strong> pour occasionnels</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Identification conducteurs (badges SEA)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Calques cartographiques : limitations vitesse, règles accès → détection automatique</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Résultats :</strong> Responsabilité claire en cas d'accident, hausse significative utilisation autorisée, amélioration réponse urgences.
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> La visibilité en temps réel des activités au sol nous permet de prendre des décisions éclairées qui améliorent la sécurité, l'efficacité et la performance environnementale.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://targatelematics.com/media/customer-story/sea-enanches-safety-and-sustainability-across-the-airside-areas-of-italys-second-largest-airport/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Targa Telematics</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-network">🗓️ Rencontres</span> <strong>Rencontres trimestrielles</strong></td>
+                    <td>AFPM Regional Networks (7 réseaux régionaux)</td>
+                    <td>Proximité terrain + échanges locaux réguliers entre professionnels</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-network">📚 Base REX</span> <strong>Base REX partagée</strong></td>
+                    <td>AFPM Safety Bulletins & Hazard ID documents (centaines de docs)</td>
+                    <td>Partage structuré d'incidents et bonnes pratiques à l'échelle industrielle</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-network">👥 Groupes thématiques</span> <strong>Groupes de travail thématiques</strong></td>
+                    <td>ASSP SBUGs + AFPM Subgroups (performance humaine, intégrité mécanique)</td>
+                    <td>Co-développement de solutions par praticiens et experts</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-network">📏 Standards communs</span> <strong>Standards communs</strong></td>
+                    <td>ASSP/Avetta Cultural Maturity Index (normes Z10/Z16 intégrées)</td>
+                    <td>Transformation des standards en outils mesurables et scalables</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-network">💻 Plateforme</span> <strong>Plateforme collaborative</strong></td>
+                    <td>SafewayNT digital collaboration platform + "sandbox" sécurisée</td>
+                    <td>Partage de données sécurisé, tableaux de bord collaboratifs</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-network">🛒 Achats groupés</span> <strong>Achats / formations groupés</strong></td>
+                    <td>SEA Milan Airports (tous handlers intégrés dans système unique)</td>
+                    <td>Mutualisation des équipements et des données à l'échelle plateforme</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-network">🏆 Reconnaissance</span> <strong>Reconnaissance collective</strong></td>
+                    <td>Swissport-Aurrigo partnership (collaboration long terme)</td>
+                    <td>L'innovation en sécurité passe par des partenariats structurés</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-collab">AFPM</span> <strong>7 réseaux régionaux :</strong> Partage structuré de REX à l'échelle d'une industrie entière.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-collab">ASSP/Avetta</span> <strong>SBUGs :</strong> Groupes collaboratifs transformant standards en avantage concurrentiel.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-collab">SafewayNT</span> <strong>-42% écarts :</strong> Méthodologie concrète avec indicateurs de suivi.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-collab">SEA Milan</span> <strong>Tous handlers intégrés :</strong> Mutualisation à l'échelle plateforme.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-collab">Swissport</span> <strong>Partenariat long terme :</strong> Accélération de l'innovation en sécurité.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de sécurité collaborative inter-entreprises est parfaitement alignée avec les meilleures pratiques internationales :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-collab">AFPM</span> partage structuré de REX à l'échelle industrielle
+                <span class="badge-collab">ASSP/Avetta</span> groupes collaboratifs transformant les standards
+                <span class="badge-collab">SafewayNT</span> plateforme collaborative avec indicateurs
+                <span class="badge-collab">Swissport</span> partenariats stratégiques pour l'innovation
+                <span class="badge-collab">SEA Milan</span> intégration de tous les handlers dans un système unique
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

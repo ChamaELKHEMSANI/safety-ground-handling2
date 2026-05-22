@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 10 - Formation Immersive VR</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-tech {
+            background: #2563eb20;
+            color: #2563eb;
+            border: 1px solid #2563eb;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-iata {
+            background: #05966920;
+            color: #059669;
+            border: 1px solid #059669;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .stat-cost {
+            background: rgba(5, 150, 105, 0.08);
+            border-left: 4px solid #059669;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-cost strong {
+            color: #059669;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .scenario-badge {
+            display: inline-block;
+            background: #d9770620;
+            color: #d97706;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            border: 1px solid #d97706;
+            margin-right: 5px;
+        }
+        .haptic-badge {
+            display: inline-block;
+            background: #7c3aed20;
+            color: #7c3aed;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            border: 1px solid #7c3aed;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-vr-cardboard"></i>
+            Piste n°10 : Formation Immersive VR
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Réalité Virtuelle / Haptique</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-glasses" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Formation immersive VR :</strong> Apprendre les gestes critiques et les procédures de sécurité dans un environnement virtuel réaliste, sans risque pour les personnes ni pour les équipements.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-plane"></i> Formation VR pour l'aviation et le handling</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-vr-cardboard"></i> Draxon & AAS <span class="badge-org">Suisse</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays">Suisse / Autriche / Allemagne</span>
+                    <span class="badge-iata">Certifié IATA</span>
+                </div>
+                <p><strong>Premier fournisseur mondial</strong> avec modules VR certifiés IATA pour personnel de piste.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Modules : arrivée avion, cônes, chargement bagages, détection FOD</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Formation en langue maternelle (pas de barrière linguistique)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Déploiement : Zurich, Vienne, Berlin</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Résultat :</strong> "Game-changing learning experience", employés fascinés, avantage concurrentiel pour recrutement.
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Les cours théoriques, les PowerPoint interminables ne correspondent pas à l'ADN des gens de notre industrie.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.groundhandlinginternational.com/content/news/draxon-vr-modules-awarded-iata-accreditation" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Ground Handling Intl</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-train"></i> Japan Airlines <span class="badge-org">Beatle Grahan</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays">Japon</span>
+                </div>
+                <p><strong>Système de formation VR</strong> pour opérations de piste.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Pushback</strong> (tractage avion)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Convoyeurs à bagages</strong> (belt loaders)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Manipulation des soutes</strong> (cargo door operation)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Indépendance météo et contraintes horaires</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>ANA</strong> a également déployé des formations VR - tendance lourde au Japon.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://vrtuoluo.net/542529.html" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> VR Tuoluo</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-industry"></i> Formation VR pour l'industrie et la maintenance</h3>
+        
+        
+        <div class="grid-3">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-car"></i> Toyota <span class="badge-org">Safety Dojo</span></h4>
+                <span class="badge-pays">États-Unis (Kentucky)</span>
+                <p><strong>Safety Dojo VR</strong> pour formation maintenance.</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-vr-cardboard"></i> 10 scénarios</span>
+                    <span class="chiffre"><i class="fa-regular fa-clock"></i> 2h+ contenu</span>
+                </div>
+                
+                <ul>
+                    <li><strong>Plateforme pneumatique</strong> (sensation chute)</li>
+                    <li><strong>Gants haptiques</strong> (vibrations)</li>
+                    <li>3 points de vue : victime, conducteur, observateur</li>
+                </ul>
+                
+                <div class="quote">
+                    Traiter d'abord les risques majeurs (chute, heurt) avant les détails.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.industryweek.com/technology-and-iiot/article/55326780/what-i-learned-from-toyotas-virtual-reality-safety-training-in-kentucky" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> IndustryWeek</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-oil-well"></i> Trafigura</h4>
+                <span class="badge-pays">Global</span>
+                <p><strong>Formation VR pour situations d'urgence</strong> (stations, terminaux, raffineries).</p>
+                
+                <ul>
+                    <li>Déversements (spills), incendies, pannes</li>
+                    <li>Programme pilote 3 mois</li>
+                </ul>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-chart-line"></i> 100% confiance</span>
+                    <span class="chiffre"><i class="fa-solid fa-thumbs-up"></i> 100% préfèrent VR</span>
+                </div>
+                
+                <div class="stat-impact">
+                    <strong>91%</strong> ont amélioré comportements clés<br>
+                    <strong>82%</strong> ont acquis nouvelles compétences
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.trafigura.com/news-and-insights/case-studies/sustainability/improving-service-station-safety-with-virtual-reality-training/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Trafigura</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-microchip"></i> Delaware <span class="badge-org">SmartSkills</span></h4>
+                <span class="badge-pays">Europe</span>
+                <p><strong>Procédures industrielles critiques</strong>.</p>
+                
+                <ul>
+                    <li>Extraction métal en fusion</li>
+                    <li>Maintenance réacteurs sous pression</li>
+                    <li>Preuve de concept <strong>30 jours</strong></li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Étude académique :</strong> groupes VR obtiennent de meilleurs scores en situation réelle.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.delaware.pro/en-lu/stories/vr-training-industrial-safety" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Delaware</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-microchip"></i> Technologies avancées et intégration LMS</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-tower-observation"></i> HQSoftware <span class="badge-org">Émirats Arabes Unis</span></h4>
+                <p><strong>Plateforme VR pour 6 types d'engins de piste</strong>.</p>
+                
+                <ul>
+                    <li>Tracteurs, passerelles, GPU, catering, convoyeurs</li>
+                    <li>4 modules obligatoires (GACA) - 30 min/engin</li>
+                    <li>Intégration <strong>LMS</strong> avec rapports et notation</li>
+                </ul>
+                
+                <div class="stat-cost">
+                    <i class="fa-solid fa-chart-line"></i> <strong>-47% de coûts de formation</strong>
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://techreviewer.co/companies/hqsoftware/vr-aviation-training-platform-for-ground-handling-agents" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> TechReviewer</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-helicopter"></i> Toll Aviation <span class="badge-org">MAVS</span></h4>
+                <span class="badge-pays">Australie</span>
+                <p><strong>Mixed Augmented Virtual Reality Simulator</strong> pour missions recherche et sauvetage.</p>
+                
+                <ul>
+                    <li><strong>Google Earth intégré</strong> : réplique 3D de n'importe quel lieu</li>
+                    <li>Hélicoptère simulé + objets physiques</li>
+                    <li>Drone mapping pour zones sans haute résolution</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    Formation sur terrains spécifiques (Blue Mountains) sans déplacement.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="http://admin.australiandefence.com.au/defence/cyber-space/toll-aviation-debuts-advanced-training-simulator-at-avalon-airshow" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Australian Defence</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-pen-ruler"></i> Générateur de scénarios personnalisables</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-industry"></i> CIVS & Steel Consortium <span class="badge-org">États-Unis</span></h4>
+            <p><strong>Outil de construction de scénarios VR</strong> permettant aux aciéries de créer leurs propres formations.</p>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <ul>
+                        <li>Utilisation des <strong>propres vidéos 360°</strong>, images, textes</li>
+                        <li>Formation reflétant conditions réelles du site</li>
+                        <li>Développement itératif avec retours opérateurs</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="stat-highlight">
+                        <strong>Résultat :</strong> Logiciel robuste, préparation déploiement élargi.
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://steelconsortium.org/civs-hazard-recognition-project-featured-in-iron-steel-technology/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Steel Consortium</a>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="scenario-badge">Scénario 1</span> <strong>"Push trop rapide"</strong></td>
+                    <td>Draxon/AAS (modules VR certifiés IATA)</td>
+                    <td>Formation sans barrière linguistique, attractive pour recrutement</td>
+                </tr>
+                <tr>
+                    <td><span class="scenario-badge">Scénario 2</span> <strong>"Charge instable" (LOADER)</strong></td>
+                    <td>JAL "Beatle Grahan"</td>
+                    <td>Formation pushback et manipulation soutes, répétable sans contrainte météo</td>
+                </tr>
+                <tr>
+                    <td><span class="scenario-badge">Scénario 3</span> <strong>"Piéton invisible" (BUS)</strong></td>
+                    <td>Toyota Safety Dojo</td>
+                    <td>Sensation physique de chute, gants haptiques, 3 points de vue</td>
+                </tr>
+                <tr>
+                    <td><span class="scenario-badge">Scénario 4</span> <strong>"Dégivrage hivernal"</strong></td>
+                    <td>Toll Aviation MAVS</td>
+                    <td>Intégration Google Earth, formation sur terrains réels spécifiques</td>
+                </tr>
+                <tr>
+                    <td><span class="scenario-badge">Scénario 5</span> <strong>"Panne moteur"</strong></td>
+                    <td>Delaware/SmartSkills</td>
+                    <td>Preuve de concept en 30 jours, co-développement avec experts</td>
+                </tr>
+                <tr>
+                    <td><span class="scenario-badge">Scénario 6</span> <strong>"Nuit/Brouillard"</strong></td>
+                    <td>Trafigura</td>
+                    <td>100% des participants plus confiants et mieux préparés psychologiquement</td>
+                </tr>
+                <tr>
+                    <td><span class="scenario-badge">Approche pédagogique</span></td>
+                    <td>CIVS Steel Consortium</td>
+                    <td>Génération de scénarios par l'utilisateur final, feedback itératif</td>
+                </tr>
+                <tr>
+                    <td><span class="scenario-badge">Intégration LMS</span></td>
+                    <td>HQSoftware (UAE)</td>
+                    <td>Réduction de 47% des coûts de formation, conformité ISAGO</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-iata">IATA</span> <strong>Draxon/AAS :</strong> Certification IATA des modules VR = gage de qualité.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="haptic-badge">Haptique</span> <strong>Toyota :</strong> Plateforme pneumatique + gants haptiques = sensation physique réaliste.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-tech">-47%</span> <strong>HQSoftware :</strong> Réduction mesurable des coûts de formation.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-tech">100%</span> <strong>Trafigura :</strong> 100% des participants plus confiants après formation VR.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-tech">Google Earth</span> <strong>Toll :</strong> Formation sur terrains réels sans déplacement.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de formation immersive VR est parfaitement alignée avec les meilleures pratiques internationales :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-iata">Draxon/AAS</span> certifié IATA et attractif RH
+                <span class="badge-tech">JAL</span> pushback et opérations de piste
+                <span class="haptic-badge">Toyota</span> multi-points de vue + sensations physiques
+                <span class="badge-tech">Trafigura</span> 100% de confiance accrue
+                <span class="badge-tech">HQSoftware</span> -47% de coûts
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

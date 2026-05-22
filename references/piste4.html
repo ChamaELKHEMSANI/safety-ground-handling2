@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 4 - Programme de Mentorat et Buddy</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 800px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-handshake"></i>
+            Piste n°4 : Programme de Mentorat et Buddy
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Inspirations internationales</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-people-arrows" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Le mentorat en sécurité :</strong> Transmettre l'expérience, réduire la part humaine des accidents, créer une culture de confiance et d'entraide.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-helicopter"></i> Mentorat dans l'aviation et l'aéronautique</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-helicopter"></i> Airbus Helicopters <span class="badge-org">Fred North</span></h4>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="badge-pays"><i class="fa-solid fa-globe"></i> Mondial</span>
+                </div>
+                <p><strong>Ce qu'ils font :</strong> Helicopter Safety Mentorship Program (2025), fondé par le pilote cascadeur Fred North, connecte des jeunes pilotes avec des mentors expérimentés.</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-users"></i> 350+ pilotes inscrits</span>
+                    <span class="chiffre"><i class="fa-solid fa-clock"></i> 40 en liste d'attente</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Échanges flexibles sur sujets concrets (planification, stress, risques)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Mentors bénévoles, dont pilotes d'essai Airbus</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-solid fa-bullseye"></i> <strong>Objectif :</strong> S'inscrit dans la feuille de route <strong>"Zéro accident"</strong> d'Airbus Helicopters.
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Aujourd'hui, le point faible, c'est nous, les humains. J'aimerais que tous les jeunes pilotes participent au programme. Cela peut créer un environnement plus sûr car ils peuvent poser des questions maintenant et ne pas commettre cette erreur huit ans plus tard.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://afm.aero/airbus-helicopters-supports-fred-norths-global-mentorship-program-for-young-pilots/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> afm.aero</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-graduation-cap"></i> SAFE <span class="badge-org">Aviation Educator Mentoring</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag-usa"></i> États-Unis</span>
+                </div>
+                <p><strong>Ce qu'ils font :</strong> Programme de mentorat pour éducateurs aéronautiques (vol, sol, jeunesse, université, maintenance).</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Ouvert aux éducateurs expérimentés pour nouveaux aéronefs/technologies</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Sélection rigoureuse des mentors (2 références, validation par comité)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Soutenu par d'anciens administrateurs FAA</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> Même les experts peuvent bénéficier du mentorat quand ils enseignent sur de nouveaux appareils. L'expertise n'est jamais définitive.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://safepilots.org/programs-1/mentoring-program/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> safepilots.org</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-scale-balanced"></i> Recommandations officielles - CASA Australie</h3>
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-people-carry-box"></i> CASA - Personnel au sol</h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag"></i> Australie</span>
+                </div>
+                <p><strong>Contexte :</strong> Départ des effectifs expérimentés post-COVID, "transience" croissante du personnel.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Recommande de <strong>démarrer un programme de mentorat</strong> où les moins expérimentés apprennent des plus expérimentés</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Aller au-delà de la formation de base pour transmettre des connaissances approfondies</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Compléter la formation en salle par une formation complète sur le tas (OJT)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Partager ce qui a mal tourné et comment l'éviter</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> Le mentorat doit tenir compte des différences générationnelles et des styles d'apprentissage.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.casa.gov.au/operations-safety-and-travel/safety-management-systems/sector-safety-risk-profiles/ground-handling-sector-safety-risk-profile/ground-handling-behaviours-and-culture" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> CASA Ground Handling</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-user-pilot"></i> CASA - Équipages peu expérimentés</h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag"></i> Australie</span>
+                </div>
+                <p><strong>Recommandation :</strong> Mentorat pour équipages peu expérimentés dans les opérations aériennes.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Créer un programme où les jeunes pilotes sont accompagnés par des pilotes plus expérimentés</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Va au-delà de la formation et du contrôle traditionnels</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Acquérir une compréhension approfondie des connaissances d'entreprise</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> Promouvoir une culture de sécurité positive pour que le personnel se sente soutenu.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.casa.gov.au/smaller-aeroplanes-sector-safety-risky-profile/issue-crew-limited-experience-ato-sa" target="_blank" class="url-link"><i class="fa-solid-arrow-up-right-from-squares"></i> CASA Crew Experience</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-helmet-safety"></i> Mentorat dans l'industrie et le BTP</h3>
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-building"></i> Mercury Engineering</h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-globe"></i> Europe</span>
+                </div>
+                <p><strong>Safety Mentorship Programme</strong> pour professionnels EHS (Environnement, Hygiène, Sécurité).</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-users"></i> 50+ participants/semaine</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Sessions hebdomadaires entre EHS expérimentés et nouveaux</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Contenu mixte : technique + pratique + actualités sécurité</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Intervenants extérieurs invités</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultats :</strong> Feedback extrêmement positif, adhésion croissante, apprentissage auprès du management senior.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.mercuryeng.com/2024/07/03/driving-a-work-safe-home-safe-culture-through-mentorship/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> mercuryeng.com</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-oil-well"></i> ExxonMobil <span class="badge-org">Safety Coach Concept</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag"></i> Allemagne</span>
+                </div>
+                <p><strong>Concept de Safety Coach</strong> : engagement pair-à-pair pour partager les presque-accidents.</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-users"></i> 600+ employés formés</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Formation en petits groupes (8-12 personnes)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Axé sur : identification dangers, communication, types de personnalité</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Concept "<strong>actively caring</strong>" : obligation d'intervenir/arrêter le travail</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Représentants sécurité → safety coaches avec temps dédié chaque semaine</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultats :</strong> Environnement de confiance, amélioration du reporting des presque-accidents, responsabilisation accrue.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://onepetro.org/SPEHSE/proceedings-abstract/16HSE/3-16HSE/D031S045R003/187085" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> onepetro.org</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-users-between-lines"></i> Formation participative par les pairs</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-helmet-safety"></i> Formation par pairs pour ouvriers du bâtiment (États-Unis)</h4>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span class="badge-pays"><i class="fa-solid fa-flag-usa"></i> États-Unis (ouvriers latinos)</span>
+            </div>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <p><strong>Ce qu'ils font :</strong></p>
+                    <ul>
+                        <li>Formation d'une journée (min 6h) en espagnol</li>
+                        <li>Animée par des <strong>formateurs ouvriers formés</strong></li>
+                        <li>Approche participative : travail d'équipe, résolution active basée sur situations réelles</li>
+                        <li>300+ ouvriers formés</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Résultats :</strong></p>
+                    <ul>
+                        <li>Amélioration significative de l'utilisation des EPI</li>
+                        <li>Augmentation des comportements d'auto-protection</li>
+                        <li>Baisse suggestive des blessures auto-déclarées</li>
+                        <li><strong>66% des ouvriers</strong> ont partagé les informations avec des amis/collègues</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="stat-highlight" style="margin-top: 10px;">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> La formation par les pairs a un effet multiplicateur (partage avec les pairs). Approche très prometteuse.
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Buddy pour nouveaux conducteurs</strong></td>
+                    <td>Airbus Helicopters (mentorat jeunes pilotes)</td>
+                    <td>Le mentorat réduit la part humaine des accidents ("Zéro accident")</td>
+                </tr>
+                <tr>
+                    <td><strong>Buddy expérimenté, volontaire, formé</strong></td>
+                    <td>Mercury Engineering (mentorat sécurité)</td>
+                    <td>Les sessions hebdomadaires créent un environnement de confiance et d'adhésion</td>
+                </tr>
+                <tr>
+                    <td><strong>Formation des buddies (2 jours)</strong></td>
+                    <td>SAFE (mentorat éducateurs)</td>
+                    <td>Même les experts peuvent bénéficier du mentorat sur de nouveaux sujets</td>
+                </tr>
+                <tr>
+                    <td><strong>Transmission culture sécurité</strong></td>
+                    <td>CASA Australie (recommandations officielles)</td>
+                    <td>Le mentorat compense le départ des expérimentés et la "transience" du personnel</td>
+                </tr>
+                <tr>
+                    <td><strong>Binôme observation → autonomie</strong></td>
+                    <td>ExxonMobil (Safety Coach)</td>
+                    <td>Le coaching pair-à-pair avec temps dédié crée une obligation d'intervention</td>
+                </tr>
+                <tr>
+                    <td><strong>Partage des connaissances tacites</strong></td>
+                    <td>Étude ouvriers construction (peer-led training)</td>
+                    <td>Les apprenants partagent massivement avec leurs pairs (effet multiplicateur)</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+</html>

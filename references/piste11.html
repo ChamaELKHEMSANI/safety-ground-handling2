@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 11 - Observatoire de la Fatigue</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-science {
+            background: #7c3aed20;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-frms {
+            background: #05966920;
+            color: #059669;
+            border: 1px solid #059669;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-fact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-fact strong {
+            color: #dc2626;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .tool-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        .tool-table th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            padding: 8px;
+            text-align: left;
+        }
+        .tool-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .tool-table tr:last-child td {
+            border-bottom: none;
+        }
+        .study-badge {
+            display: inline-block;
+            background: #2563eb20;
+            color: #2563eb;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            border: 1px solid #2563eb;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-moon"></i>
+            Piste n°11 : Observatoire de la Fatigue
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">FRMS / KSS / PVT / Actimétrie</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-bed" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Observatoire de la fatigue :</strong> Système de gestion des risques liés à la fatigue (FRMS) pour les agents de piste, combinant mesures scientifiques, formation et adaptation des plannings.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-plane"></i> Programmes FRMS dans l'aviation commerciale</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-plane"></i> Air New Zealand <span class="badge-org">Massey University</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays">Nouvelle-Zélande</span>
+                    <span class="badge-science">Tripartite</span>
+                </div>
+                <p><strong>FRMS pour vols ultra-long-courriers</strong> (Auckland-Chicago, Auckland-New York).</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Élaboration d'un <strong>"safety case"</strong> avant chaque nouvelle route</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Modèles biomathématiques + revue scientifique indépendante</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Conception collaborative : scientifiques + opérationnels + syndicats pilotes</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Résultat :</strong> Formation des pilotes améliorée, planning de repos optimisé, adhésion des équipages garantie.
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> L'approche tripartite est essentielle pour obtenir l'engagement des équipages.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.thieme-connect.de/products/ejournals/abstract/10.1055/s-0045-1812733" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Thieme Connect</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-indian-rupee-sign"></i> IndiGo Airlines <span class="badge-org">Thales</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays">Inde</span>
+                    <span class="badge-science">Actimétrie</span>
+                </div>
+                <p><strong>Fatigue Analysis Tool (FAT)</strong> - preuve de concept avec Thales.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Dispositifs portés au poignet + bornes au sol (Delhi, Mumbai, Bengaluru, Chennai)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Test de <strong>5 minutes</strong> pour les pilotes</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Données temps réel + historique + analytique prédictive</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Désidentification</strong> totale des données</li>
+                </ul>
+                
+                <div class="quote">
+                    Nous restons engagés envers le bien-être de nos pilotes, garantissant leur santé mentale, améliorant ainsi la sécurité des passagers.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://odishatv.in/news/national/indigo-to-incorporate-wrist-gadget-ground-device-to-monitor-pilots-fatigue-214893/amp" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Odisha TV</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-truck"></i> Programmes transport routier et ferroviaire</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-truck"></i> NAFMP <span class="badge-org">North America</span></h4>
+                <span class="badge-pays">États-Unis / Canada</span>
+                <p><strong>North American Fatigue Management Program</strong> - Programme éducatif gratuit et volontaire.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Cibles multiples</strong> : conducteurs, familles, dirigeants, dispatchers</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Formation : hygiène du sommeil, nutrition, reconnaissance signes de fatigue</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Recommandations FRMS + technologies de détection</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Calculateur de ROI</strong> pour bénéfices économiques</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    Je recommande souvent le site du NAFMP pour guider la mise en œuvre d'un programme de gestion de la fatigue.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://nafmp.org" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> nafmp.org</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-train"></i> UK Office of Rail and Road</h4>
+                <span class="badge-pays">Royaume-Uni</span>
+                <p><strong>Cadre réglementaire FRMS pour le ferroviaire</strong>.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Approche <strong>"Plan, Do, Check, Act"</strong> (HSG65)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Intégration avec SMS existants (pas de silo)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Basé sur principes scientifiques solides</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Proportionné à la taille et aux risques</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Bénéfices identifiés :</strong> sécurité améliorée, moral renforcé, réduction absentéisme, avantage concurrentiel.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.orr.gov.uk/managing-rail-staff-fatigue/5-fatigue-risk-management-systems" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> ORR.gov.uk</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-flask"></i> Validation scientifique des outils de mesure</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-microscope"></i> Outils validés scientifiquement <span class="badge-science">PubMed/NIH</span></h4>
+            
+            <table class="tool-table">
+                <thead>
+                    <tr>
+                        <th>Outil</th>
+                        <th>Description</th>
+                        <th>Lien avec Piste 11</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Karolinska Sleepiness Scale (KSS)</strong></td>
+                        <td>Échelle subjective de somnolence en 9 niveaux (1 = extrêmement alerte, 9 = très somnolent)</td>
+                        <td><span class="badge-science">✅ Utilisé</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Samn-Perelli Crew Status Check (SPS)</strong></td>
+                        <td>Échelle subjective de fatigue en 7 points</td>
+                        <td><span class="badge-science">✅ Validé</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Psychomotor Vigilance Task (PVT)</strong></td>
+                        <td>Test objectif de 5 minutes mesurant temps de réaction et laps d'attention</td>
+                        <td><span class="badge-science">✅ Utilisé</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Durée de sommeil</strong></td>
+                        <td>Collectée par journaux ou actigraphie</td>
+                        <td><span class="badge-science">✅ Actimétrie</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Qualité du sommeil</strong></td>
+                        <td>Facteurs : bruit, température, luminosité, caféine</td>
+                        <td><span class="badge-science">✅ Analyse</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Validation :</strong> Les outils KSS et PVT que vous proposez sont précisément ceux validés par la recherche comme références internationales.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8640601/table/tbl1/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> NIH PubMed</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-people-carry-box"></i> Étude spécifique aux agents de piste</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-book-open"></i> Étude académique (Portugal) <span class="badge-org">Open Engineering</span></h4>
+            <p><strong>Première proposition de FRMS spécifiquement pour les agents de piste (ramp workers)</strong>.</p>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <p><strong>Constat :</strong></p>
+                    <ul>
+                        <li>Les agents de piste sont un <strong>secteur négligé</strong> dans la sécurité aérienne</li>
+                        <li>La FAA a des règles pour les pilotes, mais <strong>aucune norme fédérale</strong> pour les opérations de piste</li>
+                        <li><strong>10%</strong> des accidents aériens sont des accidents de piste (IATA 2016-2020)</li>
+                        <li><strong>35 cas</strong> d'événements au sol causés par la fatigue (ASRS 2016-2021)</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Caractéristiques du travail :</strong></p>
+                    <ul>
+                        <li>Exigences <strong>physiques</strong> : force, postures contraignantes, météo, bruit</li>
+                        <li>Exigences <strong>mentales</strong> : horaires imprévisibles, stress, attention multiple</li>
+                        <li>Horaires <strong>irréguliers</strong> perturbant cycles veille/sommeil</li>
+                        <li>Sommeil de jour perturbé (lumière, bruit)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="stat-fact">
+                <i class="fa-solid fa-exclamation-triangle"></i> <strong>Confirmation :</strong> Les agents de piste sont un angle mort réglementaire concernant la fatigue. Besoin de règles spécifiques.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.degruyterbrill.com/document/doi/10.1515/eng-2022-0411/html" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> De Gruyter</a>
+            </div>
+        </div>
+
+        
+        <div class="card" style="margin-bottom: 25px; background: var(--c-surface);">
+            <h4><i class="fa-solid fa-book"></i> Définition ICAO de la fatigue</h4>
+            <div class="quote" style="border-left-color: var(--c-primary);">
+                <i class="fa-solid fa-quote-left" style="color: var(--c-primary);"></i> 
+                <em>"État physiologique de capacité de performance mentale ou physique réduite résultant d'une perte de sommeil, d'un éveil prolongé, de la phase circadienne et/ou de la charge de travail, pouvant altérer la vigilance et la capacité à effectuer des tâches opérationnelles liées à la sécurité."</em>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="study-badge">KSS / PVT</span> <strong>Échelle KSS + Test PVT</strong></td>
+                    <td>Validation scientifique NIH</td>
+                    <td>Outils internationalement validés, utilisés dans aviation, ferroviaire, transport routier</td>
+                </tr>
+                <tr>
+                    <td><span class="study-badge">Étude 6 mois</span> <strong>Étude scientifique préalable</strong></td>
+                    <td>Air New Zealand + Massey University</td>
+                    <td>Approche tripartite (scientifiques + opérateurs + représentants) = adhésion</td>
+                </tr>
+                <tr>
+                    <td><span class="study-badge">Actimétrie</span> <strong>Montres connectées</strong></td>
+                    <td>IndiGo + Thales</td>
+                    <td>Dispositifs portables + bornes au sol = évaluation multi-dimensionnelle</td>
+                </tr>
+                <tr>
+                    <td><span class="study-badge">Formation</span> <strong>Formation "Sommeil et vigilance"</strong></td>
+                    <td>NAFMP</td>
+                    <td>Formation conducteurs + familles + management, calculateur ROI</td>
+                </tr>
+                <tr>
+                    <td><span class="study-badge">Limitation</span> <strong>Limitation nuits consécutives</strong></td>
+                    <td>ORR Rail (FRMS)</td>
+                    <td>Approche proportionnée, intégrée au SMS, processus continu Plan-Do-Check-Act</td>
+                </tr>
+                <tr>
+                    <td><span class="study-badge">Spécificité</span> <strong>Agents de piste</strong></td>
+                    <td>Étude portugaise</td>
+                    <td>Confirmation scientifique : les ramp workers sont un secteur négligé, besoin de règles spécifiques</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-science">Air NZ</span> <strong>Étude préalable :</strong> L'approche tripartite garantit l'adhésion.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-science">IndiGo</span> <strong>Actimétrie :</strong> Dispositifs portables + bornes = évaluation objective.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-science">NAFMP</span> <strong>Formation :</strong> Inclure les familles et le management.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-science">ORR</span> <strong>FRMS :</strong> Approche PDCA, intégrée au SMS.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-science">Portugal</span> <strong>Spécificité :</strong> Les agents de piste sont un angle mort réglementaire.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition d'observatoire de la fatigue est parfaitement alignée avec les meilleures pratiques internationales :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-science">Air New Zealand</span> étude scientifique préalable avec chercheurs indépendants
+                <span class="badge-science">IndiGo/Thales</span> dispositifs portables + tests 5 min
+                <span class="badge-science">NAFMP</span> formation multi-cibles incluant familles
+                <span class="badge-science">ORR</span> approche progressive Plan-Do-Check-Act
+                <span class="badge-science">Étude portugaise</span> validation académique spécifique aux agents de piste
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

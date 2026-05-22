@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 25 - Joker Sécurité</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-joker {
+            background: #05966920;
+            color: #059669;
+            border: 1px solid #059669;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-legal {
+            background: #7c3aed20;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .joker-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border: 2px solid #059669;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .joker-card-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #059669;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .joker-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .joker-step:last-child {
+            border-bottom: none;
+        }
+        .joker-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+        .color-red { background-color: #dc2626; }
+        .color-yellow { background-color: #d97706; }
+        .color-green { background-color: #059669; }
+        .color-blue { background-color: #2563eb; }
+        .legal-badge {
+            background: #7c3aed;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+        .crm-stats {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .crm-stat-item {
+            background: white;
+            padding: 8px;
+            border-radius: var(--radius);
+            text-align: center;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-regular fa-circle-stop"></i>
+            Piste n°25 : Joker Sécurité
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Stop Work Authority / Carte / Time-out</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-regular fa-hand" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Joker Sécurité :</strong> Un outil physique (carte) et symbolique (4 couleurs) donnant à chaque employé le pouvoir et la responsabilité d'arrêter un travail jugé dangereux, sans crainte de sanction.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="joker-card">
+            <div class="joker-card-title"><i class="fa-regular fa-circle-stop"></i> JOKER SÉCURITÉ</div>
+            <div class="joker-step">
+                <div class="joker-color color-red"></div>
+                <div><strong>🔴 ROUGE</strong> - STOP ! J'observe une situation à risque immédiat</div>
+            </div>
+            <div class="joker-step">
+                <div class="joker-color color-yellow"></div>
+                <div><strong>🟡 JAUNE</strong> - TIME-OUT ! Prenons 5 min pour discuter</div>
+            </div>
+            <div class="joker-step">
+                <div class="joker-color color-green"></div>
+                <div><strong>🟢 VERT</strong> - Tout est OK, on continue</div>
+            </div>
+            <div class="joker-step">
+                <div class="joker-color color-blue"></div>
+                <div><strong>🔵 BLEU</strong> - Merci d'avoir utilisé le joker, bravo !</div>
+            </div>
+            <div style="text-align: center; margin-top: 15px; font-size: 0.8rem;">
+                <i class="fa-solid fa-circle-check" style="color:#059669;"></i> Garantie de non-sanction
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-droplet"></i> Programme d'entreprise - Nexus Water Group</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-water"></i> Nexus Water Group - Stop Work Authority Program <span class="badge-joker">États-Unis</span></h4>
+            <span class="badge-pays">États-Unis</span>
+            
+            <p><strong>Programme formel lancé en juillet 2024 avec carte physique format portefeuille.</strong></p>
+            
+            <div style="background: #f3f4f6; padding: 15px; border-radius: var(--radius); margin: 15px 0;">
+                <h5 style="margin-top:0;">📇 Carte Stop Work Authority - 4 étapes simples :</h5>
+                <ol style="margin-bottom:0;">
+                    <li><strong>Arrêter le travail</strong> : être poli, ferme et clair</li>
+                    <li><strong>Notifier</strong> : informer superviseur et sécuriser la zone</li>
+                    <li><strong>Corriger</strong> : mesures correctives par personne compétente</li>
+                    <li><strong>Reprendre</strong> : uniquement quand sécurité garantie</li>
+                </ol>
+            </div>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Carte de crédit physique</strong> format portefeuille</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Garantie explicite</strong> : "Il n'y aura jamais de mesure disciplinaire pour l'utilisation du Stop Work Authority"</li>
+                <li><i class="fa-solid fa-check-circle"></i> Chaque incident analysé comme <strong>opportunité d'apprentissage</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Remise officielle des cartes (photo de Greg Presley, opérateur)</li>
+            </ul>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Il n'y a rien de plus important que la sécurité de nos équipes. Parfois, cela signifie que nous devons prendre la parole et arrêter le travail. Avoir un objet tangible comme une carte Stop Work Authority peut faciliter cette décision.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.nexuswatergroup.com/2024/07/26/nexus-water-group-introduces-stop-work-authority-program/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Nexus Water Group</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-scale-balanced"></i> Cadre juridique - Afrique du Sud</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-gavel"></i> Droit du travail sud-africain <span class="badge-legal">MHSA / OHSA</span></h4>
+            <span class="badge-pays">Afrique du Sud</span>
+            
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0;">
+                <span class="legal-badge">Section 23 MHSA</span>
+                <span class="legal-badge">Section 14(d) OHSA</span>
+            </div>
+            
+            <p><strong>Reconnaissance légale du droit d'arrêt pour tout employé.</strong></p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Droit légal de refuser d'exécuter un travail dangereux</li>
+                <li><i class="fa-solid fa-check-circle"></i> Les investigations montrent que si ce droit avait été exercé, <strong>l'accident aurait été évité dans la plupart des cas</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Nécessité de <strong>procédures claires</strong> (surtout dans le secteur minier)</li>
+                <li><i class="fa-solid fa-check-circle"></i> Mise en garde contre les abus : utilisation détournée peut entraîner des sanctions</li>
+                <li><i class="fa-solid fa-check-circle"></i> Arrêt de la Cour du Travail (14 octobre 2025) : l'exercice du droit doit reposer sur des <strong>motifs légitimes</strong> et suivre la procédure appropriée</li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> Validation juridique forte. Le droit d'arrêt est reconnu comme fondamental pour la prévention.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://beechveltman.com/uncategorized/top-tip-tuesday-a-legitimate-exercise-of-employee-rights-on-health-and-safety-grounds-or-abuse/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Beech Veltman</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-plane"></i> Crew Resource Management - Aviation</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-users"></i> Crew Resource Management (CRM) <span class="badge-org">Threat and Error Management</span></h4>
+            
+            <div class="crm-stats">
+                <div class="crm-stat-item">
+                    <span class="stat-highlight" style="display:block; margin:0;">70%</span>
+                    <span style="font-size:0.7rem;">accidents liés à erreur humaine (1970)</span>
+                </div>
+                <div class="crm-stat-item">
+                    <span class="stat-highlight" style="display:block; margin:0;">98%</span>
+                    <span style="font-size:0.7rem;">vols avec au moins 1 menace</span>
+                </div>
+                <div class="crm-stat-item">
+                    <span class="stat-highlight" style="display:block; margin:0;">82%</span>
+                    <span style="font-size:0.7rem;">erreurs observées</span>
+                </div>
+            </div>
+            
+            <p><strong>Philosophie fondamentale en aviation : tout membre d'équipage a le droit et le devoir de "parler" s'il identifie un problème de sécurité.</strong></p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Principes clés : <strong>communication efficace, conscience situationnelle partagée, prise de décision collaborative</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Concept de <strong>"Threat and Error Management (TEM)"</strong> : identifier et gérer les menaces avant qu'elles ne deviennent des erreurs</li>
+                <li><i class="fa-solid fa-check-circle"></i> Formation obligatoire pour pilotes et personnel de cabine</li>
+                <li><i class="fa-solid fa-check-circle"></i> Intégration dans programmes universitaires (Mount Royal University)</li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> Le CRM est la philosophie sous-jacente à votre "Joker Sécurité" : donner à chaque membre de l'équipe le pouvoir et la responsabilité de s'exprimer.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://themobilityforum.net/2025/12/23/quickstoppers-managing-risk-the-core-of-military-aviation-safety/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Mobility Forum</a>
+                <a href="https://catalog.mtroyal.ca/preview_course_nopop.php?catoid=33&coid=51504" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Mount Royal University</a>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-joker">🃏 Carte Joker</span> <strong>Carte Joker physique (4 couleurs)</strong></td>
+                    <td>Nexus Water Group Stop Work Authority Card</td>
+                    <td>Carte format portefeuille avec 4 étapes claires, remise officielle, garantie de non-sanction, analyse comme opportunité d'apprentissage</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-legal">⚖️ Pouvoir d'arrêt</span> <strong>Pouvoir d'arrêt sans justification</strong></td>
+                    <td>South African MHSA/OHSA (cadre légal)</td>
+                    <td>Reconnaissance juridique du droit d'arrêt, potentiel de sauver des vies, nécessité de procédures claires et de formation</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-joker">🗣️ Culture de la parole</span> <strong>Culture de la parole et du "time-out"</strong></td>
+                    <td>Crew Resource Management (aviation)</td>
+                    <td>Tout membre d'équipage peut et doit s'exprimer, conscience situationnelle partagée, responsabilité collective</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-legal">🔴 Joker Rouge</span> <strong>Joker Rouge (refus de tâche)</strong></td>
+                    <td>Droit de retrait (code du travail)</td>
+                    <td>Fondement légal du refus de tâche dangereuse, mais souvent perçu comme "lourd" — votre version symbolique est plus accessible</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-joker">🟡 Joker Jaune</span> <strong>Joker Jaune (time-out collectif)</strong></td>
+                    <td>Threat and Error Management (TEM)</td>
+                    <td>Identifier les menaces avant qu'elles ne deviennent des erreurs, action collective immédiate</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-joker">Nexus</span> <strong>Carte physique :</strong> Un outil tangible facilite la décision d'arrêter le travail.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-legal">Afrique du Sud</span> <strong>Cadre légal :</strong> Le droit d'arrêt est reconnu comme fondamental.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-joker">CRM</span> <strong>Culture de parole :</strong> 70% des accidents évités par la communication.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-joker">Garantie</span> <strong>Non-sanction :</strong> La protection explicite est un prérequis.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de "Joker Sécurité" s'appuie sur des bases solides, à la fois juridiques et opérationnelles :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-joker">Nexus Water</span> carte physique efficace
+                <span class="badge-legal">Afrique du Sud</span> validation juridique
+                <span class="badge-joker">CRM</span> philosophie de la parole libérée
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

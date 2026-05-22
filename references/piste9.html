@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 9 - Label Sécurité Entreprise</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-niveau {
+            display: inline-block;
+            background: #d9770620;
+            color: #d97706;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            border: 1px solid #d97706;
+            margin-right: 5px;
+        }
+        .badge-niveau.stage3 {
+            background: #05966920;
+            color: #059669;
+            border-color: #059669;
+        }
+        .badge-niveau.stage2 {
+            background: #2563eb20;
+            color: #2563eb;
+            border-color: #2563eb;
+        }
+        .badge-niveau.stage1 {
+            background: #f59e0b20;
+            color: #f59e0b;
+            border-color: #f59e0b;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .stat-eu {
+            background: rgba(5, 150, 105, 0.08);
+            border-left: 4px solid #059669;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-eu strong {
+            color: #059669;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .level-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border-radius: var(--radius);
+        }
+        .level-bronze {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #cd7f32;
+        }
+        .level-argent {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #c0c0c0;
+        }
+        .level-or {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-medal"></i>
+            Piste n°9 : Label Sécurité Entreprise
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Bronze / Argent / Or</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-award" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Label Sécurité Entreprise :</strong> Reconnaître et valoriser les prestataires de handling qui investissent dans la sécurité au-delà des exigences réglementaires minimales.</p>
+                </div>
+            </div>
+            
+            
+            <div class="level-indicator" style="justify-content: center; margin-top: 15px;">
+                <span class="level-bronze"></span>
+                <span><strong>Bronze</strong> (Conformité socle)</span>
+                <span style="width: 20px;"></span>
+                <span class="level-argent"></span>
+                <span><strong>Argent</strong> (Équipements modernisés)</span>
+                <span style="width: 20px;"></span>
+                <span class="level-or"></span>
+                <span><strong>Or</strong> (Excellence continue)</span>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-globe"></i> Programmes internationaux existants</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-plane"></i> IATA Enhanced GSE Recognition Program</h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-globe"></i> International</span>
+                    <span class="badge-org">Gratuit / Volontaire</span>
+                </div>
+                <p><strong>Programme de reconnaissance des flottes modernisées</strong> lancé en 2024.</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-tag"></i> Label 2 ans</span>
+                    <span class="chiffre"><i class="fa-solid fa-building"></i> Menzies, Hactl</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Évaluation des flottes selon proportion d'<strong>Enhanced GSE</strong> (anti-collision, inching, électrique)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Intégration prévue dans <strong>ISAGO</strong> en 2025</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Totalement gratuit pour les handlers</li>
+                </ul>
+                
+                <div class="stat-impact">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Impact potentiel :</strong> Si 75% des flottes équipées, <strong>-42% des coûts dommages</strong> (10 Mds$ estimés en 2035)
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://ghi.mydigitalpublication.co.uk/articles/ramp-safety-briefing?article_id=4791224&i=823788" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> GHI Article</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-briefcase"></i> IS-BAH <span class="badge-org">IBAC</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-globe"></i> International</span>
+                </div>
+                <p><strong>International Standard for Business Aircraft Handling</strong> - Certification sécurité pour l'aviation d'affaires.</p>
+                
+                <div style="display: flex; gap: 5px; margin: 10px 0;">
+                    <span class="badge-niveau stage1">Stage 1</span>
+                    <span class="badge-niveau stage2">Stage 2</span>
+                    <span class="badge-niveau stage3">Stage 3</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>3 niveaux de maturité</strong> (Stage 1, 2, 3) du SMS</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Moins de <strong>10% des handlers</strong> atteignent Stage 3</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Démarche de progrès continu sur 8+ ans</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Earning Stage 3 accreditation is a reflection of the high standards our team holds itself to every day.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.businessairportinternational.com/news/universal-aviation-london-stansted-achieves-is-bah-stage-3-accreditation.html" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Business Airport Intl</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-clipboard-check"></i> Certifications et audits reconnus</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-magnifying-glass"></i> ISAGO <span class="badge-org">IATA Safety Audit</span></h4>
+                <p><strong>Programme d'audit sécurité pour les opérations de handling</strong>.</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-chart-line"></i> 300+ audits (2023)</span>
+                    <span class="chiffre"><i class="fa-solid fa-building"></i> +18% vs 2022</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>153 compagnies aériennes</strong> utilisent ISAGO dans leurs appels d'offres</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>40 régulateurs et aéroports</strong> reconnaissent ISAGO</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Exemple CV Handling : certification renouvelée chaque année depuis 2017</li>
+                </ul>
+                
+                <div class="quote">
+                    Cette reconnaissance permet de continuer à faire partie du groupe des handlers certifiés basés sur les exigences élevées définies internationalement par l'IATA.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://cvhandling.cv/certification/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> CV Handling</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-leaf"></i> Nouvelle-Zélande <span class="badge-org">NZQA</span></h4>
+                <p><strong>New Zealand Certificate in Aviation (Ground Handling) Level 3</strong> - Certification nationale des compétences.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Deux filières : <strong>Air Cargo</strong> et <strong>Ramp Operations</strong></li>
+                    <li><i class="fa-solid fa-check-circle"></i> Compétences validées : communication, sécurité, marchandises dangereuses, GSE</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Standard national reconnu par tous les employeurs</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> Articulation possible entre label entreprise et certification individuelle des personnels (ex: Permis T).
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.nzqa.govt.nz/nzqf/search/viewQualification.do?selectedItemKey=1948" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> NZQA</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-scale-balanced"></i> Nouveaux cadres réglementaires</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-euro-sign"></i> Règlement (UE) 2025/20</h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays">Union Européenne</span>
+                    <span class="badge-org">Applicable 2028</span>
+                </div>
+                <p><strong>Premier cadre harmonisé pour les prestataires d'assistance en escale dans l'UE</strong>.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Obligation de <strong>déclaration de capacité</strong> (mars 2027)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Mise en œuvre d'un <strong>SMS complet</strong></li>
+                    <li><i class="fa-solid fa-check-circle"></i> Formation, maintenance, procédures d'urgence</li>
+                </ul>
+                
+                <div class="stat-eu">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Opportunité :</strong> Votre label pourrait certifier la conformité "supra-réglementaire" au-delà de la simple déclaration.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.easa.europa.eu/lv/document-library/easy-access-rules/easy-access-rules-ground-handling-regulations-eu-202523-and" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> EASA</a>
+                    <a href="https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX:32025R0020" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> EUR-Lex</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-indian-rupee-sign"></i> DGCA Inde <span class="badge-org">CAR 2024</span></h4>
+                <p><strong>Nouvelles normes de sécurité pour les handlers</strong> (juillet 2024).</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Obligation d'obtenir un <strong>safety clearance</strong> dans les 6 mois</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Nomination obligatoire : Accountable Manager, Station Manager, Safety Manager</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Formation récurrente obligatoire</li>
+                </ul>
+                
+                <div class="quote">
+                    Contrairement à d'autres domaines, le handling n'était pas soumis au même niveau de réglementation. Il est devenu nécessaire de développer des exigences.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.cnbctv18.com/business/aviation/dgca-sets-new-safety-standards-for-airport-ground-handlers-19441186.htm/amp" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> CNBC TV18</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-niveau stage1">Bronze</span> <span class="badge-niveau stage2">Argent</span> <span class="badge-niveau stage3">Or</span> <strong>3 niveaux progressifs</strong></td>
+                    <td>IS-BAH (Stage 1, 2, 3)</td>
+                    <td>Progressivité essentielle pour engager les entreprises dans la durée (8+ ans pour Stage 3)</td>
+                </tr>
+                <tr>
+                    <td><strong>Critères "rétrofit" (M2)</strong> - Équipements modernisés</td>
+                    <td>IATA Enhanced GSE Program</td>
+                    <td>Reconnaissance des flottes modernisées, -42% coûts dommages si 75% flotte équipée</td>
+                </tr>
+                <tr>
+                    <td><strong>Reconnaissance par les compagnies</strong></td>
+                    <td>ISAGO</td>
+                    <td>153 compagnies utilisent ISAGO dans leurs appels d'offres</td>
+                </tr>
+                <tr>
+                    <td><strong>Articulation avec réglementation</strong></td>
+                    <td>Règlement (UE) 2025/20</td>
+                    <td>Label peut certifier conformité "supra-réglementaire" au-delà de la déclaration obligatoire</td>
+                </tr>
+                <tr>
+                    <td><strong>Formation et compétences individuelles</strong></td>
+                    <td>NZ Certificate in Aviation</td>
+                    <td>Certification nationale des compétences individuelles (articulation possible avec Permis T)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-niveau stage3">IS-BAH</span> <strong>3 niveaux :</strong> La progressivité permet l'engagement dans la durée.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-niveau stage2">IATA GSE</span> <strong>Gratuit & volontaire :</strong> L'incitation plutôt que la contrainte.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-niveau stage1">ISAGO</span> <strong>Reconnaissance client :</strong> 153 compagnies l'utilisent dans leurs appels d'offres.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-niveau stage2">UE 2025/20</span> <strong>Cadre réglementaire :</strong> Votre label s'inscrit naturellement dans ce nouveau contexte.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-niveau stage1">NZ Certificate</span> <strong>Compétences :</strong> Articulation possible avec certification individuelle.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de label sécurité entreprise est parfaitement alignée avec les meilleures pratiques internationales :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-niveau stage3">IS-BAH</span> montre la pertinence des 3 niveaux progressifs
+                <span class="badge-niveau stage2">IATA Enhanced GSE</span> prouve qu'une reconnaissance volontaire et gratuite peut accélérer l'adoption
+                <span class="badge-niveau stage1">ISAGO</span> démontre que les compagnies aériennes utilisent ces labels dans leurs décisions d'achat
+                <span class="badge-niveau stage2">EU 2025/20</span> crée le cadre réglementaire dans lequel votre label s'inscrira naturellement
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

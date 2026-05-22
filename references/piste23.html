@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 23 - Contrat de Confiance</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-pledge {
+            background: #05966920;
+            color: #059669;
+            border: 1px solid #059669;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-ceremony {
+            background: #7c3aed20;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .pledge-box {
+            background: #f0fdf4;
+            border: 2px solid #059669;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .pledge-tagline {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #059669;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .casa-pledge {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .casa-pledge-item {
+            flex: 1;
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 12px;
+            text-align: center;
+            min-width: 120px;
+        }
+        .casa-pledge-item i {
+            font-size: 1.5rem;
+            color: #059669;
+            margin-bottom: 5px;
+        }
+        .badge-sample {
+            display: inline-block;
+            background: #059669;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin: 2px;
+        }
+        .hero-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #fef3c7;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .hero-character {
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-handshake"></i>
+            Piste n°23 : Contrat de Confiance
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Engagement / Cérémonie / Badge / Symbole</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-file-signature" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Contrat de confiance :</strong> Engagement public et volontaire des conducteurs et des managers, matérialisé par une cérémonie et un symbole (badge, pin's), pour renforcer la responsabilité individuelle et collective.</p>
+                </div>
+            </div>
+            <div class="pledge-tagline">
+                <i class="fa-solid fa-quote-left"></i> "My Safety is in My Hands" / "Their Safety is in Our Hands" — CASA Australia
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-flag"></i> Programme national - CASA Australia</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-plane"></i> CASA Aviation Safety Pledge <span class="badge-org">Lancé 2025</span></h4>
+            <span class="badge-pays">Australie</span>
+            
+            <div class="stats-chiffres">
+                <span class="chiffre"><i class="fa-solid fa-users"></i> 330+ signataires</span>
+                <span class="chiffre"><i class="fa-regular fa-calendar"></i> 30 premiers jours</span>
+            </div>
+            
+            <div class="casa-pledge">
+                <div class="casa-pledge-item">
+                    <i class="fa-solid fa-user-pilot"></i>
+                    <div><strong>"My Safety is in My Hands"</strong></div>
+                    <div style="font-size:0.7rem;">Pilotes (individuel)</div>
+                </div>
+                <div class="casa-pledge-item">
+                    <i class="fa-solid fa-building"></i>
+                    <div><strong>"Their Safety is in Our Hands"</strong></div>
+                    <div style="font-size:0.7rem;">Organisations (collectif)</div>
+                </div>
+                <div class="casa-pledge-item">
+                    <i class="fa-solid fa-wrench"></i>
+                    <div><strong>Mainteneurs</strong></div>
+                    <div style="font-size:0.7rem;">Lancé mai 2025 (May-tenance Month)</div>
+                </div>
+            </div>
+            
+            <p><strong>7 domaines d'engagement pour les pilotes :</strong></p>
+            <div style="display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0;">
+                <span class="badge-sample">Préparation pré-vol</span>
+                <span class="badge-sample">Respect réglementations</span>
+                <span class="badge-sample">Amélioration continue</span>
+                <span class="badge-sample">Respect des pairs</span>
+                <span class="badge-sample">Prise de parole</span>
+                <span class="badge-sample">Vigilance</span>
+                <span class="badge-sample">Culture sécurité</span>
+            </div>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Public recognition</strong> : noms des signataires publiés sur le site CASA</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Badge numérique</strong> à afficher sur sites web et réseaux sociaux</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Engagement volontaire et public</strong> — fondement psychologique : l'engagement public renforce la responsabilité</li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <strong>Signataires prestigieux :</strong> Royal Flying Doctor Service, RMIT University, Sharp Airlines, Pilatus Australia
+            </div>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Le cœur de notre message de sécurité est que la sécurité est une responsabilité partagée. Nous voulons encourager une culture où nous normalisons la discussion sur la sécurité.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.casa.gov.au/about-us/news-media-releases-and-speeches/aircraft-maintainers-take-lead-safety-pledge-today" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> CASA - Mainteneurs</a>
+                <a href="https://updates.communication.casa.gov.au/pilot-safety-hub-newsletter-fixed-wing-april-2025" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> CASA - Pilotes</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-suitcase"></i> Ground Handling - Menzies Aviation</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-briefcase"></i> Menzies Aviation - Station Manager Pledge <span class="badge-org">2023</span></h4>
+            <span class="badge-pays">International (ground handling)</span>
+            
+            <div class="pledge-box">
+                <p style="font-weight:700; margin-top:0;"><i class="fa-regular fa-handshake"></i> "Unique contract amongst our peers"</p>
+                <p><strong>10 promesses</strong> faites par les managers de station à leurs équipes.</p>
+            </div>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Engagements concrets : "engager et renforcer leurs équipes, soutenir les personnes, créer un environnement où tous se sentent à l'aise pour parler"</li>
+                <li><i class="fa-solid fa-check-circle"></i> Lancement lors de la <strong>M.O.R.S.E Week</strong> (Menzies Operating Responsibly Safely and Effectively), événement bi-annuel</li>
+                <li><i class="fa-solid fa-check-circle"></i> Thème : <strong>"See Something, Say Something"</strong> (culture no blame)</li>
+            </ul>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Thank you for your hard work and commitment to our safety culture and making Menzies a great place to work for all.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.linkedin.com/posts/hassanelhoury_menziesaviation-peoplepassionpride-morseweek-activity-7188479406472904706-U1UX" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Menzies Aviation - LinkedIn</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-users"></i> Cérémonies collectives - Akasa Air</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-plane-departure"></i> Akasa Air - Aviation Security Culture Week <span class="badge-org">BCAS India</span></h4>
+            <span class="badge-pays">Inde</span>
+            
+            <div class="stats-chiffres">
+                <span class="chiffre"><i class="fa-regular fa-building"></i> Tous bureaux</span>
+                <span class="chiffre"><i class="fa-solid fa-users"></i> Toutes stations</span>
+            </div>
+            
+            <p><strong>Cérémonies de prise d'engagement</strong> organisées dans tous les bureaux et stations.</p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Tagline : <strong>"See it, Say it and Secure it"</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Activités : sensibilisation au sol, amplification digitale, masterclasses</li>
+                <li><i class="fa-solid fa-check-circle"></i> Annonces spéciales aux portes d'embarquement et en vol</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Implication du CEO</strong> Vinay Dube en personne</li>
+            </ul>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Aujourd'hui, il est plus que crucial de sensibiliser nos employés et nos passagers à l'importance de la sûreté et de la sécurité. La sécurité est notre priorité absolue.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.hotelierindia.com/events/akasa-air-commits-to-support-aviation-security-culture-week" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Hotelier India</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-tree"></i> Storytelling et symbole - Sappi Forests</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-leaf"></i> Sappi Forests (Afrique du Sud) - "Clever Me"</h4>
+            <span class="badge-pays">Afrique du Sud</span>
+            
+            <div class="hero-box">
+                <div class="hero-character">🦸</div>
+                <div><strong>Clever Me</strong> (héros) - celui qui s'arrête pour réfléchir</div>
+                <div class="hero-character">👹</div>
+                <div><strong>Stupid Me</strong> (méchant) - celui qui ne réfléchit pas, se blesse</div>
+            </div>
+            
+            <p><strong>Approche de storytelling pour travailleurs à faible littératie</strong> (9 500 employés, 390 000 hectares).</p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Création d'un <strong>héros ("Clever Me")</strong> et d'un <strong>méchant ("Stupid Me")</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Les travailleurs eux-mêmes ont <strong>nommé les personnages</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Illustre le processus <strong>"Stop and Think Before you Act" (STBA)</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Une équipe a préféré renommer le méchant "Irresponsible Me" — flexibilité de l'approche</li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <strong>Résultats :</strong> Taux d'adoption élevé, sensibilisation considérablement accrue.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.sappi.com/cs/using-storytelling-to-improve-safety" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Sappi - Storytelling</a>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-pledge">📜 Contrat signé</span> <strong>Contrat signé (engagement moral)</strong></td>
+                    <td>CASA Aviation Safety Pledge (Australie)</td>
+                    <td><strong>330+ signataires en 30 jours</strong> pour un engagement public et volontaire, avec reconnaissance officielle et badge numérique</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-ceremony">🎉 Cérémonie</span> <strong>Cérémonie d'accueil / engagement</strong></td>
+                    <td>Akasa Air (Inde) - Pledge ceremonies</td>
+                    <td>Cérémonies dans tous les bureaux, <strong>implication du CEO</strong>, communication interne et externe</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-pledge">📛 Pin's / symbole</span> <strong>Pin's / symbole de reconnaissance</strong></td>
+                    <td>CASA digital badge + public recognition list</td>
+                    <td>Le badge est un <strong>marqueur visible</strong> de l'engagement, la liste publique crée une fierté et une émulation</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-pledge">🤝 Engagement managers</span> <strong>Engagement des managers envers leurs équipes</strong></td>
+                    <td>Menzies Aviation Station Manager Pledge (10 promises)</td>
+                    <td>"Contrat unique entre pairs" dans le ground handling, engagements concrets, lien avec culture "no blame"</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-ceremony">🦸 Symbole fédérateur</span> <strong>Symbole / héros fédérateur</strong></td>
+                    <td>Sappi Forests "Clever Me" storytelling</td>
+                    <td>L'appropriation par les travailleurs (choix des noms) renforce l'engagement émotionnel</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-pledge">CASA</span> <strong>330 signatures :</strong> L'engagement public et volontaire fonctionne à l'échelle nationale.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-pledge">Menzies</span> <strong>10 promesses :</strong> "Contrat entre pairs" applicable au ground handling.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ceremony">Akasa</span> <strong>Cérémonies :</strong> L'implication du CEO donne solennité et légitimité.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ceremony">Sappi</span> <strong>Storytelling :</strong> Le symbole (héros) est plus fort qu'un long discours.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de contrat de confiance est parfaitement alignée avec les meilleures pratiques internationales :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-pledge">CASA</span> engagement national avec badge
+                <span class="badge-pledge">Menzies</span> contrat entre pairs en ground handling
+                <span class="badge-ceremony">Akasa</span> cérémonies avec CEO
+                <span class="badge-ceremony">Sappi</span> héros symbolique
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

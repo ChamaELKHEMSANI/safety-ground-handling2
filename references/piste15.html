@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 15 - Design Émotionnel des Engins</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-award {
+            background: #d9770620;
+            color: #d97706;
+            border: 1px solid #d97706;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-emotion {
+            background: #7c3aed20;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .stat-positive {
+            background: rgba(5, 150, 105, 0.08);
+            border-left: 4px solid #059669;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-positive strong {
+            color: #059669;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        .feature-table th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            padding: 8px;
+            text-align: left;
+        }
+        .feature-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .feature-table tr:last-child td {
+            border-bottom: none;
+        }
+        .axis-badge {
+            display: inline-block;
+            background: #2563eb20;
+            color: #2563eb;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            border: 1px solid #2563eb;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-regular fa-heart"></i>
+            Piste n°15 : Design Émotionnel des Engins
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Cockpit bien-être / Feedback positif / Personnalisation</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-regular fa-face-smile" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Design émotionnel des engins :</strong> Concevoir les postes de conduite et les interactions pour améliorer le bien-être, la reconnaissance positive et l'identité professionnelle des conducteurs.</p>
+                </div>
+            </div>
+            <div style="margin-top: 10px; font-style: italic; color: var(--c-text-muted);">
+                <i class="fa-solid fa-quote-left"></i> "Performance, sécurité ET émotion" — JD Logistics JING-X (Red Dot Award)
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-car-side"></i> Axe 1 - Cockpit bien-être</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-truck"></i> Combilift <span class="badge-org">Combi-STE</span></h4>
+                <span class="badge-pays">Irlande</span>
+                
+                <p><strong>Cabine montée sur silentblocs en caoutchouc</strong> pour chariots élévateurs.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Cabine <strong>isolée du châssis</strong> : minimisation bruit et chocs</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Réduction de la <strong>fatigue opérateur</strong></li>
+                    <li><i class="fa-solid fa-check-circle"></i> Environnement plus silencieux</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Bénéfice :</strong> Conduite plus douce → meilleure concentration, sécurité et productivité améliorées.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://combilift.com/en-us/products/combi-ste-multi-directional-electric-stand-on-forklift/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Combilift</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-bolt"></i> Redway Power <span class="badge-org">Cabine optimale</span></h4>
+                <span class="badge-pays">International</span>
+                
+                <table class="feature-table">
+                    <thead>
+                        <tr>
+                            <th>Fonction</th>
+                            <th>Bénéfice</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sièges à suspension dynamique</strong></td>
+                            <td>Réduction vibrations verticales jusqu'à <strong>60%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sièges multi-axes ajustables</strong></td>
+                            <td><strong>27%</strong> de plaintes musculo-squelettiques en moins</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Écrans anti-éblouissement</strong></td>
+                            <td><strong>40%</strong> réduction fatigue oculaire</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Direction pneumatique</strong></td>
+                            <td><strong>15%</strong> manœuvres plus rapides</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="stat-highlight">
+                    <i class="fa-regular fa-lightbulb"></i> Les cabines modernes deviennent des <strong>"centres de données"</strong> avec IA adaptative en temps réel.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.redwaypower.com/what-defines-an-optimal-forklift-operator-cabin/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Redway Power</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-thumbs-up"></i> Axe 2 - Feedback positif</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-microchip"></i> Motive <span class="badge-org">Positive Driving</span></h4>
+                <span class="badge-pays">États-Unis</span>
+                
+                <p><strong>IA qui identifie automatiquement les bons comportements de conduite</strong> (réaction rapide, distance de sécurité).</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Détection temps réel + validation par équipe sécurité</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Weighting personnalisé</strong> du Safety Score (par flotte/véhicule/conducteur)</li>
+                </ul>
+                
+                <div class="stat-positive">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultats :</strong>
+                </div>
+                <ul>
+                    <li><strong>-64%</strong> d'incidents de sécurité</li>
+                    <li><strong>-43%</strong> de turnover</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Nous avons pu féliciter un conducteur pour sa réactivité qui a évité un accident grave. Positive Driving nous a donné une visibilité instantanée.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://tech.yahoo.com/ai/articles/motive-releases-ai-powered-positive-144802654.html" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Yahoo Tech</a>
+                    <a href="https://gomotive.com/blog/ai-safety-customization-for-fleets/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Motive Blog</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-bus"></i> Transport NSW <span class="badge-org">Co-design sonore AVAS</span></h4>
+                <span class="badge-pays">Australie</span>
+                
+                <p><strong>Développement participatif du son AVAS</strong> pour bus électriques.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Ateliers avec <strong>15 experts + 41 participants</strong></li>
+                    <li><i class="fa-solid fa-check-circle"></i> Techniques d'empathie et cartographie utilisateur</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Objectif : son à la fois <strong>alerte et positif</strong> (calme, poli, vital)</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Résultat :</strong> Son perceptible mais non intrusif, intégrant besoins de toutes les parties prenantes.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/hfm.70004" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Wiley Online</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-sliders"></i> Axes 3 & 4 - Personnalisation et identité visuelle</h3>
+        
+        
+        <div class="grid-3">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-pen-ruler"></i> EAVX <span class="badge-org">JB Poindexter</span></h4>
+                <p><strong>Personnalisation basée sur retours conducteurs</strong>.</p>
+                <ul>
+                    <li>Retour conducteurs intégré dès la conception</li>
+                    <li>Réduction <strong>charge cognitive</strong></li>
+                    <li>Analyse embarquée en temps réel</li>
+                </ul>
+                <div class="quote">
+                    Réduire une partie de la charge cognitive du conducteur est la clé.
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="https://www.fleetequipmentmag.com/eavx-fleet-customization-otr/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Fleet Equipment Mag</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-truck-fast"></i> JD Logistics <span class="badge-org">JING-X</span></h4>
+                <span class="badge-award">Red Dot Award</span>
+                <p><strong>Système de conduite intelligent</strong> combinant performance, sécurité et émotion.</p>
+                <ul>
+                    <li>IA + big data + 5G + jumeau numérique</li>
+                    <li>Soutien <strong>émotionnel</strong> aux conducteurs</li>
+                </ul>
+                <div class="stat-highlight">
+                    <strong>Reconnaissance :</strong> Red Dot Award : Design Concept (Interaction & Expérience Utilisateur)
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="https://www.red-dot.org/project/jing-x-intelligent-driving-system-for-trucks-65889" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Red Dot</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-handshake"></i> SATS & Guangtai</h4>
+                <span class="badge-pays">Singapour / Chine</span>
+                <p><strong>Partenariat 3 ans pour co-conception GSE</strong>.</p>
+                <ul>
+                    <li>Essai mid-size electric airtug</li>
+                    <li>Retours sur conception et fabrication</li>
+                    <li>Formation spécialisée</li>
+                </ul>
+                <div class="quote">
+                    La collaboration nous donne accès à de nouvelles technologies électriques et à une formation spécialisée.
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="https://www.sats.com.sg/media/latest-news/2025/sats-collaborates-with-global-gse-manufacturer-guangtai-to-drive-innovation-in-airport-ground-support-technologies" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> SATS</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="axis-badge">Axe 1</span> <strong>Cockpit bien-être</strong></td>
+                    <td>Combilift STE (cabine suspendue) + Redway Power (sièges dynamiques)</td>
+                    <td>Réduction vibrations jusqu'à <strong>60%</strong>, -27% plaintes musculo-squelettiques</td>
+                </tr>
+                <tr>
+                    <td><span class="axis-badge">Axe 2</span> <strong>Feedback positif</strong></td>
+                    <td>Motive Positive Driving (IA de reconnaissance)</td>
+                    <td><strong>-64%</strong> incidents, <strong>-43%</strong> turnover</td>
+                </tr>
+                <tr>
+                    <td><span class="axis-badge">Axe 2</span> <strong>Sons de félicitation</strong></td>
+                    <td>Transport NSW (co-design sonore AVAS)</td>
+                    <td>Co-conception avec utilisateurs pour sons alertes ET positifs</td>
+                </tr>
+                <tr>
+                    <td><span class="axis-badge">Axe 3</span> <strong>Personnalisation</strong></td>
+                    <td>Motive (seuils personnalisables) + EAVX (design basé retours)</td>
+                    <td>Réduction charge cognitive, ajustement par flotte/véhicule/conducteur</td>
+                </tr>
+                <tr>
+                    <td><span class="axis-badge">Axe 4</span> <strong>Identité visuelle</strong></td>
+                    <td>JD Logistics JING-X (design émotionnel primé)</td>
+                    <td>Reconnaissance Red Dot Award pour approche performance + émotion</td>
+                </tr>
+                <tr>
+                    <td><span class="axis-badge">Global</span> <strong>Approche collaborative</strong></td>
+                    <td>SATS-Guangtai partenariat (co-conception GSE)</td>
+                    <td>Collaboration étroite fabricant-opérateur pour équipements adaptés</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-award">JD Logistics</span> <strong>Red Dot Award :</strong> Performance + émotion = approche primée.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-emotion">Motive</span> <strong>-64% incidents :</strong> La reconnaissance positive réduit accidents ET turnover.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-emotion">Transport NSW</span> <strong>Co-design :</strong> Sons fonctionnels ET agréables.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-emotion">Combilift</span> <strong>Confort :</strong> Réduction vibrations = sécurité active.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-emotion">SATS/Guangtai</span> <strong>Partenariat :</strong> Co-conception = GSE mieux adaptés.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de design émotionnel des engins est parfaitement alignée avec les meilleures pratiques internationales :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-award">JD Logistics</span> performance et émotion primées
+                <span class="badge-emotion">Motive</span> -64% incidents par reconnaissance positive
+                <span class="badge-emotion">Transport NSW</span> co-design sonore
+                <span class="badge-emotion">Combilift</span> confort = sécurité
+                <span class="badge-emotion">SATS/Guangtai</span> co-conception GSE
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 5 - Gamification de la Formation Sécurité</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 800px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-gamification {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid #d97706;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-gamification strong {
+            color: #d97706;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .game-badge {
+            display: inline-block;
+            background: #f59e0b20;
+            color: #d97706;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            border: 1px solid #d97706;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-gamepad"></i>
+            Piste n°5 : Gamification de la Formation Sécurité
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">XP / Badges / Niveaux</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #fef9e7 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: #f59e0b20; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-trophy" style="color: #d97706;"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>La gamification en sécurité :</strong> Utiliser les mécanismes du jeu (points, badges, classements, défis) pour engager, motiver et ancrer durablement les comportements sécuritaires.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-question"></i> Quiz et formations interactives</h3>
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-train"></i> SNCF <span class="badge-org">Kahoot!</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag"></i> France</span>
+                </div>
+                <p><strong>Ce qu'ils font :</strong> Gamification des sessions de formation obligatoire à la sécurité pour <strong>4 000 employés</strong>.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Sessions de 20 min avec 15 QCM</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Utilisation en présentiel et à distance</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Rapports détaillés pour identifier les lacunes</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> Outil de formation "phare" de la SNCF, retours très positifs, engagement accru.
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Le principal avantage de Kahoot! est sa facilité d'utilisation. L'outil engage tous les participants, ce qui est peut-être dû à sa nature compétitive et sociale.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://kahoot.com/business/resources/customer-stories/sncf-railway-mandatory-training/?lang=zh-cn" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Kahoot SNCF</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-truck"></i> Vale <span class="badge-org">Learning Map</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag"></i> Brésil</span>
+                </div>
+                <p><strong>Ce qu'ils font :</strong> Jeu de formation basé sur la méthodologie "Learning Map" pour transformer la culture sécurité.</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-users"></i> 200+ formés</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Jeu de rôle + plateau simulant scénarios réalistes</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Réflexion collective sur responsabilités et décisions</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> Forte demande interne, changement culturel positif, meilleure compréhension systémique des risques.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://aiche.onlinelibrary.wiley.com/doi/10.1002/prs.70037" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Wiley Online</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-bug"></i> Signalement gamifié et culture de l'erreur</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-plane"></i> Industrie Aéronautique Allemande</h4>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span class="badge-pays"><i class="fa-solid fa-flag"></i> Allemagne</span>
+                <span class="game-badge">Hexad</span>
+                <span class="game-badge">Bouton d'urgence</span>
+            </div>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <p><strong>Méthodologie :</strong></p>
+                    <ul>
+                        <li>Enquête "Hexad" pour identifier types d'utilisateurs</li>
+                        <li>Tableau périodique des éléments de gamification (Marczewski)</li>
+                        <li>Prototype "bouton d'urgence" pour signaler anomalies</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Résultats :</strong></p>
+                    <ul>
+                        <li>Réduction des dommages de manutention</li>
+                        <li>Augmentation notable du reporting</li>
+                        <li>Signalement de défauts sur pièces brutes (bénéfice inattendu)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="stat-gamification" style="margin-top: 10px;">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> Le bouton d'urgence, simple à utiliser, a créé une "meilleure culture de l'erreur". Implication des groupes concernés dans le développement est essentielle.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.springerprofessional.de/en/developing-gamification-strategies-to-reduce-handling-damages-in/27164512" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Springer Professional</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-vr-cardboard"></i> Simulation VR pour formation pratique</h3>
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-bag-shopping"></i> Airline Assistance Switzerland <span class="badge-org">Draxon</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag"></i> Suisse</span>
+                </div>
+                <p><strong>Modules VR :</strong></p>
+                <ul>
+                    <li>Arrivée avion</li>
+                    <li>Examen de rotation</li>
+                    <li>Pose et retrait des cônes</li>
+                    <li>Chargement/déchargement</li>
+                    <li>Détection FOD</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> "Game-changing learning experience", employés fascinés, attractivité renforcée pour recrutement.
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Les cours théoriques, les PowerPoint interminables ne correspondent pas à l'ADN des gens de notre industrie.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://ghi.mydigitalpublication.co.uk/articles/ramp-safety-briefing?article_id=5025742&i=850851" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> GHI Article</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-plane-lock"></i> NetJets <span class="badge-org">MSU Capstone</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag-usa"></i> États-Unis</span>
+                </div>
+                <p><strong>Scénarios VR :</strong></p>
+                <ul>
+                    <li><strong>Changement de pneu</strong> (manuel, notation)</li>
+                    <li><strong>Marshalling</strong> (guidage avion)</li>
+                    <li><strong>Croissance d'aile</strong> (obstacles)</li>
+                </ul>
+                <p>Mode entraînement (guides) + mode évaluation (score).</p>
+                
+                <div class="stat-highlight">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> Réduction des coûts, apprentissage sans risque d'erreur.
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> "Apprendre par l'erreur n'est pas une option" – NetJets
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://capstone.cse.msu.edu/2026-01/projects/netjets/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> MSU Capstone</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-people-group"></i> Jeux de rôle et développement des soft skills</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-helmet-safety"></i> icare & RMIT (Australie) <span class="badge-org">BTP</span></h4>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span class="badge-pays"><i class="fa-solid fa-flag"></i> Australie</span>
+            </div>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <p><strong>Ce qu'ils font :</strong> Jeu de rôle numérique pour jeunes ouvriers du bâtiment (18-24 ans).</p>
+                    <ul>
+                        <li>Trois scénarios basés sur vécu réel</li>
+                        <li>Prise de décision au tour par tour avec conséquences</li>
+                        <li>Objectif : améliorer communication entre jeunes et superviseurs</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Résultats :</strong></p>
+                    <ul>
+                        <li>120 apprentis en test</li>
+                        <li>Scénarios "engageants, pertinents, applicables"</li>
+                        <li>Développement des soft skills</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="quote" style="margin-top: 10px;">
+                <i class="fa-solid fa-quote-left"></i> Maintenir une communication ouverte est essentiel pour la sécurité. Les compétences non techniques sont difficiles à enseigner en classe.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.icare.nsw.gov.au/news-and-stories/2022/ipic-and-rmit-story" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> icare NSW</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-mobile-screen"></i> Applications gamifiées et engagement conducteurs</h3>
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-car"></i> i-DREAMS <span class="badge-org">Belgique/Royaume-Uni</span></h4>
+                <p><strong>Application smartphone gamifiée</strong> pour conducteurs.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Scores, objectifs, classements</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Suivi des trajets</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultats :</strong> Réengagement constaté lors de l'activation des fonctions gamifiées. Relation dose-réponse : plus d'usage = plus de progrès.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://documentserver.uhasselt.be/handle/1942/47422?mode=simple" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Uhasselt Research</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-tablets"></i> Hazardometrics <span class="badge-org">Mexique/France/Italie</span></h4>
+                <p><strong>Jeu de cartes pictographiques</strong> pour améliorer la compréhension des risques.</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-users"></i> 2000+ participants</span>
+                    <span class="chiffre"><i class="fa-solid fa-flag"></i> 78 ambassadeurs</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Adapté aux malentendants (langue des signes)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Version digitale avec avatar IA</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultats :</strong> 75% identifient correctement les risques, 95% de satisfaction.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.preventionweb.net/resource/case-study/hazardometrics-playful-approach-strengthening-risk-awareness" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> PreventionWeb</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Quiz sécurité (points XP)</strong></td>
+                    <td>SNCF (Kahoot!)</td>
+                    <td>La compétition sociale engage et motive</td>
+                </tr>
+                <tr>
+                    <td><strong>Niveaux et badges</strong></td>
+                    <td>Vale (Learning Map)</td>
+                    <td>Transformation culturelle par l'immersion collective</td>
+                </tr>
+                <tr>
+                    <td><strong>Signalement gamifié (+25 XP)</strong></td>
+                    <td>Industrie aéronautique allemande</td>
+                    <td>Le "bouton d'urgence" augmente le reporting</td>
+                </tr>
+                <tr>
+                    <td><strong>Immersion VR</strong></td>
+                    <td>AAS (Draxon) & NetJets</td>
+                    <td>Formation sans risque, attractive pour recrutement</td>
+                </tr>
+                <tr>
+                    <td><strong>Classements équipes</strong></td>
+                    <td>i-DREAMS (Belgique/UK)</td>
+                    <td>Relation dose-réponse : + d'usage = + de progrès</td>
+                </tr>
+                <tr>
+                    <td><strong>Défis et missions</strong></td>
+                    <td>icare Australie (BTP)</td>
+                    <td>Scénarios basés sur vécu réel = engagement</td>
+                </tr>
+                <tr>
+                    <td><strong>Pédagogie accessible</strong></td>
+                    <td>Hazardometrics (international)</td>
+                    <td>95% satisfaction, 75% rétention connaissances</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+</html>

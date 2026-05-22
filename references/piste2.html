@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 2 - Équipes Mobiles de Prévention Sécurité</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 700px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-agency {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .table-quotas {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-quotas th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-quotas td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .table-quotas tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .dot-agency {
+            display: inline-block;
+            background: #1f2937;
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+        .legal-guarantee {
+            background: rgba(5, 150, 105, 0.03);
+            border: 1px solid rgba(5, 150, 105, 0.2);
+            border-radius: var(--radius);
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        .legal-guarantee i {
+            color: #059669;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-truck-fast"></i>
+            Piste n°2 : Équipes Mobiles de Prévention Sécurité (EMPS)
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Inspiration DOT</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px;">
+            <h3><i class="fa-solid fa-gavel"></i> Le Cadre Réglementaire Américain : DOT (Département des Transports)</h3>
+            
+            <h4><i class="fa-regular fa-clipboard"></i> Ce qu'ils font</h4>
+            <p style="font-size: 0.9rem;">Le Département des Transports américain impose à toutes les entreprises de transport un programme obligatoire de dépistage alcool et stupéfiants pour les employés occupant des fonctions de sécurité. Le cœur du dispositif repose sur des <strong>tests aléatoires</strong> avec des quotas minimums annuels :</p>
+            
+            <table class="table-quotas">
+                <thead>
+                    <tr>
+                        <th>Agence</th>
+                        <th>Secteur</th>
+                        <th>Stupéfiants</th>
+                        <th>Alcool</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>FMCSA</td><td>Transport routier</td><td>50%</td><td>10%</td></tr>
+                    <tr><td>FTA</td><td>Transports en commun</td><td>50%</td><td>10%</td></tr>
+                    <tr><td>FAA</td><td>Aviation</td><td>25%</td><td>10%</td></tr>
+                    <tr><td>FRA</td><td>Ferroviaire</td><td>25-50%</td><td>10-25%</td></tr>
+                </tbody>
+            </table>
+            
+            <p style="font-size: 0.9rem;">Le programme couvre plusieurs types de tests : pré-embauche, aléatoire, soupçon raisonnable, post-accident, retour au travail et suivi.</p>
+            
+            <div class="stat-highlight">
+                <i class="fa-solid fa-chart-line"></i> <strong>Le Résultat :</strong> Ce système a créé une <strong>dissuasion structurelle</strong> à l'échelle nationale. Les taux de positivité sont maintenus à des niveaux bas (autour de 1-2%). Les entreprises qui ne s'y conforment pas s'exposent à des amendes lourdes et à l'exclusion des financements fédéraux.
+            </div>
+            
+            <h4><i class="fa-regular fa-lightbulb"></i> La Leçon</h4>
+            <p style="font-size: 0.9rem; font-style: italic; background: var(--c-surface); padding: 12px; border-radius: var(--radius);">
+                <i class="fa-solid fa-quote-left" style="color: var(--c-primary); opacity: 0.5;"></i>
+                Le <strong>volume et l'aléa des contrôles sont plus importants que leur sévérité</strong>. L'obligation de tester un pourcentage minimum du personnel chaque année (50% pour les stupéfiants) garantit une pression constante et imprévisible. C'est exactement la logique que vous proposez avec vos Équipes Mobiles de Prévention Sécurité (EMPS) et leurs 20 à 30 tests quotidiens.
+            </p>
+            
+            <div style="margin-top: 15px;">
+                <a href="https://www.ecfr.gov/on/2025-07-01/title-49/subtitle-B/chapter-VI/part-655" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> eCFR Part 655</a>
+                <a href="https://transit.dot.gov/regulations-and-guidance/safety/drug-alcohol-program-regulations-rules-notices" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> DOT.gov</a>
+                <a href="https://disa.com/news/random-drug-testing-a-comprehensive-guide-for-employers/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> DISA Guide</a>
+            </div>
+        </div>
+
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h3><i class="fa-solid fa-scale-balanced"></i>  Garanties Juridiques et Procédurales</h3>
+                
+                <h4><i class="fa-regular fa-clipboard"></i> Ce qu'ils font</h4>
+                <p style="font-size: 0.85rem;">La réglementation DOT prévoit un cadre procédural extrêmement détaillé pour garantir les droits des salariés :</p>
+                
+                <div class="legal-guarantee">
+                    <i class="fa-solid fa-link"></i> <strong>Chaîne de custody</strong> : traçabilité stricte des échantillons
+                </div>
+                <div class="legal-guarantee">
+                    <i class="fa-solid fa-flask"></i> <strong>Double test</strong> : confirmation par chromatographie/spectrométrie de masse
+                </div>
+                <div class="legal-guarantee">
+                    <i class="fa-solid fa-vial"></i> <strong>Split sample</strong> : possibilité de contre-expertise indépendante
+                </div>
+                <div class="legal-guarantee">
+                    <i class="fa-solid fa-user-md"></i> <strong>Médecin référent</strong> (MRO) examine tous les positifs
+                </div>
+                <div class="legal-guarantee">
+                    <i class="fa-solid fa-lock"></i> <strong>Confidentialité</strong> : résultats protégés, non utilisables au pénal
+                </div>
+                
+                <div class="stat-highlight" style="margin: 10px 0;">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> Acceptabilité sociale garantie, contestations réduites.
+                </div>
+                
+                <h4><i class="fa-regular fa-lightbulb"></i> Leçon pour EMPS</h4>
+                <p style="font-size: 0.85rem; background: var(--c-primary-light); padding: 10px; border-radius: var(--radius);">
+                    Intégrer : droit à la contre-expertise (faux positifs), double test systématique, confidentialité, information préalable des salariés.
+                </p>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.lawinsider.com/clause/schedule-a-dot-drug-and-alcohol-testing" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Law Insider</a>
+                    <a href="https://www.law.cornell.edu/regulations/missouri/20-CSR-4240-40-080" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Cornell Law</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h3><i class="fa-solid fa-id-card"></i> 🎓 Programme Conducteurs de Poids Lourds (CDL)</h3>
+                
+                <h4><i class="fa-regular fa-clipboard"></i> Ce qu'ils font</h4>
+                <ul style="font-size: 0.85rem; padding-left: 20px; margin-bottom: 10px;">
+                    <li><strong>Plan écrit obligatoire</strong> pour chaque employeur</li>
+                    <li><strong>Formation des superviseurs</strong> à la détection</li>
+                    <li><strong>Mise à l'écart préventive</strong> dès 0,02% d'alcoolémie</li>
+                    <li><strong>Conséquences graduées</strong> : évaluation → traitement → suivi</li>
+                    <li><strong>Base de données nationale</strong> (FMCSA Clearinghouse) depuis 2020</li>
+                </ul>
+                
+                <div class="stat-highlight" style="margin: 10px 0;">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> Traçabilité nationale, pas de "nomadisme" des conducteurs à risque.
+                </div>
+                
+                <h4><i class="fa-regular fa-lightbulb"></i> Leçon pour EMPS</h4>
+                <p style="font-size: 0.85rem; background: var(--c-primary-light); padding: 10px; border-radius: var(--radius);">
+                    <strong>1.</strong> La base de données nationale correspond à votre idée de <strong>"reconnaissance mutuelle du solde de points"</strong> entre entreprises.<br>
+                    <strong>2.</strong> Formation obligatoire des superviseurs (équipes EMPS) prévue dans votre budget.
+                </p>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://catalog.dmacc.edu/preview_course_nopop.php?catoid=27&coid=30720" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> DMACC Catalog</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card" style="margin-bottom: 20px;">
+            <h3><i class="fa-solid fa-chart-line"></i>  Le Principe des Quotas et l'Ajustement Dynamique</h3>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <h4><i class="fa-regular fa-clipboard"></i> Ce qu'ils font</h4>
+                    <p style="font-size: 0.9rem;">Les agences DOT ajustent périodiquement les taux minimums de test en fonction des résultats observés : si le taux de positivité national dépasse 1%, le taux de test aléatoire peut être augmenté (ex: passage de 25% à 50% pour le transport routier).</p>
+                </div>
+                <div>
+                    <h4><i class="fa-regular fa-lightbulb"></i> Leçon pour EMPS</h4>
+                    <p style="font-size: 0.9rem; background: var(--c-primary-light); padding: 10px; border-radius: var(--radius);">
+                        Vos objectifs quantifiés (taux de positivité < 0,1% alcool, < 0,05% stupéfiants) doivent être liés à l'intensité des contrôles : si non atteints, augmentation de la fréquence des tests.
+                    </p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 15px;">
+                <a href="https://disa.com/news/random-drug-testing-a-comprehensive-guide-for-employers/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> DISA Guide</a>
+                <a href="https://dev.natlawreview.com/node/283444/printable/print" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> NatLaw Review</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-table"></i>  Synthèse comparative </h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th>Élément du dispositif DOT</th>
+                    <th>Correspondance dans la Piste 2 (EMPS)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tests aléatoires avec quotas minimums</strong> (50% stupéfiants, 10% alcool)</td>
+                    <td>Équipes Mobiles de Prévention Sécurité avec objectifs de <strong>20-30 tests/jour</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Multiples circonstances de test</strong> (pré-embauche, aléatoire, soupçon, post-accident)</td>
+                    <td>Contrôles inopinés renforcés + articulation avec le <strong>permis à points</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Garanties procédurales</strong> (double test, split sample, MRO, confidentialité)</td>
+                    <td>Double test systématique, <strong>droit à la contre-expertise</strong>, confidentialité</td>
+                </tr>
+                <tr>
+                    <td><strong>Formation obligatoire des superviseurs</strong> à la détection</td>
+                    <td><strong>Formation des équipes EMPS</strong> prévue dans votre budget</td>
+                </tr>
+                <tr>
+                    <td><strong>Base de données nationale</strong> (FMCSA Clearinghouse)</td>
+                    <td><strong>Reconnaissance mutuelle du solde de points</strong> entre entreprises</td>
+                </tr>
+                <tr>
+                    <td><strong>Seuils d'alcoolémie précis</strong> (0,02% / 0,04%)</td>
+                    <td>Vos seuils : 0,2-0,5 g/L (positif léger) et > 0,5 g/L (positif grave)</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+</html>

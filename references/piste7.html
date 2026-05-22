@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 7 - Équipements de Sécurité Embarqués</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 800px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-tech {
+            background: #2563eb20;
+            color: #2563eb;
+            border: 1px solid #2563eb;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .stat-cost {
+            background: rgba(5, 150, 105, 0.08);
+            border-left: 4px solid #059669;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-cost strong {
+            color: #059669;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .tech-spec {
+            background: white;
+            border: 1px dashed var(--c-border);
+            border-radius: var(--radius);
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .tech-spec i {
+            color: var(--c-primary);
+        }
+        .spec-item {
+            background: var(--c-primary-light);
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-microchip"></i>
+            Piste n°7 : Équipements de Sécurité Embarqués
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Caméras / LiDAR / UWB / Géofencing</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-shield-halved" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Équipements de sécurité embarqués :</strong> Technologies embarquées sur les engins de piste pour prévenir les collisions, détecter les piétons, et alerter en temps réel.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-industry"></i> Solutions industrielles transposables</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-truck"></i> Glencore <span class="badge-org">ELOKON ELOshield</span></h4>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <span class="badge-pays"><i class="fa-solid fa-flag"></i> États-Unis (Rhode Island)</span>
+                <span class="badge-tech">UWB (Ultra-Wideband)</span>
+            </div>
+            
+            <p><strong>Ce qu'ils font :</strong> Équipement complet du site de recyclage : 30 chariots élévateurs + tout le personnel (y compris visiteurs) avec détection de proximité ELOshield.</p>
+            
+            <div class="tech-spec">
+                <i class="fa-solid fa-ruler"></i> <strong>Technologie UWB bidirectionnelle</strong>
+                <span class="spec-item"><i class="fa-regular fa-circle-dot"></i> Zones d'alerte ajustables</span>
+                <span class="spec-item"><i class="fa-solid fa-rotate"></i> Rétrofittable</span>
+                <span class="spec-item"><i class="fa-regular fa-bell"></i> Alertes visuelles et sonores</span>
+            </div>
+            
+            <div class="stat-cost">
+                <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> "Aucun incident significatif" impliquant des chariots depuis l'installation. Awareness accrue de tous les employés.
+            </div>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Le système a accru la conscience et la perception des dangers de chacun, rendant notre installation beaucoup plus sûre.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.mmh.com/article/glencore_improves_recycling_plant_safety_with_elokon_automated_forklift_system/equipment" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> MMH Article</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-plane"></i> Solutions pour l'aviation et les GSE</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-radar"></i> Evitado <span class="badge-org">ELVIZ</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag"></i> Allemagne</span>
+                    <span class="badge-tech">LiDAR 3D 360°</span>
+                </div>
+                
+                <p><strong>Système anti-collision "plug-and-play"</strong> pour opérations au sol.</p>
+                
+                <div class="tech-spec">
+                    <i class="fa-solid fa-ruler"></i> <strong>100 m portée / 10 cm précision</strong>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Montable sur aéronefs OU véhicules de piste</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Alertes en temps réel (sonores, visuelles)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Répond à l'appel à technologie FAA contre collisions au sol</li>
+                </ul>
+                
+                <div class="stat-impact">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Réduction potentielle :</strong> Jusqu'à <strong>90% des incidents</strong>
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Les collisions au sol coûtent des milliards à l'aviation. Beaucoup d'aéroports utilisent encore des procédures inchangées depuis des décennies.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.gate-alliance.com/2025/07/28/safety-meets-intelligence-how-evitado-is-powering-the-next-generation-of-airside-operations/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Gate Alliance</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-camera"></i> Brigade Electronics <span class="badge-org">Backeye®360</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-globe"></i> International</span>
+                    <span class="badge-tech">IA / Caméras 360°</span>
+                </div>
+                
+                <p><strong>Kits de sécurité spécifiques GSE</strong> avec caméras 360°, détection humaine par IA et alarmes adaptatives.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> HFR HD Backeye®360 : vision 360° HD + reconnaissance humaine IA</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Caméras dédiées approche initiale (ailes) et approche finale (fuselage)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Systèmes adaptés par type d'engin (catering, lavatory, pushback)</li>
+                </ul>
+                
+                <div class="stat-cost">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Impact économique :</strong> Selon IATA, réduction des dommages au sol <strong>jusqu'à -42%</strong>. Coûts mondiaux : <strong>10 Mds$ d'ici 2035</strong> si rien n'est fait.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://africanpilot.africa/brigade-discusses-how-tailored-gse-safety-systems-can-cut-ground-damage-costs-by-up-to-42/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> African Pilot</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-satellite"></i> Systèmes de tracking et géofencing</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-map-location-dot"></i> Collins Aerospace <span class="badge-org">Airport Surface Awareness System</span></h4>
+            <div style="display: flex; justify-content: space-between;">
+                <span class="badge-pays"><i class="fa-solid fa-flag"></i> États-Unis</span>
+                <span class="badge-tech">ADS-B / Géofencing</span>
+            </div>
+            
+            <p><strong>Système de tracking temps réel</strong> pour aéronefs ET équipements au sol (GSE).</p>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <p><strong>Technologies :</strong></p>
+                    <ul>
+                        <li>Suivi aéronefs (ADS-B, radar)</li>
+                        <li>Suivi équipements motorisés ET non-motorisés</li>
+                        <li>Application cartographique interactive</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Fonctionnalités sécurité :</strong></p>
+                    <ul>
+                        <li><strong>Géofencing</strong> avec alertes</li>
+                        <li>Alertes <strong>limitations de vitesse</strong></li>
+                        <li>Alertes <strong>zones interdites</strong></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> L'intégration géofencing + alertes vitesse correspond directement à votre proposition de limiteurs de vitesse embarqués.
+            </div>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Le manque de conscience situationnelle contribue constamment aux problèmes critiques dans les aéroports.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.globalair.com/articles/collins-aerospace-unveils-new-solution-to-enhance-airfield-operations-surface-awareness?id=7397" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Global Air</a>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <i class="fa-solid fa-people-group" style="color: var(--c-primary);"></i> <strong>Glencore :</strong> Équiper TOUS les acteurs (engins + personnels) = sécurité systémique.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <i class="fa-solid fa-radar" style="color: var(--c-primary);"></i> <strong>Evitado :</strong> LiDAR 100m/10cm, plug-and-play, -90% incidents potentiels.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <i class="fa-solid fa-camera" style="color: var(--c-primary);"></i> <strong>Brigade :</strong> Approche "tailored" par type d'engin + IA pour détection humaine.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <i class="fa-solid fa-map-pin" style="color: var(--c-primary);"></i> <strong>Collins :</strong> Géofencing + alertes vitesse = votre proposition de limiteurs.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <i class="fa-solid fa-chart-line" style="color: var(--c-primary);"></i> <strong>IATA :</strong> 10 Mds$ en 2035 si rien, -42% avec équipements.
+                </div>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 25px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Caméras 360°</strong></td>
+                    <td>Brigade Electronics (Backeye®360)</td>
+                    <td>IA pour détection humaine + caméras dédiées approche aile/fuselage</td>
+                </tr>
+                <tr>
+                    <td><strong>Détecteurs de proximité</strong></td>
+                    <td>Evitado (ELVIZ LiDAR)</td>
+                    <td>Précision 10 cm à 100 m, réduction incidents jusqu'à -90%</td>
+                </tr>
+                <tr>
+                    <td><strong>Détection piétons/engins</strong></td>
+                    <td>Glencore (ELOKON ELOshield)</td>
+                    <td>Équiper TOUS les acteurs (engins + personnels) pour sécurité systémique</td>
+                </tr>
+                <tr>
+                    <td><strong>Limitation vitesse / géofencing</strong></td>
+                    <td>Collins Aerospace (Airport Surface Awareness)</td>
+                    <td>Alertes automatiques sur violations de zones/vitesses</td>
+                </tr>
+                <tr>
+                    <td><strong>Rétrofit sur parc existant</strong></td>
+                    <td>Evitado (plug-and-play), ELOKON (UWB)</td>
+                    <td>Solutions non-intrusives, déployables rapidement</td>
+                </tr>
+                <tr>
+                    <td><strong>Coût dommages sol</strong></td>
+                    <td>Brigade / IATA</td>
+                    <td>10 Mds$ en 2035 si rien n'est fait, -42% avec équipements</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+            <span class="badge-tech" style="font-size: 0.8rem; padding: 5px 12px;"><i class="fa-solid fa-wifi"></i> UWB (ELOKON)</span>
+            <span class="badge-tech" style="font-size: 0.8rem; padding: 5px 12px;"><i class="fa-solid fa-satellite"></i> LiDAR 3D (Evitado)</span>
+            <span class="badge-tech" style="font-size: 0.8rem; padding: 5px 12px;"><i class="fa-solid fa-camera"></i> Caméras IA (Brigade)</span>
+            <span class="badge-tech" style="font-size: 0.8rem; padding: 5px 12px;"><i class="fa-solid fa-map-location-dot"></i> ADS-B / Géofencing (Collins)</span>
+        </div>
+
+
+    </div>
+</body>
+</html>

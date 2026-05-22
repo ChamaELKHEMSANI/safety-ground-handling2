@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 8 - IA Prédictive pour la Sécurité en Piste</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-tech {
+            background: #2563eb20;
+            color: #2563eb;
+            border: 1px solid #2563eb;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-ia {
+            background: #7c3aed20;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-precision {
+            background: rgba(124, 58, 237, 0.08);
+            border-left: 4px solid #7c3aed;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-precision strong {
+            color: #7c3aed;
+        }
+        .stat-unsupervised {
+            background: rgba(5, 150, 105, 0.08);
+            border-left: 4px solid #059669;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-unsupervised strong {
+            color: #059669;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .tech-spec {
+            background: white;
+            border: 1px dashed var(--c-border);
+            border-radius: var(--radius);
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .tech-spec i {
+            color: var(--c-primary);
+        }
+        .spec-item {
+            background: var(--c-primary-light);
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .use-case-badge {
+            display: inline-block;
+            background: #d9770620;
+            color: #d97706;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            border: 1px solid #d97706;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-brain"></i>
+            Piste n°8 : IA Prédictive pour la Sécurité en Piste
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Machine Learning / Deep Learning</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-chart-line" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>IA prédictive pour la sécurité :</strong> Anticiper les risques avant qu'ils ne surviennent en analysant les données historiques, les comportements et les signaux faibles.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-plane"></i> Applications dans l'aviation et les aéroports</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-cloud-bolt"></i> ANA (Japon) <span class="badge-org">BlueWX</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag"></i> Japon</span>
+                    <span class="badge-tech">Deep Learning</span>
+                </div>
+                
+                <p><strong>Prédiction des turbulences par IA</strong> - Première compagnie aérienne mondiale à intégrer ce service.</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-chart-line"></i> 86% précision</span>
+                    <span class="chiffre"><i class="fa-solid fa-users"></i> 2 500 pilotes</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Deep learning sur une décennie de données de turbulences</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Intégration dans l'infrastructure météo</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Optimisation des routes de vol</li>
+                </ul>
+                
+                <div class="stat-precision">
+                    <i class="fa-solid fa-bullseye"></i> <strong>86% de précision</strong> dans la prévision des turbulences
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Pour les compagnies aériennes, la prédiction des turbulences est un défi de longue date. Ce système garantira une expérience de voyage plus fiable.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://aerospaceglobalnews.com/news/ana-ai-turbulence-prediction/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Aerospace Global News</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-radar"></i> Cortical.io (Autriche)</h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays"><i class="fa-solid fa-flag"></i> Autriche</span>
+                    <span class="badge-tech">Semantic Folding</span>
+                </div>
+                
+                <p><strong>Détection d'anomalies sur données radar</strong> par apprentissage non supervisé.</p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-database"></i> 8 766 enregistrements</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Apprentissage totalement <strong>non supervisé</strong> (pas de labellisation)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Conversion des signatures radar en "empreintes sémantiques"</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Détection drones, oiseaux, trajectoires non autorisées</li>
+                </ul>
+                
+                <div class="stat-unsupervised">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Atout clé :</strong> Détection d'anomalies subtiles et émergentes, même non rencontrées en apprentissage.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.cortical.io/science/semantic-folding-for-sensor-fusion/sensor-fusion-case-study-anomaly-detection-in-aviation-safety/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Cortical.io</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-helmet-safety"></i> Applications dans l'industrie et les chantiers</h3>
+        
+        
+        <div class="grid-3">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-cube"></i> Hitachi <span class="badge-org">Naivy</span></h4>
+                <span class="badge-pays">Japon</span>
+                <p><strong>Agent IA "Frontline Coordinator"</strong> pour prédiction des risques sur chantiers.</p>
+                <ul>
+                    <li>Recréation du site dans le métavers</li>
+                    <li>Recherche de cas passés similaires</li>
+                    <li>Visualisation zones dangereuses</li>
+                </ul>
+                <div class="stat-highlight">
+                    <strong>-20%</strong> de temps formation à la prédiction des risques
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="https://rd.hitachi.com/_ct/17806977" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Hitachi RD</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-robot"></i> Proboy (Corée)</h4>
+                <span class="badge-pays">Corée</span>
+                <span class="badge-tech">Non supervisé</span>
+                <p><strong>Détection de collisions avec charges non standard</strong> (pales, blocs navire).</p>
+                <ul>
+                    <li>Fusion caméra-LiDAR IP67</li>
+                    <li>IA non supervisée : détection sans labellisation</li>
+                    <li>Calibration propriétaire caméra 2D / LiDAR 3D</li>
+                </ul>
+                <div class="quote">
+                    Nos concurrents ne prédisent que collisions entre engins. Nous prédisons collisions avec charges imprévisibles.
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="https://www.venturesquare.net/en/1006882" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Venture Square</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-flask"></i> ChemSafeAI+</h4>
+                <span class="badge-tech">Gradient Boosting</span>
+                <p><strong>Framework ML pour sécurité des procédés chimiques</strong>.</p>
+                <ul>
+                    <li>Détection d'anomalies en temps réel</li>
+                    <li>Explicabilité SHAP</li>
+                    <li>Test sur 5 000 scénarios Haber-Bosch</li>
+                </ul>
+                <div class="stat-highlight">
+                    Dépasser les seuils statiques, détecter déviations non linéaires précoces.
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="https://www.techrxiv.org/browse-all?tags=%5B%22chemical+process%22%5D" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> TechRxiv</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-heart-pulse"></i> Facteur humain et gestion de risques terrain</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-user-astronaut"></i> NATO <span class="badge-org">Human Digital Twin</span></h4>
+                <span class="badge-pays">OTAN</span>
+                <p><strong>Jumeau Humain Digital</strong> pour prédire performance des pilotes en temps réel.</p>
+                <ul>
+                    <li>IA prédictive (Temporal Fusion Transformer)</li>
+                    <li>IA décisionnelle (Gaussian Processes)</li>
+                    <li>Données physiologiques + caractéristiques individuelles</li>
+                </ul>
+                <div class="stat-precision">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Application directe :</strong> Détection fatigue conducteurs via données physiologiques.
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="https://www.sto.nato.int/document/an-ai-framework-for-real-time-flight-performance-forecasting-and-assessment-presentation/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> NATO STO</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-bolt"></i> Enexis (Pays-Bas)</h4>
+                <span class="badge-pays">Pays-Bas</span>
+                <p><strong>Modèle prédictif pour activités d'excavation à risque</strong>.</p>
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-regular fa-bell"></i> 1 000 notif/jour</span>
+                </div>
+                <ul>
+                    <li>Cadre probabiliste (régression logistique)</li>
+                    <li>Score de risque + facteurs explicatifs</li>
+                    <li>Réentraînement hebdomadaire</li>
+                    <li><strong>Cocréation</strong> avec équipes terrain</li>
+                </ul>
+                <div class="stat-highlight">
+                    <strong>Clé du succès :</strong> L'explicabilité a transformé un outil rejeté en outil central.
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="https://xomnia.com/enexis-builds-a-forecasting-model-for-risky-excavation-activities" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Xomnia</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="use-case-badge">CAS 1</span> <strong>Conduite à risque / comportements</strong></td>
+                    <td>Proboy (Corée) - IA non supervisée</td>
+                    <td>Détecte même les risques "invisibles" (charges non standard, comportements imprévisibles)</td>
+                </tr>
+                <tr>
+                    <td><span class="use-case-badge">CAS 2</span> <strong>Détection fatigue / facteur humain</strong></td>
+                    <td>NATO (Human Digital Twin)</td>
+                    <td>Données physiologiques + IA = prédiction performance et marges sécurité</td>
+                </tr>
+                <tr>
+                    <td><span class="use-case-badge">CAS 3</span> <strong>Hotspots prédictifs / anomalies</strong></td>
+                    <td>Cortical.io (radar)</td>
+                    <td>Détection d'anomalies subtiles et émergentes avant systèmes traditionnels</td>
+                </tr>
+                <tr>
+                    <td><span class="use-case-badge">CAS 4</span> <strong>Maintenance prédictive</strong></td>
+                    <td>ChemSafeAI+</td>
+                    <td>Dépasser les seuils statiques, détecter déviations non linéaires précoces</td>
+                </tr>
+                <tr>
+                    <td><span class="use-case-badge">CAS 5</span> <strong>Anticipation risques / formation</strong></td>
+                    <td>Hitachi Naivy</td>
+                    <td>-20% temps formation, visualisation intuitive des zones dangereuses</td>
+                </tr>
+                <tr>
+                    <td><span class="use-case-badge">Approche générale</span></td>
+                    <td>Enexis (Pays-Bas)</td>
+                    <td>L'explicabilité + cocréation = adoption par les experts terrain</td>
+                </tr>
+                <tr>
+                    <td><span class="use-case-badge">Performance opérateurs</span></td>
+                    <td>ANA turbulence</td>
+                    <td>86% précision après tests 2 500 pilotes, intégration opérationnelle</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ia">86% précision</span> <strong>ANA :</strong> L'IA entraînée sur données historiques massives anticipe avec fiabilité.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ia">Non supervisé</span> <strong>Proboy / Cortical.io :</strong> Détection des risques que personne n'a anticipés.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ia">Explicabilité</span> <strong>Enexis :</strong> La clé de l'adoption par les experts terrain.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ia">-20% formation</span> <strong>Hitachi :</strong> Visualisation intuitive des risques.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ia">Données physio</span> <strong>NATO :</strong> Prédiction de la fatigue et des marges sécurité.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition d'IA prédictive pour la sécurité en piste est parfaitement alignée avec l'état de l'art :</strong> ANA (aviation), NATO (facteur humain), Hitachi (industrie lourde), Enexis (gestion de risques terrain), et Proboy (détection de risques non standard) déploient déjà ces technologies avec des bénéfices mesurables.
+            </p>
+        </div>
+
+
+    </div>
+</body>
+</html>

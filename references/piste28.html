@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 28 - Musée de la Sécurité</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-museum {
+            background: #7c3aed20;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-simulator {
+            background: #d9770620;
+            color: #d97706;
+            border: 1px solid #d97706;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .museum-space {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .museum-card {
+            flex: 1;
+            min-width: 150px;
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 12px;
+            text-align: center;
+        }
+        .museum-card i {
+            font-size: 1.5rem;
+            color: var(--c-primary);
+            margin-bottom: 5px;
+        }
+        .timeline-museum {
+            background: #f3f4f6;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+        }
+        .museum-year {
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--c-primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-building-columns"></i>
+            Piste n°28 : Musée de la Sécurité
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Mémoire / Transmission / Immersion</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Musée de la Sécurité :</strong> Un lieu physique dédié à la mémoire des accidents, à l'évolution des pratiques et à la transmission intergénérationnelle, avec des espaces immersifs et interactifs.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="museum-space">
+            <div class="museum-card">
+                <i class="fa-solid fa-tractor"></i>
+                <div><strong>Engins d'hier</strong></div>
+                <div style="font-size:0.7rem;">Matériels restaurés</div>
+            </div>
+            <div class="museum-card">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div><strong>Mémoire des accidents</strong></div>
+                <div style="font-size:0.7rem;">Objets symboles</div>
+            </div>
+            <div class="museum-card">
+                <i class="fa-solid fa-microphone"></i>
+                <div><strong>Témoignages</strong></div>
+                <div style="font-size:0.7rem;">Anciens, enregistrements</div>
+            </div>
+            <div class="museum-card">
+                <i class="fa-solid fa-headphones"></i>
+                <div><strong>Immersion</strong></div>
+                <div style="font-size:0.7rem;">Simulateurs, VR</div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-plane"></i> Delta Flight Museum (Atlanta, États-Unis)</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-building"></i> Delta Air Lines - Centenaire 2025</h4>
+            <span class="badge-pays">Atlanta, États-Unis</span>
+            
+            <div class="stats-chiffres">
+                <span class="chiffre"><i class="fa-regular fa-building"></i> 6 300 m²</span>
+                <span class="chiffre"><i class="fa-solid fa-plane"></i> 288 objets</span>
+                <span class="chiffre"><i class="fa-regular fa-clock"></i> 100 ans</span>
+            </div>
+            
+            <p><strong>Musée d'entreprise rénové en 2025 pour le centenaire de Delta.</strong></p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Collection d'avions historiques dont le <strong>Douglas DC-3</strong> (mieux restauré au monde)</li>
+                <li><i class="fa-solid fa-check-circle"></i> Nouvelle vidéo de sécurité : <strong>"A Hundred Years of Safety"</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Espace "The Colors of Delta" : <strong>288 objets</strong> des compagnies prédécesseuses</li>
+                <li><i class="fa-solid fa-check-circle"></i> Financement : <strong>Delta Foundation + contributions employés et retraités</strong></li>
+            </ul>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Je veux vraiment que les visiteurs repartent avec le sentiment d'avoir appris quelque chose qu'ils ne savaient pas auparavant.
+            </div>
+            
+            <div class="quote" style="margin-top:5px;">
+                <i class="fa-solid fa-quote-left"></i> C'est une joie de montrer l'aviation aux enfants. Peut-être qu'ils voudront un jour se lancer dans l'aviation.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.fox5atlanta.com/news/delta-air-lines-unveiling-re-imagined-flight-museum-atlanta/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> FOX5 Atlanta</a>
+                <a href="https://hoodline.com/2025/03/delta-flight-museum-in-atlanta-launches-renovated-exhibit-honoring-100-years-of-aviation-heritage/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Hoodline</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-water"></i> Sullenberger Aviation Museum - Le "Miracle sur l'Hudson"</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-plane"></i> Airbus A320 du vol US Airways 1549</h4>
+            <span class="badge-pays">Caroline du Nord, États-Unis</span>
+            
+            <div class="stats-chiffres">
+                <span class="chiffre"><i class="fa-regular fa-building"></i> 3 250 m²</span>
+                <span class="chiffre"><i class="fa-regular fa-calendar"></i> 2009-2025</span>
+            </div>
+            
+            <p><strong>L'avion accidenté devenu symbole de la sécurité aérienne.</strong></p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Airbus A320 du "Miracle sur l'Hudson"</strong> (amerrissage 2009) comme pièce maîtresse</li>
+                <li><i class="fa-solid fa-check-circle"></i> Exposition immersive : <strong>enregistrement réel des communications</strong> pilote-contrôleur + témoignages passagers</li>
+                <li><i class="fa-solid fa-check-circle"></i> Jeux de lumières et effets sonores pour une <strong>expérience émotionnelle forte</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Parcours chronologique : <strong>comment chaque accident a amélioré la sécurité</strong></li>
+                <li><i class="fa-solid fa-check-circle"></i> Simulateurs, réalité augmentée, objets multimédias</li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> Un objet accidenté peut devenir le symbole le plus puissant de la sécurité et de la transmission.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.frd.com.au/sullenberger-aviation-museum/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> FRD - Sullenberger Museum</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-industry"></i> DASA - Musée du travail et de la sécurité (Dortmund)</h3>
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-gear"></i> DASA Dortmund <span class="badge-simulator">Allemagne</span></h4>
+                
+                <p><strong>L'un des plus grands musées du monde dédiés à la sécurité et santé au travail.</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Voyage dans le temps : ateliers bruyants XIXe, tissages, aciéries</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Expériences participatives</strong> : simulateur de camion (18 m), simulateur d'avion, ambulance, hélicoptère</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Focus sur risques professionnels : bruit, sédentarité</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Entrée gratuite</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> La voie semblait toujours trop étroite, et quand un véhicule arrivait en sens inverse, un rétroviseur en faisait les frais.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.compeng.ruhr-uni-bochum.de/ce/news/news00026.html.en" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Ruhr-Universität</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-clock-rotate-left"></i> Musée de la Sécurité de Budapest <span class="badge-museum">1908-1923</span></h4>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-users"></i> 20 000 visiteurs/an</span>
+                    <span class="chiffre"><i class="fa-regular fa-calendar"></i> 1928 record</span>
+                </div>
+                
+                <p><strong>Premier musée dédié à la prévention des accidents du travail.</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Fondé en 1908, actif jusqu'en 1923</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Collection issue du pavillon hongrois (Exposition Universelle Paris 1900)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>14 sous-collections</strong> : prévention accidents, hygiène, premiers secours, tuberculose</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Jusqu'à 32 500 visiteurs</strong> en 1928 (Congrès mondial santé au travail)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Premier cours européen d'infirmière du travail (1933)</li>
+                </ul>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://oem.bmj.com/content/75/Suppl_2/A193.1" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> BMJ Occupational Medicine</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-museum">🛞 Espace "Les engins d'hier"</span></td>
+                    <td>Delta Flight Museum (Douglas DC-3 restauré) + DASA (machines à vapeur, haut fourneau)</td>
+                    <td>Des objets authentiques et restaurés créent un lien tangible avec le passé et suscitent la fierté</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-museum">💥 Espace "La mémoire des accidents"</span></td>
+                    <td>Sullenberger Aviation Museum (Airbus du Miracle sur l'Hudson)</td>
+                    <td>Un objet accidenté peut devenir le symbole le plus puissant de la sécurité et de la transmission</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-museum">👴 Témoignages d'anciens</span></td>
+                    <td>Delta Flight Museum (retraités contributeurs, anciens agents de bord guides)</td>
+                    <td>Les anciens sont les meilleurs ambassadeurs ; leur parole est une ressource inestimable</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-simulator">🎮 Immersion / interactivité</span></td>
+                    <td>DASA (simulateurs, expériences sensorielles)</td>
+                    <td>L'apprentissage par l'expérience (simulateur de camion) est plus marquant que la simple observation</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-museum">📚 Formation / transmission</span></td>
+                    <td>Musée de la Sécurité de Budapest (cours d'infirmières, 20 000 visiteurs/an)</td>
+                    <td>Un musée peut être un outil de formation professionnelle et un lieu de mémoire</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-museum">Delta</span> <strong>Musée d'entreprise :</strong> Vecteur de fierté, financement participatif interne.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-museum">Sullenberger</span> <strong>Objet accidenté :</strong> Symbole puissant, mise en scène émotionnelle.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-simulator">DASA</span> <strong>Apprentissage expérientiel :</strong> Simulateurs, immersion sensorielle.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-museum">Budapest</span> <strong>Précurseur :</strong> 20 000 visiteurs/an, cours professionnels.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de "Musée de la Sécurité" s'appuie sur des précédents historiques et contemporains solides :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-museum">Delta</span> musée d'entreprise centenaire
+                <span class="badge-museum">Sullenberger</span> objet accidenté symbole
+                <span class="badge-simulator">DASA</span> apprentissage expérientiel
+                <span class="badge-museum">Budapest</span> précurseur historique
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

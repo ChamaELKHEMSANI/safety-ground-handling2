@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 17 - Reconnaissance et Badges</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-recognition {
+            background: #05966920;
+            color: #059669;
+            border: 1px solid #059669;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-star {
+            background: #d9770620;
+            color: #d97706;
+            border: 1px solid #d97706;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .stat-positive {
+            background: rgba(5, 150, 105, 0.08);
+            border-left: 4px solid #059669;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-positive strong {
+            color: #059669;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .award-visual {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border-radius: var(--radius);
+        }
+        .flag-icon {
+            font-size: 2rem;
+            color: #059669;
+        }
+        .trophy-icon {
+            font-size: 2rem;
+            color: #d97706;
+        }
+        .badge-icon {
+            font-size: 2rem;
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-medal"></i>
+            Piste n°17 : Reconnaissance et Badges
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Marqueurs d'exemplarité / Badges distinctifs</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-award" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Reconnaissance et badges :</strong> Distinguer visuellement les entreprises et les personnels qui excellent en matière de sécurité, pour créer fierté collective et engagement durable.</p>
+                </div>
+            </div>
+            <div style="margin-top: 10px; font-style: italic; color: var(--c-text-muted);">
+                <i class="fa-solid fa-quote-left"></i> "Going above and beyond to protect your employees" — TOSHA Volunteer STAR
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-building"></i> Programmes de reconnaissance employeurs</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-star"></i> TOSHA Volunteer STAR & SHARP <span class="badge-recognition">Tennessee, USA</span></h4>
+                
+                <div class="award-visual">
+                    <div class="flag-icon"><i class="fa-solid fa-flag"></i></div>
+                    <div class="trophy-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <div><span class="badge-recognition">Drapeau hissé</span> <span class="badge-recognition">Trophée cristal</span> <span class="badge-recognition">Logo officiel</span></div>
+                </div>
+                
+                <p><strong>Programmes distinguant les employeurs exemplaires</strong> (calqué sur VPP fédéral).</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Critères stricts</strong> : taux incidents inférieurs à moyenne nationale, SMS robuste, implication totale employés</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Processus rigoureux</strong> : candidature écrite, évaluation sur site, entretiens avec chaque équipe</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Récompenses visibles</strong> : drapeau, trophée, logo, exemption d'inspections programmées</li>
+                </ul>
+                
+                <div class="stat-positive">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultats :</strong>
+                </div>
+                <ul>
+                    <li><strong>TCIR -62%</strong> (taux d'incidents) par rapport à la moyenne industrielle</li>
+                    <li><strong>DART -66%</strong> (taux de gravité)</li>
+                    <li>Employés "pumped" par le programme, participation massive</li>
+                    <li>Une entreprise a mis <strong>3 ans</strong> à obtenir SHARP, a perdu puis retrouvé son statut</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Being a VPP site says not only are you meeting the intent of the OSHA standards, but you're going above and beyond to protect your employees.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.tn.gov/workforce/employees/safety-health/tosha-redirect/recognition-programs/volunteer-star.html" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> TOSHA Volunteer STAR</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-landmark"></i> Camp Pendleton VPP Star <span class="badge-star">OSHA</span></h4>
+                
+                <p><strong>Plus haute distinction de sécurité de l'OSHA</strong> obtenue par la base des Marines.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Approche globale et collaborative de la sécurité</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Taux accidents inférieurs, systèmes robustes, implication employés</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Cérémonie officielle avec Colonel commandant et administrateur régional OSHA</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Message :</strong> Quand leadership, formation et responsabilité s'alignent, la sécurité devient une force centrale ("core strength").
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> It can't just be management. It has to be everybody working toward that common goal.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.osha.gov/vpp" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> OSHA VPP</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-id-card"></i> Badges distinctifs pour personnel qualifié</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-plane"></i> Known Crewmember (KCM) <span class="badge-recognition">NATA CS</span></h4>
+            <span class="badge-pays">États-Unis</span>
+            
+            <div class="award-visual">
+                <div class="badge-icon"><i class="fa-solid fa-id-card"></i></div>
+                <div><span class="badge-recognition">Badge KCM®</span> <span class="badge-recognition">Accès prioritaire</span> <span class="badge-recognition">Biométrie AirTera</span></div>
+            </div>
+            
+            <p><strong>Programme permettant aux pilotes et membres d'équipage qualifiés d'accéder à des points de contrôle dédiés.</strong></p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Badge conforme</strong> délivré aux membres autorisés</li>
+                <li><i class="fa-solid fa-check-circle"></i> Points d'accès exclusifs KCM® dans aéroports participants</li>
+                <li><i class="fa-solid fa-check-circle"></i> Transition vers <strong>CMAP avec vérification biométrique</strong> (AirTera℠)</li>
+            </ul>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> The best thing our company has ever done!
+            </div>
+            
+            <div class="stat-highlight">
+                <strong>Leçon :</strong> Un badge spécifique offrant un bénéfice concret (gain de temps) devient un marqueur d'identité professionnelle très valorisé.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://airtera.com/kcm" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> AirtEra KCM</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-check-double"></i> Vérification visuelle et responsabilisation</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-tablet"></i> XPressEntry <span class="badge-recognition">Aéroport de Cleveland Hopkins</span></h4>
+            <span class="badge-pays">Ohio, États-Unis</span>
+            
+            <p><strong>Système de validation en temps réel des badges multi-classes</strong> avec appareils portables.</p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Appareils <strong>XPID100/XPID200</strong> pour validation en temps réel (points fixes ou patrouilles)</li>
+                <li><i class="fa-solid fa-check-circle"></i> Passage de processus <strong>manuel/papier</strong> à validation électronique instantanée</li>
+                <li><i class="fa-solid fa-check-circle"></i> Intégration avec système Schneider Electric Security Expert</li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <strong>Résultats :</strong> Centaines de badges validés quotidiennement, réduction significative des tentatives d'accès non autorisées, amélioration de la responsabilité et conformité.
+            </div>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Cette collaboration a joué un rôle déterminant dans l'élévation des normes de sécurité de l'aéroport.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://telaeris.com/case-studies/airport-handheld-badge-verification-case-study/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Telaeris Case Study</a>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-recognition">🏳️ Marqueurs visuels</span> <strong>Drapeau / Trophée / Logo</strong></td>
+                    <td>TOSHA Volunteer STAR & SHARP</td>
+                    <td>La reconnaissance visible crée une fierté collective et réduit les accidents de <strong>-62%</strong></td>
+                </tr>
+                <tr>
+                    <td><span class="badge-star">🎖️ Cérémonie</span> <strong>Cérémonie de remise</strong></td>
+                    <td>Camp Pendleton VPP Star Award Ceremony</td>
+                    <td>La cérémonie officielle avec hauts dirigeants est aussi importante que le marqueur lui-même</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-recognition">🪪 Badge distinctif</span> <strong>Badge pour personnel qualifié</strong></td>
+                    <td>Known Crewmember (KCM) Program</td>
+                    <td>Un badge offrant un bénéfice concret (accès prioritaire) devient un marqueur d'identité valorisé</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-recognition">✅ Vérification</span> <strong>Vérification visuelle temps réel</strong></td>
+                    <td>XPressEntry (Aéroport de Cleveland)</td>
+                    <td>La validation en temps réel des badges renforce la responsabilité et réduit les accès non autorisés</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-recognition">👥 Implication</span> <strong>Implication totale des employés</strong></td>
+                    <td>TOSHA VPP sites</td>
+                    <td>"It has to be everybody working toward that common goal" — L'engagement de tous est la clé</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-recognition">TOSHA</span> <strong>-62% incidents :</strong> La reconnaissance visible (drapeau hissé) réduit drastiquement les accidents.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-star">VPP Star</span> <strong>Cérémonie :</strong> L'implication du leadership et une cérémonie officielle sont essentielles.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-recognition">KCM</span> <strong>Badge distinctif :</strong> Un bénéfice concret (gain de temps) crée un marqueur d'identité valorisé.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-recognition">XPressEntry</span> <strong>Validation temps réel :</strong> Centaines de badges validés quotidiennement, réduction des accès non autorisés.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de reconnaissance et badges est parfaitement alignée avec les meilleures pratiques internationales :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-recognition">TOSHA STAR</span> -62% incidents par reconnaissance visible
+                <span class="badge-star">VPP Star</span> cérémonie officielle avec leadership
+                <span class="badge-recognition">KCM</span> badge distinctif avec bénéfice concret
+                <span class="badge-recognition">XPressEntry</span> validation temps réel responsabilisante
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

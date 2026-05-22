@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 21 - Parrainage d'Engin</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-recognition {
+            background: #05966920;
+            color: #059669;
+            border: 1px solid #059669;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-driver {
+            background: #2563eb20;
+            color: #2563eb;
+            border: 1px solid #2563eb;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-impact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-impact strong {
+            color: #dc2626;
+        }
+        .stat-positive {
+            background: rgba(5, 150, 105, 0.08);
+            border-left: 4px solid #059669;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-positive strong {
+            color: #059669;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .fntp-quote {
+            background: #fef3c7;
+            border-left: 4px solid #d97706;
+            padding: 12px;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+        }
+        .award-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .mug-icon {
+            font-size: 2rem;
+            color: #d97706;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-truck"></i>
+            Piste n°21 : Parrainage d'Engin
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Prénom / Fierté / Reconnaissance / Responsabilité</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-id-card" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Parrainage d'engin :</strong> Rendre visible la responsabilité individuelle du conducteur sur son engin (prénom, entretien, fierté) pour créer un attachement durable et améliorer la sécurité.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-video"></i> Reconnaissance et exonération par la vidéo</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-oil-well"></i> Cox Petroleum Transport <span class="badge-org">DriveCam</span></h4>
+                <span class="badge-pays">États-Unis</span>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-truck"></i> 100+ camions</span>
+                    <span class="chiffre"><i class="fa-solid fa-chart-line"></i> 26 → 5 accidents</span>
+                </div>
+                
+                <p><strong>Programme de reconnaissance et exonération des conducteurs par vidéo.</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Installation du programme <strong>DriveCam</strong> sur toute la flotte</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Vidéo comme <strong>outil de formation</strong> principal</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Reconnaissance des bons conducteurs</strong> et protection de leur réputation</li>
+                </ul>
+                
+                <div class="stat-positive">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultats :</strong>
+                </div>
+                <ul>
+                    <li>2008-2009 : <strong>-80%</strong> d'accidents responsables (26 → 5)</li>
+                    <li>2011 : seulement <strong>2 accidents</strong> pour 14 millions de miles</li>
+                    <li>Prix de sécurité dans la division</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Lytx DriveCam est l'un de nos plus grands outils de formation. Il nous aide à améliorer la sécurité et, en retour, à garder les bons conducteurs.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.lytx.com/case-study/cox-petroleum-transport-case-study" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Lytx - Cox Petroleum</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-helmet-safety"></i> Sunstate Equipment <span class="badge-org">Programme d'incitation</span></h4>
+                <span class="badge-pays">États-Unis</span>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-truck"></i> 1 000 véhicules</span>
+                    <span class="chiffre"><i class="fa-solid fa-dollar-sign"></i> 150 000$ récompenses</span>
+                    <span class="chiffre"><i class="fa-solid fa-scale-balanced"></i> 5,5 M$ économies</span>
+                </div>
+                
+                <p><strong>Programme d'incitation robuste pour bons conducteurs.</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Conducteurs sans coaching reçoivent <strong>cadeaux et récompenses</strong> (casquettes, t-shirts, vestes)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Plus la période est longue, plus la récompense est grande</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>110 exonérations</strong> depuis 2015</li>
+                </ul>
+                
+                <div class="stat-positive">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultats :</strong>
+                </div>
+                <ul>
+                    <li><strong>31% de réduction</strong> des comportements à risque (2018-2019)</li>
+                    <li>Moitié de la moyenne de l'industrie en matière de risque</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Je peux dire : "J'ai une vidéo de l'événement que je vais vous envoyer". Après l'avoir vue, vous entendez : "Merci, ce sera tout."
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.lytx.com/en-gb/our-clients/success-stories/sunstate" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Lytx - Sunstate</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-flag"></i> Reconnaissance symbolique et culturelle</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-microchip"></i> MBX Systems <span class="badge-org">Programme "Net Driver"</span></h4>
+            <span class="badge-pays">États-Unis</span>
+            
+            <div class="award-box">
+                <div class="mug-icon"><i class="fa-solid fa-mug-hot"></i></div>
+                <div>
+                    <span class="badge-recognition">Mug "Net Driver"</span>
+                    <span class="badge-recognition">Casquettes</span>
+                    <span class="badge-recognition">Logo NASCAR</span>
+                </div>
+            </div>
+            
+            <div class="stats-chiffres">
+                <span class="chiffre"><i class="fa-solid fa-dollar-sign"></i> 700 000$ économies</span>
+                <span class="chiffre"><i class="fa-solid fa-chart-line"></i> +23% bénéfice</span>
+                <span class="chiffre"><i class="fa-solid fa-mug-hot"></i> 25 mugs</span>
+            </div>
+            
+            <p><strong>Programme culturel inspiré du NASCAR où les employés sont "au volant" de l'amélioration continue.</strong></p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Employés encouragés à identifier opportunités de réduction des coûts et amélioration</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Reconnaissance immédiate</strong> : quand un manager surprend une bonne idée, il remet un mug "Net Driver" sur-le-champ</li>
+                <li><i class="fa-solid fa-check-circle"></i> Création d'un <strong>esprit d'équipe</strong> et de compétition positive</li>
+            </ul>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Ce n'est pas une chose super formelle ; c'est juste une chose culturelle. En s'amusant un peu et en s'assurant que tout le monde est impliqué, ça a pu prendre sa propre vie.
+            </div>
+            
+            <div class="stat-highlight">
+                <strong>Résultat :</strong> Plus de 700 000$ d'économies, augmentation du bénéfice net de près de 23%, création du concept de "Super Cell" (8 → 400 systèmes).
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.manufacturing.net/operations/article/13240524/in-the-drivers-seat" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Manufacturing.net</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-gavel"></i> Cadre réglementaire français</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-hard-hat"></i> FNTP & France compétences <span class="badge-driver">Référentiel officiel</span></h4>
+            <span class="badge-pays">France</span>
+            
+            <div class="fntp-quote">
+                <i class="fa-solid fa-quote-left"></i> Le conducteur d'engins "connaît parfaitement les engins qui lui sont confiés" et doit "maintenir son engin dans un état de propreté pour assurer la sécurité et la durée de vie de l'engin, mais également pour participer à <strong>l'image de l'entreprise</strong>."
+            </div>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Effectue les <strong>gestes d'entretien courant</strong> (1er niveau : petites réparations, dépannage)</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Responsabilité du bon fonctionnement</strong> de son engin, contrôle quotidien</li>
+                <li><i class="fa-solid fa-check-circle"></i> Peut assurer la <strong>maintenance de premier niveau</strong> dans le respect du carnet d'entretien</li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> La responsabilité de l'entretien et de la propreté fait déjà partie intégrante du métier. Votre dispositif <strong>rend visible et valorise</strong> cette responsabilité existante.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.fntp.fr/metiers/conducteur-dengins/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> FNTP - Conducteur d'engins</a>
+                <a href="https://www.francecompetences.fr/recherche/RNCP/4847/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> France compétences RNCP 4847</a>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-recognition">🏷️ Prénom sur l'engin</span> <strong>Fierté individuelle</strong></td>
+                    <td>Cox Petroleum (reconnaissance + exonération)</td>
+                    <td><strong>-80% d'accidents responsables</strong>, fidélisation des meilleurs conducteurs. La <strong>protection et la reconnaissance</strong> créent un attachement durable.</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-recognition">🏆 Concours / récompenses</span> <strong>Concours et récompenses</strong></td>
+                    <td>Sunstate Equipment (prix pour bons conducteurs)</td>
+                    <td><strong>31% réduction</strong> des comportements à risque, <strong>5,5 M$ économisés</strong>, 150 000$ de récompenses. La reconnaissance tangible renforce la fierté.</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-recognition">☕ Reconnaissance immédiate</span> <strong>Reconnaissance immédiate et symbolique</strong></td>
+                    <td>MBX Systems "Net Driver" (mugs, casquettes)</td>
+                    <td><strong>700 000$ d'économies</strong>, +23% de bénéfice. L'appropriation culturelle et la reconnaissance symbolique sont plus puissantes que des processus formels.</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-driver">🔧 Responsabilité entretien</span> <strong>Responsabilité de l'entretien / propreté</strong></td>
+                    <td>FNTP / France compétences (référentiel officiel)</td>
+                    <td>La propreté de l'engin participe à <strong>l'image de l'entreprise</strong>. La responsabilité de l'entretien est déjà inscrite dans le métier — votre dispositif la rend visible.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-recognition">Cox Petroleum</span> <strong>-80% accidents :</strong> La reconnaissance individuelle réduit drastiquement les accidents et fidélise.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-recognition">Sunstate</span> <strong>31% réduction :</strong> Programme d'incitation basé sur la fierté et les récompenses.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-recognition">MBX Systems</span> <strong>700 000$ :</strong> La reconnaissance symbolique immédiate est puissante.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-driver">FNTP</span> <strong>Propreté = image :</strong> La responsabilité est déjà dans le référentiel métier.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de parrainage d'engin est non seulement pertinente, mais déjà validée par des pratiques industrielles et des référentiels officiels :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-recognition">Cox Petroleum</span> -80% accidents, fidélisation
+                <span class="badge-recognition">Sunstate</span> 31% réduction, 5,5M$ économies
+                <span class="badge-recognition">MBX Systems</span> 700 000$ d'économies, +23% bénéfice
+                <span class="badge-driver">FNTP</span> responsabilité d'entretien déjà inscrite
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

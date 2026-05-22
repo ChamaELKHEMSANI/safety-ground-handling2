@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthèse comparative - Permis à points</title>
+    
+
+
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 16px;
+            margin: 0;
+            min-height: auto;
+            font-family: var(--font-body);
+            color: var(--c-text);
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.6rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        hr {
+            border: none;
+            border-top: 2px solid var(--c-border);
+            margin: 25px 0 15px 0;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 700px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .dispositif-card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .dispositif-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .dispositif-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed var(--c-border);
+            padding-bottom: 8px;
+        }
+        .dispositif-header h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--c-primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dispositif-header h4 i {
+            color: var(--c-primary);
+            font-size: 1rem;
+        }
+        .badge-tech {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+        }
+        .dispositif-desc {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: var(--c-text);
+            margin-bottom: 12px;
+            flex: 1;
+        }
+        .dispositif-resultat {
+            background: rgba(5, 150, 105, 0.08);
+            border-left: 4px solid #059669;
+            padding: 10px 12px;
+            border-radius: var(--radius);
+            font-size: 0.75rem;
+            margin: 10px 0 12px 0;
+            color: #065f46;
+            font-weight: 500;
+        }
+        .dispositif-lecon {
+            font-style: italic;
+            font-size: 0.75rem;
+            color: var(--c-text-muted);
+            border-top: 1px dotted var(--c-border);
+            padding-top: 10px;
+            margin-top: 5px;
+        }
+        .dispositif-url {
+            margin-top: 12px;
+            font-size: 0.7rem;
+        }
+        .dispositif-url a {
+            color: var(--c-primary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            transition: all 0.15s;
+        }
+        .dispositif-url a:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.8rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .tech-icon {
+            color: var(--c-primary);
+            margin-right: 4px;
+        }
+        .inspiration-badge {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            color: var(--c-text-muted);
+            display: inline-block;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+            Synthèse comparative de dispositifs existants
+        </h2>
+
+        
+        <div class="grid-2">
+            
+            <div class="dispositif-card">
+                <div class="dispositif-header">
+                    <h4><i class="fa-solid fa-microchip"></i> Swissport North America</h4>
+                    <span class="badge-tech">IA / Data</span>
+                </div>
+                <div class="dispositif-desc">
+                    <strong>Ce qu'ils font :</strong> Équipement de 1 600 véhicules avec caméras AI Samsara. Alertes en temps réel (téléphone, ceinture, freinage) + analyse vidéo.
+                </div>
+                <div class="dispositif-resultat">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> -60% d'incidents, -23% de dommages en 18 semaines.
+                </div>
+                <div class="dispositif-lecon">
+                    <i class="fa-regular fa-lightbulb"></i> La donnée objective permet un coaching immédiat, transformant la sanction en progression.
+                </div>
+                <div class="dispositif-url">
+                    <a href="https://www.samsara.com/customers/swissport" target="_blank"><i class="fa-solid fa-arrow-up-right-from-squares"></i> samsara.com/swissport</a>
+                </div>
+            </div>
+
+            
+            <div class="dispositif-card">
+                <div class="dispositif-header">
+                    <h4><i class="fa-solid fa-tower-broadcast"></i> Jet2.com & ZoneSafe</h4>
+                    <span class="badge-tech">RFID / Alarmes</span>
+                </div>
+                <div class="dispositif-desc">
+                    <strong>Ce qu'ils font :</strong> Balises RFID sur cônes de sécurité créant une zone virtuelle. Alerte sonore/visuelle en cabine si approche trop près.
+                </div>
+                <div class="dispositif-resultat">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> Fiabilité 100%, réduction des quasi-accidents et des coûts.
+                </div>
+                <div class="dispositif-lecon">
+                    <i class="fa-regular fa-lightbulb"></i> L'alerte physique immédiate brise l'automatisme et protège sans juger.
+                </div>
+                <div class="dispositif-url">
+                    <a href="https://zonesafe.com/casestudy/asset-protection-hazard-alert-system/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-squares"></i> zonesafe.com</a>
+                </div>
+            </div>
+
+            
+            <div class="dispositif-card">
+                <div class="dispositif-header">
+                    <h4><i class="fa-solid fa-users"></i> ABM Aviation UK</h4>
+                    <span class="badge-tech">Formation</span>
+                </div>
+                <div class="dispositif-desc">
+                    <strong>Ce qu'ils font :</strong> Formation obligatoire en conduite défensive pour 660 conducteurs, certifiée RoSPA, avec images réelles.
+                </div>
+                <div class="dispositif-resultat">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> -49% d'accidents, -55% de contraventions, +44% de signalements.
+                </div>
+                <div class="dispositif-lecon">
+                    <i class="fa-regular fa-lightbulb"></i> Formation contextualisée = culture de sécurité mature. Le near-miss reporting explose.
+                </div>
+                <div class="dispositif-url">
+                    <a href="https://rospa.com/case-studies/abm-aviation" target="_blank"><i class="fa-solid fa-arrow-up-right-from-squares"></i> rospa.com/abm</a>
+                </div>
+            </div>
+
+            
+            <div class="dispositif-card">
+                <div class="dispositif-header">
+                    <h4><i class="fa-solid fa-scale-balanced"></i> Programme CLOCS</h4>
+                    <span class="badge-tech">Standard / Charte</span>
+                </div>
+                <div class="dispositif-desc">
+                    <strong>Ce qu'ils font :</strong> Charte commune de sécurité pour la logistique, digitalisée par Veyor (contrôles d'accès, traçabilité).
+                </div>
+                <div class="dispositif-resultat">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> Conformité démontrable, transparence totale, réduction des conflits.
+                </div>
+                <div class="dispositif-lecon">
+                    <i class="fa-regular fa-lightbulb"></i> Un cadre commun (ex: CSCA) permet la reconnaissance mutuelle du solde de points.
+                </div>
+                <div class="dispositif-url">
+                    <a href="https://clocs-a.org.au/veyor/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-squares"></i> clocs-a.org.au</a>
+                </div>
+            </div>
+
+            
+            <div class="dispositif-card" style="grid-column: 1 / -1;">
+                <div class="dispositif-header">
+                    <h4><i class="fa-solid fa-camera"></i> Pennsylvania Turnpike (AWZSE)</h4>
+                    <span class="badge-tech">Radar / Sanction</span>
+                </div>
+                <div class="dispositif-desc">
+                    <strong>Ce qu'ils font :</strong> Radars automatisés en zones de chantier. Amende progressive : avertissement, 75$, puis 150$.
+                </div>
+                <div class="dispositif-resultat">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Résultat :</strong> -38% petits excès, -47% grands excès, -15 à 50% d'accidents.
+                </div>
+                <div class="dispositif-lecon">
+                    <i class="fa-regular fa-lightbulb"></i> La certitude de la sanction (même modérée) est plus dissuasive que la peur d'une sanction sévère aléatoire.
+                </div>
+                <div class="dispositif-url">
+                    <a href="https://www.paturnpike.com/news/stories-from-the-turnpike/automated-work-zone-speed-enforcement-has-reduced-speeding-crashes" target="_blank"><i class="fa-solid fa-arrow-up-right-from-squares"></i> paturnpike.com/awzse</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <hr>
+
+        
+        <h3>
+            <i class="fa-solid fa-link"></i>
+             Liens avec votre proposition "Permis à points"
+        </h3>
+
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th>Dispositif</th>
+                    <th>Technologie clé</th>
+                    <th>Votre "Permis à points" s'inspire de...</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Swissport</strong> <span class="inspiration-badge"><i class="fa-regular fa-star"></i> Coaching</span></td>
+                    <td><i class="fa-solid fa-microchip tech-icon"></i> IA / Data</td>
+                    <td>La <strong>partie "Reconquête"</strong> et l'idée d'un outil de <strong>progression individuelle</strong> basé sur des faits objectifs.</td>
+                </tr>
+                <tr>
+                    <td><strong>Jet2.com</strong> <span class="inspiration-badge"><i class="fa-regular fa-bell"></i> Alerte</span></td>
+                    <td><i class="fa-solid fa-tower-broadcast tech-icon"></i> RFID / Alarmes</td>
+                    <td>La <strong>nécessité d'un constat impartial</strong>. L'alerte immédiate est au conducteur ce que le retrait de points est au dossier : un signal d'alerte.</td>
+                </tr>
+                <tr>
+                    <td><strong>ABM Aviation</strong> <span class="inspiration-badge"><i class="fa-regular fa-pen-to-square"></i> Formation</span></td>
+                    <td><i class="fa-solid fa-users tech-icon"></i> Formation contextuelle</td>
+                    <td>Le lien entre <strong>l'outil (le permis)</strong> et <strong>l'action de formation corrective</strong>. Un conducteur qui perd des points doit suivre le module spécifique à son erreur.</td>
+                </tr>
+                <tr>
+                    <td><strong>CLOCS</strong> <span class="inspiration-badge"><i class="fa-regular fa-handshake"></i> Charte</span></td>
+                    <td><i class="fa-solid fa-scale-balanced tech-icon"></i> Standard / Charte</td>
+                    <td>L'<strong>articulation avec la CSCA</strong> et la <strong>reconnaissance inter-entreprises</strong>. C'est la clé pour éviter qu'un conducteur à risque change simplement d'employeur.</td>
+                </tr>
+                <tr>
+                    <td><strong>PA Turnpike</strong> <span class="inspiration-badge"><i class="fa-regular fa-gavel"></i> Sanction</span></td>
+                    <td><i class="fa-solid fa-camera tech-icon"></i> Radar / Sanction graduée</td>
+                    <td>Le <strong>barème progressif</strong> et le principe d'une <strong>sanction objective, immédiate et sans discussion</strong> pour les infractions "objectivables" (vitesse).</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+</html>

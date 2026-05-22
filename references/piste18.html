@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 18 - Miroir à Émotions</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-ai {
+            background: #7c3aed20;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-warning {
+            background: #dc262620;
+            color: #dc2626;
+            border: 1px solid #dc2626;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-ethics {
+            background: #05966920;
+            color: #059669;
+            border: 1px solid #059669;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-accuracy {
+            background: rgba(124, 58, 237, 0.08);
+            border-left: 4px solid #7c3aed;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-accuracy strong {
+            color: #7c3aed;
+        }
+        .stat-warning {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-warning strong {
+            color: #dc2626;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .ai-act-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        .ai-act-table th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            padding: 8px;
+            text-align: left;
+        }
+        .ai-act-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .ai-act-table tr:last-child td {
+            border-bottom: none;
+        }
+        .risk-inacceptable {
+            background: #dc262610;
+            color: #dc2626;
+            font-weight: 600;
+        }
+        .recommendation-box {
+            background: #fef3c7;
+            border: 1px solid #d97706;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-regular fa-face-smile"></i>
+            Piste n°18 : Miroir à Émotions
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">IA émotionnelle / Détection fatigue / Éthique</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-regular fa-face-smile-wink" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Miroir à Émotions :</strong> IA analysant les expressions faciales, la fatigue et le stress pour prévenir les risques liés aux états émotionnels des conducteurs.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="stat-warning" style="margin-bottom: 25px; border-left-color: #dc2626; background: #fee2e2;">
+            <i class="fa-solid fa-exclamation-triangle" style="color: #dc2626; margin-right: 8px;"></i>
+            <strong>⚠️ ATTENTION - RÈGLEMENTATION EUROPÉENNE AI ACT :</strong> Le Règlement (UE) 2024/1689 interdit formellement les systèmes de reconnaissance des émotions sur le lieu de travail (Article 5). Votre projet doit être adapté pour se concentrer sur la <strong>détection de la fatigue</strong> (paupières tombantes, micro-sommeils) et garantir l'absence de transmission à l'employeur.
+        </div>
+
+        
+        <h3><i class="fa-solid fa-briefcase"></i> Solutions commerciales déployées</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-brain"></i> Cineon <span class="badge-ai">ELE (Empathic Learning Engine)</span></h4>
+                <span class="badge-pays">Royaume-Uni</span>
+                
+                <p><strong>IA émotionnelle déployée dans l'aviation, la défense, le nucléaire et l'industrie pétrolière.</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>TACET</strong> : VR/XR pour entraînement équipages aériens (eye tracking + IA temps réel)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>RCAT</strong> : simulations adaptatives pour Ministère britannique de la Défense</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>INCORA</strong> : VR pour secteur nucléaire (états émotionnels et cognitifs)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Clients : <strong>Total, BP, Police métropolitaine</strong></li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Approche :</strong> Signaux comportementaux et physiologiques (pas seulement expressions faciales).
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://cineon.ai/sectors/#aviation" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Cineon Aviation</a>
+                    <a href="https://cineon.ai/cineon-named-finalist-in-two-categories-at-the-tech-south-west-awards/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Tech South West Awards</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-regular fa-eye"></i> BeEmotion.AI <span class="badge-ai">Aeromind</span></h4>
+                <span class="badge-pays">APATS 2025 (Singapour)</span>
+                
+                <p><strong>Analyse émotionnelle pour formation des pilotes</strong> avec une seule caméra aérienne.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Une seule <strong>caméra aérienne non-invasive</strong></li>
+                    <li><i class="fa-solid fa-check-circle"></i> Suivi : micro-expressions, regard, posture, mouvements tête</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Signal émotionnel en temps réel</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Mesure des réactions aux facteurs de stress et temps de récupération</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Intégration transparente dans simulateurs existants</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Making a good pilot into a great one isn't guesswork, it's about measurable, actionable data.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.halldale.com/events-news-hub/live-from-apats-beemotion-ai-debuts-emotion-analytics-for-pilot-training" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Halldale - APATS</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-flask"></i> Validation scientifique</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-microscope"></i> Recherche NIH <span class="badge-ai">PLoS One</span></h4>
+                <span class="badge-pays">États-Unis</span>
+                
+                <p><strong>Reconnaissance des états de fatigue des contrôleurs aériens par réseau neuronal Xception amélioré.</strong></p>
+                
+                <div class="stats-chiffres">
+                    <span class="chiffre"><i class="fa-solid fa-chart-line"></i> 94,36% précision</span>
+                    <span class="chiffre"><i class="fa-solid fa-arrow-trend-up"></i> 91,68% rappel</span>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Analyse temps réel des caractéristiques dynamiques des expressions faciales</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Cadre d'apprentissage multi-tâches : fatigue + stress</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Temps de détection moyen réduit de <strong>1,9 secondes</strong></li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>95% précision</strong> sur 180 images d'yeux humains</li>
+                </ul>
+                
+                <div class="stat-accuracy">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Validation :</strong> L'IA peut détecter fatigue et stress avec une précision >94%.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12057947/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> NIH PubMed</a>
+                    <a href="https://trid.trb.org/View/2563880" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> TRID</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-wave-square"></i> XLTMS <span class="badge-ai">EEG + IA explicable</span></h4>
+                <span class="badge-pays">International</span>
+                
+                <p><strong>Détection des états mentaux par ondes cérébrales pour professions critiques.</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Surveillance ondes cérébrales (EEG) bandes gamma, alpha, bêta, thêta</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>IA explicable (XAI)</strong> - pas de "boîte noire"</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Détection : stress, somnolence, surcharge cognitive, attention</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Réseaux LSTM (Long Short-Term Memory)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Évaluation pré-poste pour pilotes, conducteurs, chirurgiens</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Approche complémentaire :</strong> Détection par ondes cérébrales pour évaluation pré-poste.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.eudoxuspress.com/index.php/pub/article/view/4958" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Eudoxus Press</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-heart-pulse"></i> Santé mentale et bien-être</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-plane"></i> EasyJet & BeEmotion.AI</h4>
+                <span class="badge-pays">International</span>
+                
+                <p><strong>Panel d'experts sur l'IA pour la santé mentale des pilotes.</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Distinction : individus sains vs cultures organisationnelles saines</li>
+                    <li><i class="fa-solid fa-check-circle"></i> IA mesure objectivement stress et états émotionnels</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Données comblent lacunes de communication (équipes multiculturelles)</li>
+                </ul>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Mental health doesn't mean someone can't work. We need to create environments where people feel safe to speak up before reaching crisis point.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.halldale.com/safety-critical-industries/ai-in-action-can-ai-improve-pilot-mental-health" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Halldale - AI & Mental Health</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-robot"></i> IBS Software <span class="badge-ai">Assistant virtuel</span></h4>
+                <span class="badge-pays">International</span>
+                
+                <p><strong>Assistant virtuel intelligent pour le bien-être des équipages.</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Réponses en temps réel : discrepancies paie, retards transport, changements planning</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Correction autonome des indemnités manquantes (pendant la nuit)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Suivi des rapports de fatigue sans relance</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Contexte :</strong> 63% des pilotes ont envisagé de quitter la profession en raison d'une faible satisfaction.
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Crew don't need another app; they need answers.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://blog.ibsplc.com/innovation/beyond-operational-metrics-humanizing-crew-experiences-with-an-intelligent-virtual-assistant" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> IBS Software Blog</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-scale-balanced"></i> Cadre réglementaire européen - AI Act</h3>
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-file-shield"></i> Règlement (UE) 2024/1689 <span class="badge-warning">Applicable 2 août 2026</span></h4>
+            
+            <table class="ai-act-table">
+                <thead>
+                    <tr>
+                        <th>Niveau de risque</th>
+                        <th>Catégorie</th>
+                        <th>Exigences</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="risk-inacceptable">
+                        <td><strong>Inacceptable</strong></td>
+                        <td>Systèmes de reconnaissance des émotions sur le lieu de travail et dans les établissements d'enseignement</td>
+                        <td><strong>INTERDITS</strong> (Article 5)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Élevé</strong></td>
+                        <td>IA dans infrastructures critiques, transport, biométrie</td>
+                        <td>Tests rigoureux, évaluation conformité, transparence, supervision humaine</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Limitié</strong></td>
+                        <td>Chatbots, deep fakes</td>
+                        <td>Obligations de transparence (informer l'utilisateur)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Minimal</strong></td>
+                        <td>Jeux vidéo, filtres anti-spam</td>
+                        <td>Libre utilisation</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="stat-warning">
+                <i class="fa-solid fa-gavel"></i> <strong>Interdiction absolue :</strong> La reconnaissance des émotions au travail est interdite dans l'UE à partir d'août 2026.
+            </div>
+        </div>
+
+        
+        <div class="recommendation-box">
+            <h4 style="margin-top: 0; color: #d97706;"><i class="fa-solid fa-lightbulb"></i> Recommandations stratégiques au vu de l'AI Act</h4>
+            <p>Votre "Miroir à Émotions" doit être <strong>redéfini</strong> pour éviter l'interdiction :</p>
+            <ol style="margin-bottom: 0;">
+                <li><strong>Rebaptiser</strong> le dispositif : "Détecteur de Fatigue et de Vigilance" (plutôt que "reconnaissance des émotions")</li>
+                <li><strong>Limiter</strong> la détection aux signes physiologiques objectifs (paupières tombantes, micro-sommeils, posture avachie) -- pas de classification "tristesse" ou "colère"</li>
+                <li><strong>Garantir</strong> l'absence totale de transmission à l'employeur : données strictement personnelles et confidentielles</li>
+                <li><strong>Soumettre</strong> le dispositif à une consultation CNIL et CSE préalable</li>
+            </ol>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-ai">🧠 Analyse émotionnelle IA</span></td>
+                    <td>Cineon ELE (aviation, défense, nucléaire)</td>
+                    <td>Déploiement réussi dans environnements critiques, focus sur signaux comportementaux et physiologiques</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-ai">📷 Caméra discrète</span></td>
+                    <td>BeEmotion.AI Aeromind (formation pilotes)</td>
+                    <td>Une seule caméra aérienne, intégration transparente, rapports objectifs</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-ai">📊 Détection fatigue/stress >94%</span></td>
+                    <td>Recherche NIH (Xception network)</td>
+                    <td>Validation scientifique : précision 94-95% sur détection fatigue et stress</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-ai">🧪 Détection pré-poste EEG</span></td>
+                    <td>XLTMS (EEG + IA explicable)</td>
+                    <td>Approche alternative (EEG) pour évaluation pré-poste, accent sur explicabilité</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-ai">🤖 Assistant bien-être</span></td>
+                    <td>IBS Software (assistant virtuel équipages)</td>
+                    <td>Réduction des "frictions quotidiennes", actions autonomes (indemnités, échanges)</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-warning">⚖️ Cadre éthique et juridique</span></td>
+                    <td>EU AI Act 2024/1689</td>
+                    <td><strong>⚠️ INTERDICTION</strong> de reconnaissance des émotions au travail (sauf adaptation : fatigue, opt-in volontaire)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ai">Cineon</span> <strong>Déploiement critique :</strong> IA émotionnelle déjà utilisée dans nucléaire, défense.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ai">BeEmotion</span> <strong>Caméra non-invasive :</strong> Une seule caméra aérienne suffit.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ai">NIH</span> <strong>94-95% précision :</strong> Validation scientifique de la détection fatigue/stress.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-warning">AI Act</span> <strong>⚠️ Interdiction :</strong> Reconnaissance émotions au travail interdite en UE dès 2026.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ethics">Recommandation</span> <strong>Adapter :</strong> Focus sur fatigue, données personnelles, consultation CNIL.
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

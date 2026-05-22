@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 16 - Code de la Piste</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-standard {
+            background: #05966920;
+            color: #059669;
+            border: 1px solid #059669;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-innovation {
+            background: #d9770620;
+            color: #d97706;
+            border: 1px solid #d97706;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .spec-box {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .shall {
+            background: #dc262610;
+            border-left: 4px solid #dc2626;
+            padding: 4px 8px;
+            font-weight: 600;
+        }
+        .should {
+            background: #05966910;
+            border-left: 4px solid #059669;
+            padding: 4px 8px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-signs-post"></i>
+            Piste n°16 : Code de la Piste
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Signalétique / Marquages / Symboles / Standards</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-road" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Code de la Piste :</strong> Un référentiel national unifié de signalétique, marquages et symboles pour harmoniser les repères visuels sur toutes les plateformes aéroportuaires françaises.</p>
+                </div>
+            </div>
+            <div style="margin-top: 10px; font-style: italic; color: var(--c-text-muted);">
+                <i class="fa-solid fa-quote-left"></i> "Uniformité et cohérence pour une sécurité maximale" — FAA
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-flag-usa"></i> Standards nationaux - L'exemple américain</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-plane"></i> FAA Advisory Circular 150/5340-18G <span class="badge-standard">Standard national américain</span></h4>
+            <span class="badge-pays">États-Unis</span>
+            
+            <p><strong>Normes nationales pour l'emplacement et l'installation des panneaux de signalisation sur pistes et voies de circulation.</strong></p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Repères visuels cohérents</strong> pour pilotes et conducteurs</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Uniformité</strong> dans tout le "National Airspace System" (NAS)</li>
+                <li><i class="fa-solid fa-check-circle"></i> Document de <strong>64 pages</strong> gratuit, référence obligatoire</li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Leçon :</strong> L'uniformité nationale est non seulement possible, mais essentielle. Un conducteur retrouve les mêmes codes visuels partout aux États-Unis.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://crp.trb.org/acrpwebresource13/faa-ac-150-5340-18g-standards-for-airport-sign-systems/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> TRB - FAA AC 150/5340-18G</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-globe"></i> Bonnes pratiques internationales</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-paint-roller"></i> ACI Apron Markings and Signs Handbook</h4>
+                <span class="badge-pays">International</span>
+                
+                <p><strong>Manuel dédié aux marques au sol et signalétique sur aires de trafic.</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Bonnes pratiques pour application et maintenance des marques de peinture</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>Standardisation mondiale</strong> des marquages</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Complément à l'Annexe 14 OACI</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <strong>Objectif :</strong> Acceptation et application accrues pour un environnement d'aire de trafic plus sûr.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://crp.trb.org/acrpwebresource13/aci-apron-markings-and-signs-handbook__trashed/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> ACI Handbook</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-gear"></i> SAE ARP5910A <span class="badge-standard">Ramp Markings</span></h4>
+                <span class="badge-pays">International</span>
+                
+                <p><strong>Standard recommandé pour le marquage des postes de stationnement (GSE).</strong></p>
+                
+                <div class="spec-box">
+                    <div class="shall"><i class="fa-solid fa-circle-exclamation" style="color:#dc2626;"></i> <strong>"Shall"</strong> : critères obligatoires</div>
+                    <div class="should" style="margin-top: 5px;"><i class="fa-solid fa-circle-check" style="color:#059669;"></i> <strong>"Should"</strong> : critères recommandés</div>
+                </div>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Alignement sur recommandations OACI</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Distinction obligatoire/recommandé pour flexibilité</li>
+                </ul>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://saemobilus.sae.org/standards/arp5910a-ramp-markings" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> SAE ARP5910A</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-icons"></i> Symboles graphiques universels</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-certificate"></i> ISO 11532:2018 <span class="badge-standard">Symboles pour équipements au sol</span></h4>
+            <span class="badge-pays">International</span>
+            
+            <p><strong>Symboles graphiques communs pour tous les types d'équipements au sol de soutien aux aéronefs.</strong></p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Identification rapide et précise</strong> des commandes et indicateurs</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Atténuation des problèmes de langue</strong> (langage universel)</li>
+                <li><i class="fa-solid fa-check-circle"></i> Destiné aux compagnies, handlers, autorités et fabricants</li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Recommandation clé :</strong> Symboles à placer sur <strong>tous les nouveaux équipements</strong> et, dans la mesure du possible, <strong>rétrofités sur les équipements existants</strong>.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.intertekinform.com/en-gb/standards/iso-11532-2018-600745_saig_iso_iso_1375345" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> ISO 11532:2018</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-lightbulb"></i> Innovation locale - Signalétique véhicules</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-airport"></i> John Wayne Airport (SNA) <span class="badge-innovation">Signalétique illuminée</span></h4>
+            <span class="badge-pays">Californie, États-Unis</span>
+            
+            <p><strong>Numéros d'identification illuminés sur véhicules d'exploitation</strong> (technologie électroluminescente).</p>
+            
+            <div class="stats-chiffres">
+                <span class="chiffre"><i class="fa-regular fa-eye"></i> 200-300 m visibilité</span>
+                <span class="chiffre"><i class="fa-solid fa-dollar-sign"></i> ~1 000 $/véhicule</span>
+            </div>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> Visibles de <strong>700 à 1 000 pieds</strong> (200-300 m)</li>
+                <li><i class="fa-solid fa-check-circle"></i> Testé ARFF → déployé sur véhicules Opérations</li>
+                <li><i class="fa-solid fa-check-circle"></i> Retour tour de contrôle : <strong>"fantastic!"</strong></li>
+            </ul>
+            
+            <div class="stat-highlight">
+                <strong>Adoption :</strong> Long Beach (LGB), tests à Dallas-Fort Worth (DFW), Reno (RNO), Minneapolis-St. Paul (MSP). La FAA intègre les spécifications dans ses guides.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.airportimprovement.com/article/john-wayne-airport-boosts-airfield-safety-rubber-removal-ground-vehicle-signage/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Airport Improvement</a>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-standard">📋 Standard national</span> <strong>Signalétique verticale</strong></td>
+                    <td>FAA AC 150/5340-18G (États-Unis)</td>
+                    <td>L'uniformité nationale est la clé d'une interprétation cohérente et d'une sécurité renforcée sur tout le territoire</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-standard">🖌️ Bonnes pratiques</span> <strong>Marquages au sol</strong></td>
+                    <td>ACI Apron Markings Handbook + SAE ARP5910A</td>
+                    <td>Des ressources internationales existent pour créer un référentiel national adapté et sur mesure</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-standard">🔣 Symboles universels</span> <strong>Commandes et indicateurs</strong></td>
+                    <td>ISO 11532:2018</td>
+                    <td>La standardisation doit aussi s'appliquer aux engins eux-mêmes. Le rétrofit des symboles est encouragé</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-innovation">💡 Signalétique innovante</span> <strong>Identification véhicules</strong></td>
+                    <td>John Wayne Airport (SNA)</td>
+                    <td>L'innovation locale peut améliorer drastiquement l'identification visuelle et influencer les standards nationaux</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-standard">FAA</span> <strong>Uniformité nationale :</strong> 64 pages de standard obligatoire pour tous les aéroports américains.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-standard">ACI/SAE</span> <strong>Bonnes pratiques :</strong> Distinction "shall/should" pour allier exigence et flexibilité.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-standard">ISO 11532</span> <strong>Symboles universels :</strong> Langage visuel commun sur tous les équipements.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-innovation">John Wayne</span> <strong>Innovation locale :</strong> Visibilité 200-300 m, adoption par plusieurs aéroports, influence sur les normes FAA.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition de "Code de la Piste" est parfaitement alignée avec les meilleures pratiques internationales :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-standard">FAA</span> l'uniformité nationale est essentielle
+                <span class="badge-standard">ACI/SAE</span> bonnes pratiques internationales
+                <span class="badge-standard">ISO 11532</span> symboles universels sur engins
+                <span class="badge-innovation">John Wayne</span> l'innovation locale influence les standards
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piste 12 - Alerte Sonore Intelligente</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link  rel="stylesheet"href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background: var(--c-surface);
+            padding: 20px;
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--c-text);
+            line-height: 1.6;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h2 i {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--c-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 i {
+            color: var(--c-primary);
+        }
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--c-primary);
+        }
+        .badge-org {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--c-primary);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .badge-pays {
+            background: #e8effe;
+            color: #1f2937;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        .badge-tech {
+            background: #2563eb20;
+            color: #2563eb;
+            border: 1px solid #2563eb;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-audio {
+            background: #d9770620;
+            color: #d97706;
+            border: 1px solid #d97706;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .badge-ia {
+            background: #7c3aed20;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .stat-highlight {
+            background: rgba(26, 86, 219, 0.05);
+            border-left: 4px solid var(--c-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-highlight strong {
+            color: var(--c-primary);
+        }
+        .stat-fact {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .stat-fact strong {
+            color: #dc2626;
+        }
+        .quote {
+            font-style: italic;
+            background: var(--c-surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border-left: 4px solid #d97706;
+            margin: 10px 0;
+            color: #4b5563;
+        }
+        .quote i {
+            color: #d97706;
+            margin-right: 5px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+        .feature-list li i {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--c-primary);
+            font-size: 0.85rem;
+        }
+        .url-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--c-primary);
+            background: var(--c-primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.15s;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .url-link:hover {
+            background: var(--c-primary);
+            color: white;
+        }
+        .table-synthese {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .table-synthese th {
+            background: var(--c-primary-light);
+            color: var(--c-primary);
+            font-weight: 700;
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 2px solid var(--c-primary);
+        }
+        .table-synthese td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .table-synthese tr:last-child td {
+            border-bottom: none;
+        }
+        .table-synthese tr:hover td {
+            background: var(--c-surface-alt);
+        }
+        .stats-chiffres {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .chiffre {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-weight: 600;
+        }
+        .chiffre i {
+            color: var(--c-primary);
+            margin-right: 5px;
+        }
+        .alarm-principle {
+            background: white;
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        .audio-spec {
+            display: inline-block;
+            background: #e8effe;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        
+        <h2>
+            <i class="fa-solid fa-volume-high"></i>
+            Piste n°12 : Alerte Sonore Intelligente
+            <span style="font-size: 0.7rem; background: var(--c-primary-light); color: var(--c-primary); padding: 4px 10px; border-radius: 20px; margin-left: auto;">Messages vocaux / Sons distincts / Rétrofit</span>
+        </h2>
+
+        
+        <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="font-size: 2rem; background: var(--c-primary-light); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-ear-listen" style="color: var(--c-primary);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-size: 1rem; margin: 0;"><strong>Alerte sonore intelligente :</strong> Remplacer les "bips" indifférenciés par des messages vocaux contextuels ou des sons distincts, adaptés à la nature et à l'urgence du danger.</p>
+                </div>
+            </div>
+            
+            <div class="alarm-principle">
+                <i class="fa-solid fa-bullhorn" style="color: var(--c-primary); margin-right: 8px;"></i>
+                <strong>Principe :</strong> "Quelque chose ne va pas" (bip) → "Quoi, où, comment réagir" (message vocal)
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-plane"></i> Applications dans l'aviation</h3>
+        
+        
+        <div class="grid-2">
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-plane"></i> Honeywell SURF-A <span class="badge-org">Surface Alert</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays">États-Unis</span>
+                    <span class="badge-audio">Message vocal</span>
+                </div>
+                <p><strong>Alerte cockpit pour prévenir les incursions sur piste</strong> - Évolution de l'EGPWS.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Intègre <strong>GPS, ADS-B Out</strong> et données aéroportuaires</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Algorithmes prédictifs pour identifier conflits potentiels</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Message vocal : <strong>"Traffic on Runway"</strong> (voix féminine)</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Déclenchement à ~400 pieds (30 sec), confirmation à 300 pieds</li>
+                </ul>
+                
+                <div class="stat-fact">
+                    <i class="fa-solid fa-chart-line"></i> <strong>Contexte :</strong> 1 758 incidents d'incursion sur piste recensés par la FAA en 2024
+                </div>
+                
+                <div class="quote">
+                    <i class="fa-solid fa-quote-left"></i> Les systèmes au sol alertent la tour, mais ils ne préviennent pas les pilotes qui sont la dernière ligne de défense.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://skiesmag.com/features/how-honeywells-surf-a-is-redefining-runway-safety-and-pilot-alerts/?amp" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Skies Magazine</a>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h4><i class="fa-solid fa-tractor"></i> SICK APS <span class="badge-org">Aircraft Protection System</span></h4>
+                <div style="display: flex; justify-content: space-between;">
+                    <span class="badge-pays">Allemagne</span>
+                    <span class="badge-tech">Rétrofit</span>
+                </div>
+                <p><strong>Système d'assistance au conducteur pour pushbacks</strong> - Conçu pour rétrofit économique.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check-circle"></i> Détection obstacles <strong>sans tags RFID</strong></li>
+                    <li><i class="fa-solid fa-check-circle"></i> Affichage visuel + <strong>alerte sonore adaptative</strong> à la situation</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Distances de sécurité ajustables</li>
+                    <li><i class="fa-solid fa-check-circle"></i> Auto-diagnostic et assistant d'installation intégré</li>
+                </ul>
+                
+                <div class="stat-highlight">
+                    <i class="fa-regular fa-lightbulb"></i> <strong>Atout clé :</strong> Stratégie d'alerte adaptative = faible taux de fausses alarmes, pas d'habituation.
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <a href="https://www.sick.com/ag/en/catalog/products/systems/object-detection-systems/aps/c/g385751" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> SICK AG</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-industry"></i> Recherche ergonomique - Industrie pétrochimique</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-flask"></i> Center for Operator Performance <span class="badge-org">COP</span></h4>
+            <span class="badge-pays">États-Unis / International</span>
+            <p><strong>Design ergonomique des alarmes sonores pour salles de contrôle</strong> (post-accident Texas City 2005).</p>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <p><strong>Principes de conception :</strong></p>
+                    <ul>
+                        <li><span class="audio-spec">🔊 Hiérarchisation</span> urgence appropriée à la situation</li>
+                        <li><span class="audio-spec">📍 Localisables</span> identifier la console source</li>
+                        <li><span class="audio-spec">🧠 Faciles à apprendre</span> différenciation suffisante</li>
+                        <li><span class="audio-spec">📊 Cartographie d'urgence</span> lien perception ↔ urgence réelle</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Résultats :</strong></p>
+                    <ul>
+                        <li>Application des meilleures pratiques en acoustique, psychoacoustique et psychologie cognitive</li>
+                        <li>Réduction du risque de <strong>"fatigue d'alarme"</strong> (désensibilisation)</li>
+                        <li>Alarmes efficaces sans être aversives</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Il existe une base de recherche considérable qui peut être appliquée au développement d'alarmes sonores, bien que cela soit rarement fait en pratique.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.tandfonline.com/doi/full/10.1080/24725838.2021.2012730" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Taylor & Francis</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-brain"></i> Optimisation par intelligence artificielle</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-microchip"></i> Approche IA pour l'audibilité des alarmes <span class="badge-ia">HAL - Recherche française</span></h4>
+            <p><strong>Réseau de neurones convolutionnel</strong> pour évaluer l'audibilité en environnements bruyants.</p>
+            
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <ul>
+                        <li>Modèle entraîné sur expériences psychoacoustiques</li>
+                        <li>Classification binaire sur courts extraits sonores</li>
+                        <li>Prédiction sans tester chaque condition</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="stat-highlight">
+                        <strong>Problème identifié :</strong> Les normes peuvent conduire à des alarmes <strong>"excessivement fortes"</strong>, exposant à des niveaux sonores inutilement élevés.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-highlight">
+                <i class="fa-regular fa-lightbulb"></i> <strong>Solution :</strong> L'IA permet d'optimiser le <strong>juste niveau sonore</strong> : suffisamment audible, mais pas traumatisant.
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://hal.science/hal-04010329" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> HAL Science</a>
+            </div>
+        </div>
+
+        
+        <h3><i class="fa-solid fa-helmet-safety"></i> Application chantier géant - JFK New Terminal One</h3>
+        
+        
+        <div class="card" style="margin-bottom: 25px;">
+            <h4><i class="fa-solid fa-building"></i> JFK New Terminal One <span class="badge-org">New York</span></h4>
+            <div style="display: flex; justify-content: space-between;">
+                <span class="badge-pays">États-Unis</span>
+                <span class="badge-audio">Messages préprogrammés</span>
+            </div>
+            
+            <div class="stats-chiffres">
+                <span class="chiffre"><i class="fa-solid fa-ruler"></i> 167 225 m²</span>
+                <span class="chiffre"><i class="fa-solid fa-users"></i> 3 000 travailleurs</span>
+                <span class="chiffre"><i class="fa-solid fa-tower-broadcast"></i> 25 tours</span>
+            </div>
+            
+            <p><strong>Système de notification d'urgence sans fil</strong> avec messages vocaux clairs et spécifiques.</p>
+            
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check-circle"></i> <strong>17 messages préprogrammés</strong> en plusieurs langues (+15 personnalisables)</li>
+                <li><i class="fa-solid fa-check-circle"></i> Communication bidirectionnelle (pendeloque pour alerte)</li>
+                <li><i class="fa-solid fa-check-circle"></i> Gestion depuis station de base centrale (remorque médicale)</li>
+                <li><i class="fa-solid fa-check-circle"></i> Alertes pour : tirs, incendie, médical, déversements, effondrements, risques thermiques</li>
+            </ul>
+            
+            <div class="quote">
+                <i class="fa-solid fa-quote-left"></i> Les cornes de brume ne peuvent signaler que 'quelque chose ne va pas'. Les systèmes sans fil transmettent des messages clairs et spécifiques.
+            </div>
+            
+            <div class="stat-highlight">
+                <strong>Résultat :</strong> Le système "établit une nouvelle norme pour la sécurité dans les projets de construction à grande échelle".
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <a href="https://www.globalconstructionreview.com/site-comms-system-at-jfks-new-terminal-one-project-sets-new-standard-for-safety/" target="_blank" class="url-link"><i class="fa-solid fa-arrow-up-right-from-squares"></i> Global Construction Review</a>
+            </div>
+        </div>
+
+        
+        <h3 style="margin-top: 30px;"><i class="fa-solid fa-table"></i> Synthèse comparative</h3>
+        
+        <table class="table-synthese">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Dispositif équivalent</th>
+                    <th>Enseignement clé</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-audio">🎤 Messages vocaux</span> <strong>Messages contextuels</strong></td>
+                    <td>Honeywell SURF-A ("Traffic on Runway")</td>
+                    <td>Alerte vocale directe à l'opérateur, dernier rempart avant l'accident</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-audio">🎵 Sons distincts</span> <strong>Sons par type de danger</strong></td>
+                    <td>Étude COP (industrie pétrochimique)</td>
+                    <td>Cartographie d'urgence, différentiabilité, facilité d'apprentissage</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-ia">📊 Volume adaptatif</span> <strong>Juste niveau sonore</strong></td>
+                    <td>Approche IA (HAL - recherche française)</td>
+                    <td>Éviter les alarmes excessivement fortes, prévenir fatigue auditive</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-tech">🔧 Kit rétrofit</span> <strong>P7 + P12 combinés</strong></td>
+                    <td>SICK APS (Aircraft Protection System)</td>
+                    <td>Conçu pour rétrofit économique, stratégie d'alerte adaptative</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-audio">🌐 Multilingue</span> <strong>Messages programmés</strong></td>
+                    <td>JFK New Terminal One (17 messages)</td>
+                    <td>Communication claire sur la nature de l'urgence, pas seulement "quelque chose ne va pas"</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div style="margin-top: 25px; background: var(--c-surface-alt); border-radius: var(--radius); padding: 18px;">
+            <h4 style="margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Enseignements clés </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-audio">Honeywell</span> <strong>Message vocal :</strong> "Traffic on Runway" = information riche, pas un simple bip.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-audio">COP</span> <strong>Sons distincts :</strong> Hiérarchisation, localisation, différentiabilité.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-ia">IA/HAL</span> <strong>Juste volume :</strong> Optimisation pour éviter traumatismes auditifs.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-tech">SICK</span> <strong>Rétrofit :</strong> Solution économique avec stratégie adaptative.
+                </div>
+                <div style="background: white; padding: 10px; border-radius: var(--radius);">
+                    <span class="badge-audio">JFK</span> <strong>Multilingue :</strong> 17 messages préprogrammés, 3 000 travailleurs.
+                </div>
+            </div>
+        </div>
+
+        
+        <div style="margin-top: 25px; background: var(--c-primary-light); border-radius: var(--radius); padding: 15px; text-align: center; border: 1px solid var(--c-primary);">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fa-solid fa-check-circle" style="color: var(--c-primary);"></i> 
+                <strong>Ces exemples démontrent que votre proposition d'alerte sonore intelligente est parfaitement alignée avec les meilleures pratiques internationales :</strong>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px;">
+                <span class="badge-audio">Honeywell SURF-A</span> messages vocaux contextuels dans l'aviation
+                <span class="badge-audio">COP</span> méthodologie scientifique pour alarmes ergonomiques
+                <span class="badge-ia">IA/HAL</span> optimisation du volume par deep learning
+                <span class="badge-tech">SICK APS</span> rétrofit avec alertes intelligentes
+                <span class="badge-audio">JFK Terminal</span> messages clairs et spécifiques en milieu bruyant
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

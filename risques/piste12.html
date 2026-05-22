@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 12 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .sound-level {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: var(--radius);
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+        }
+        .level-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .level-1 { background: #93c5fd; color: #1e3a8a; }
+        .level-2 { background: #fde047; color: #854d0e; }
+        .level-3 { background: #fb923c; color: #7c2d12; }
+        .level-4 { background: #f87171; color: #7f1d1d; }
+        .sound-matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .sound-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 12px;
+        }
+        .sound-card h4 {
+            margin: 0 0 8px 0;
+            color: var(--c-primary);
+            font-size: 13px;
+            border-bottom: 1px solid var(--c-border);
+            padding-bottom: 5px;
+        }
+        .stats-highlight {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-bubble {
+            background: var(--c-primary-light);
+            border-radius: var(--radius);
+            padding: 15px;
+            text-align: center;
+        }
+        .stat-bubble .number {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            line-height: 1;
+        }
+        .stat-bubble .label {
+            font-size: 11px;
+            color: var(--c-text-muted);
+        }
+    </style>
+</head>
+<body>
+
+ 
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        COMMUNIQUER AVEC L'ENGIN, PAS CONTRE LUI
+    </div>
+
+    
+    <div class="stats-highlight">
+        <div class="stat-bubble">
+            <div class="number">72%</div>
+            <div class="label">conducteurs ignorent les alarmes</div>
+        </div>
+        <div class="stat-bubble">
+            <div class="number">68%</div>
+            <div class="label">stressés par le bruit</div>
+        </div>
+        <div class="stat-bubble">
+            <div class="number">41%</div>
+            <div class="label">accidents avec alarme ignorée</div>
+        </div>
+        <div class="stat-bubble">
+            <div class="number">47s</div>
+            <div class="label">temps d'habituation</div>
+        </div>
+    </div>
+
+    
+    <h1>
+        <i class="fa-solid fa-volume-high"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 12</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>SON 01.1</strong></td>
+                <td>Habituation aux alarmes sonores</td>
+                <td>Sons identiques pour tous les dangers, permanence des alertes</td>
+                <td>Alarmes ignorées, non-réaction en situation critique</td>
+                <td>3</td>
+                <td>A</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Sons distincts par type de danger, variation des alertes</td>
+            </tr>
+            <tr>
+                <td><strong>SON 01.2</strong></td>
+                <td>Non-identification du type de danger</td>
+                <td>Absence de différenciation sonore, pas de message vocal</td>
+                <td>Confusion, mauvaise réaction, perte de temps</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Signature acoustique unique par situation, messages vocaux</td>
+            </tr>
+            <tr>
+                <td><strong>SON 01.3</strong></td>
+                <td>Non-localisation du danger</td>
+                <td>Alerte non directionnelle, pas d'information spatiale</td>
+                <td>Incapacité à orienter son attention</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Messages vocaux avec localisation ("à droite", "à gauche")</td>
+            </tr>
+            <tr>
+                <td><strong>SON 02.1</strong></td>
+                <td>Fatigue auditive</td>
+                <td>Volume excessif (>90 dB), exposition prolongée</td>
+                <td>Stress, irritabilité, baisse de vigilance</td>
+                <td>2</td>
+                <td>A</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Volume adaptatif (55-75 dB selon conditions), réduction exposition</td>
+            </tr>
+            <tr>
+                <td><strong>SON 02.2</strong></td>
+                <td>Stress lié aux alarmes</td>
+                <td>Sons stridents imprévisibles, agression sonore</td>
+                <td>Anxiété, prise de décision altérée</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Sons psychoacoustiques étudiés pour minimiser le stress</td>
+            </tr>
+            <tr>
+                <td><strong>SON 02.3</strong></td>
+                <td>Gêne pour la communication radio</td>
+                <td>Alarmes trop fortes, masquage des communications</td>
+                <td>Mauvaise coordination, informations manquées</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Volume adaptatif, fréquences non perturbatrices</td>
+            </tr>
+            <tr>
+                <td><strong>SON 03.1</strong></td>
+                <td>Nuisances sonores nocturnes</td>
+                <td>Alarmes aussi fortes la nuit que le jour</td>
+                <td>Plaintes riverains, impact environnemental</td>
+                <td>1</td>
+                <td>B</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Volume réduit la nuit (55 dB), préservation environnement sonore</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.1</strong></td>
+                <td>Collisions par recul</td>
+                <td>Alerte de recul ignorée, non-perçue</td>
+                <td>Heurts d'obstacles, de piétons, d'engins</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Réduction ciblée de -50% grâce à l'alerte intelligente</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.2</strong></td>
+                <td>Collisions liées aux angles morts</td>
+                <td>Absence d'alerte spécifique, conducteur non informé</td>
+                <td>Heurts de piétons, d'engins</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Son spécifique angle mort, message vocal directionnel</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.3</strong></td>
+                <td>Accidents liés à la vitesse excessive</td>
+                <td>Pas d'alerte spécifique, conducteur inconscient du danger</td>
+                <td>Perte de contrôle, collision</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Alerte sonore spécifique, message "Ralentissez, zone parking"</td>
+            </tr>
+            <tr>
+                <td><strong>ERG 01.1</strong></td>
+                <td>Rejet du nouveau système par les conducteurs</td>
+                <td>Changement perçu comme gadget, méconnaissance</td>
+                <td>Non-utilisation, retour aux anciennes habitudes</td>
+                <td>1</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Co-conception phase 1, tests utilisateurs, formation 15 min</td>
+            </tr>
+            <tr>
+                <td><strong>TEC 01.1</strong></td>
+                <td>Non-reconnaissance des nouveaux sons</td>
+                <td>Période de transition insuffisante, absence de communication</td>
+                <td>Confusion, mauvaise interprétation</td>
+                <td>1</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Campagne communication, période transition, formation</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité <span style="color:#dc2626; font-weight:700;">rouge</span> (habituation, collisions recul/angles morts) et 
+        <span style="color:#f97316; font-weight:700;">orange</span> (non-identification, fatigue auditive, vitesse) sont directement liés à l'archaïsme des alarmes actuelles. 
+        La Piste 12 transforme le son d'une nuisance en une aide intelligente.
+    </div>
+
+    
+    <h2>Hiérarchie sonore intelligente</h2>
+
+    <div class="sound-level">
+        <div class="level-indicator level-1">1</div>
+        <div><strong>NIVEAU 1 - INFORMATION (bleu)</strong> — Recul standard (bip grave lent) • Départ sécurisé (son mélodieux) • 65 dB</div>
+    </div>
+    <div class="sound-level">
+        <div class="level-indicator level-2">2</div>
+        <div><strong>NIVEAU 2 - VIGILANCE (jaune)</strong> — Obstacle proche (bip rapide) • Angle mort (son spécifique) • 75 dB</div>
+    </div>
+    <div class="sound-level">
+        <div class="level-indicator level-3">3</div>
+        <div><strong>NIVEAU 3 - ALERTE (orange)</strong> — Vitesse excessive (son descendant) • 80 dB</div>
+    </div>
+    <div class="sound-level">
+        <div class="level-indicator level-4">4</div>
+        <div><strong>NIVEAU 4 - URGENCE (rouge)</strong> — Obstacle critique (son continu) • Zone interdite • 85 dB</div>
+    </div>
+
+    
+    <h2>Messages vocaux contextualisés</h2>
+
+    <div class="sound-matrix">
+        <div class="sound-card">
+            <h4>⚠️ Obstacle proche</h4>
+            <p>"Obstacle 3 mètres"</p>
+            <p style="font-size: 10px;">Voix neutre F · FR/EN</p>
+        </div>
+        <div class="sound-card">
+            <h4>🔴 Obstacle critique</h4>
+            <p>"DANGER - Arrêt immédiat"</p>
+            <p style="font-size: 10px;">Voix grave M · FR/EN</p>
+        </div>
+        <div class="sound-card">
+            <h4>⬅️ Angle mort</h4>
+            <p>"Vérifiez angle gauche"</p>
+            <p style="font-size: 10px;">Voix neutre F · FR/EN</p>
+        </div>
+        <div class="sound-card">
+            <h4>➡️ Angle mort</h4>
+            <p>"Vérifiez angle droit"</p>
+            <p style="font-size: 10px;">Voix neutre F · FR/EN</p>
+        </div>
+        <div class="sound-card">
+            <h4>🚗 Vitesse</h4>
+            <p>"Ralentissez, zone parking"</p>
+            <p style="font-size: 10px;">Voix calme M · FR/EN</p>
+        </div>
+        <div class="sound-card">
+            <h4>🚫 Zone interdite</h4>
+            <p>"Zone non autorisée"</p>
+            <p style="font-size: 10px;">Voix ferme M · FR/EN</p>
+        </div>
+    </div>
+
+    
+    <h2>Bénéfices attendus</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius);">
+            <h4 style="color: var(--c-primary); margin: 0 0 8px 0;">Sécurité</h4>
+            <ul style="margin: 0 0 0 15px;">
+                <li>Collisions recul : -50%</li>
+                <li>Collisions angles morts : -45%</li>
+                <li>Temps de réaction : 2,1s → 0,9s</li>
+                <li>Alarmes ignorées : 72% → 15%</li>
+            </ul>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius);">
+            <h4 style="color: var(--c-primary); margin: 0 0 8px 0;">Humain</h4>
+            <ul style="margin: 0 0 0 15px;">
+                <li>Fatigue auditive : -60%</li>
+                <li>Stress : réduction significative</li>
+                <li>Satisfaction : 85% attendue</li>
+                <li>Communication radio améliorée</li>
+            </ul>
+        </div>
+    </div>
+
+ 
+</body>
+</html>

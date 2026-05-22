@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 28 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .criticality-purple {
+            background-color: #9333ea !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .comparison-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .comparison-table th {
+            background: var(--c-primary-light);
+            padding: 10px;
+            text-align: left;
+        }
+        .comparison-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .espaces-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .espace-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 15px;
+            border-left: 4px solid var(--c-primary);
+        }
+        .espace-card h4 {
+            margin-top: 0;
+            color: var(--c-primary);
+        }
+        .portrait-mock {
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .portrait-placeholder {
+            width: 50px;
+            height: 50px;
+            background: var(--c-border);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        MONTRER L'ÉVOLUTION DES PRATIQUES POUR MESURER LE PROGRÈS
+    </div>
+
+
+    <h1>
+        <i class="fa-regular fa-building"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 28</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>CUL 05.1</strong></td>
+                <td>Perte de la mémoire accidentologique</td>
+                <td>Départ des anciens, absence de transmission orale, non-capitalisation des récits</td>
+                <td>Répétition des erreurs du passé, non-apprentissage des leçons, accidents récurrents</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Espace "Mémoire des accidents", témoignages enregistrés, chronologie des accidents marquants</td>
+            </tr>
+            <tr>
+                <td><strong>CUL 05.2</strong></td>
+                <td>Ingratitude inconsciente des nouvelles générations</td>
+                <td>Méconnaissance du passé, absence de visibilité sur les progrès accomplis</td>
+                <td>Remise en cause des règles, perception de la sécurité comme une contrainte superflue</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Espace "Le progrès en marche", comparaison hier/aujourd'hui, prise de conscience</td>
+            </tr>
+            <tr>
+                <td><strong>CUL 05.3</strong></td>
+                <td>Absence de fierté liée au métier</td>
+                <td>Manque de reconnaissance des anciens, absence de lieux de mémoire</td>
+                <td>Démotivation, turn-over, difficulté à recruter</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Mur des portraits, valorisation des carrières, fierté des anciens exposée</td>
+            </tr>
+            <tr>
+                <td><strong>CUL 05.4</strong></td>
+                <td>Désincarnation de la sécurité (les accidents sont des chiffres)</td>
+                <td>Communication uniquement statistique, absence de récits humains</td>
+                <td>Détachement émotionnel, moins d'impact des messages de prévention</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Témoignages audio des anciens, récits d'accidents, QR code pour approfondir</td>
+            </tr>
+            <tr>
+                <td><strong>CUL 05.5</strong></td>
+                <td>Non-transmission des leçons du passé</td>
+                <td>Absence de lieu dédié, pas de support pédagogique, oralité non structurée</td>
+                <td>Savoirs perdus, innovations déjà tentées, erreurs répétées</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Collection d'engins historiques, panneaux explicatifs, formation des buddies au musée</td>
+            </tr>
+            <tr>
+                <td><strong>FOR 03.1</strong></td>
+                <td>Formation trop abstraite pour les nouveaux</td>
+                <td>Cours en salle, diapositives, manque d'immersion dans la réalité passée</td>
+                <td>Difficulté à comprendre le "pourquoi" des règles, apprentissage moins profond</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Intégration de la visite du musée au parcours d'intégration des nouveaux</td>
+            </tr>
+            <tr>
+                <td><strong>FOR 03.2</strong></td>
+                <td>Perte de la mémoire matérielle</td>
+                <td>Engins réformés mis à la casse, équipements anciens jetés</td>
+                <td>Impossibilité de montrer concrètement l'évolution, appauvrissement pédagogique</td>
+                <td>1</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Appel aux dons, restauration et conservation d'engins et équipements historiques</td>
+            </tr>
+            <tr>
+                <td><strong>RH 03.1</strong></td>
+                <td>Dévalorisation des anciens conducteurs</td>
+                <td>Départ à la retraite sans reconnaissance, savoir non capitalisé</td>
+                <td>Sentiment d'inutilité, perte de motivation chez les seniors, moins de transmission</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Participation des anciens au projet (témoignages, dons), fierté de contribuer</td>
+            </tr>
+            <tr>
+                <td><strong>COM 04.3</strong></td>
+                <td>Méconnaissance des progrès par les parties prenantes</td>
+                <td>Communication centrée sur les objectifs futurs, pas sur le chemin parcouru</td>
+                <td>Discours de la sécurité perçu comme négatif (on insiste sur ce qui ne va pas)</td>
+                <td>1</td>
+                <td>B</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Musée comme outil de communication positive, vitrine des progrès accomplis</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.4</strong></td>
+                <td>Accidents dus à la méconnaissance des accidents passés</td>
+                <td>Non-connaissance des circonstances d'accidents similaires antérieurs</td>
+                <td>Répétition des mêmes erreurs, accidents évitables</td>
+                <td>3</td>
+                <td>D</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Enseignement des leçons des accidents passés via l'espace mémoire, ancrage durable</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #9333ea;"></div> <strong>Violet</strong> — Risque culturel/mémoriel</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <h2>Ce que les jeunes conducteurs n'ont pas connu</h2>
+
+    <table class="comparison-table">
+        <tr><th>Ce qu'ils voient aujourd'hui</th><th>Ce qu'ils n'ont pas connu</th></tr>
+        <tr><td>PUSH électriques avec caméras 360°</td><td>PUSH thermiques des années 90, sans visibilité</td></tr>
+        <tr><td>Cabines climatisées, sièges ergonomiques</td><td>Postes ouverts, vibrations, bruit permanent</td></tr>
+        <tr><td>Équipements de sécurité individuels</td><td>Casques basiques, absence de gilets</td></tr>
+        <tr><td>Procédures formalisées, audits</td><td>"On se débrouillait"</td></tr>
+        <tr><td>20 accidents corporels par an (trop)</td><td>50, 80, 100 accidents par an</td></tr>
+    </table>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité <span style="color:#dc2626; font-weight:700;">rouge</span> (accidents par méconnaissance du passé) et 
+        <span style="color:#f97316; font-weight:700;">orange</span> (perte de mémoire accidentologique) sont au cœur de cette piste. 
+        Le musée de la sécurité crée un lieu de transmission pour 168 000€ sur 3 ans.
+    </div>
+
+    
+    <h2>Les 4 espaces du musée</h2>
+
+    <div class="espaces-grid">
+        <div class="espace-card">
+            <h4>🏗️ Espace 1 - "Les engins d'hier"</h4>
+            <p>Collection d'engins historiques (PUSH 80's, LOADER 1ère génération, BUS 90's...)</p>
+            <p><em>15 k€</em></p>
+        </div>
+        <div class="espace-card">
+            <h4>📜 Espace 2 - "La mémoire des accidents"</h4>
+            <p>Chronologie des accidents marquants, témoignages audio, leçons apprises</p>
+            <p><em>8 k€</em></p>
+        </div>
+        <div class="espace-card">
+            <h4>📈 Espace 3 - "Le progrès en marche"</h4>
+            <p>Vitrines sur l'évolution des équipements (casques, gilets, chaussures)</p>
+            <p><em>5 k€</em></p>
+        </div>
+        <div class="espace-card">
+            <h4>👥 Espace 4 - "Témoignages et transmission"</h4>
+            <p>Mur des portraits, bornes audio, livre d'or, arbre des carrières</p>
+            <p><em>10 k€</em></p>
+        </div>
+    </div>
+
+    
+    <h3>Exemple : Mur des portraits</h3>
+
+    <div class="portrait-mock">
+        <div class="portrait-placeholder"></div>
+        <div><strong>Jean D.</strong> - 42 ans de carrière<br>"J'ai vu les engins passer du tout mécanique à l'électrique"</div>
+    </div>
+    <div class="portrait-mock">
+        <div class="portrait-placeholder"></div>
+        <div><strong>Marie L.</strong> - 35 ans de carrière<br>"La sécurité a fait un bond de géant en 30 ans"</div>
+    </div>
+
+    
+    <h2>Bénéfices attendus (M36)</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0;">
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">3 500</div>
+            <div>Visiteurs/an</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">100</div>
+            <div>Témoignages collectés</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">92%</div>
+            <div>Satisfaction visiteurs</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">70%</div>
+            <div>Fierté déclarée</div>
+        </div>
+    </div>
+ 
+
+</body>
+</html>

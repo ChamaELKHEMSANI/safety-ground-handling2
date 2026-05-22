@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 8 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .ia-alert {
+            background: var(--c-surface-alt);
+            border-left: 4px solid var(--c-primary);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+        .risk-bar {
+            height: 24px;
+            background: linear-gradient(90deg, #f97316, #dc2626);
+            border-radius: 12px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 11px;
+        }
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .arch-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .arch-card h4 {
+            background: var(--c-primary);
+            color: white;
+            margin: -12px -12px 10px -12px;
+            padding: 8px;
+            border-radius: var(--radius) var(--radius) 0 0;
+            font-size: 12px;
+        }
+        .arch-card p {
+            font-size: 10px;
+            margin: 5px 0;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .benefit-card {
+            background: var(--c-surface-alt);
+            padding: 12px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--c-primary);
+        }
+        .benefit-card h4 {
+            margin: 0 0 8px 0;
+            color: var(--c-primary);
+            font-size: 13px;
+        }
+        .benefit-card ul {
+            margin: 0 0 0 15px;
+            padding: 0;
+        }
+        .benefit-card li {
+            margin-bottom: 3px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+ 
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        ANTICIPER L'ACCIDENT AVANT QU'IL N'ARRIVE
+    </div>
+
+    
+    <h1>
+        <i class="fa-solid fa-robot"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 8</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>COM 01.1</strong></td>
+                <td>Conduite à risque non détectée</td>
+                <td>Absence d'analyse en temps réel, comportements dangereux invisibles</td>
+                <td>Accidents évitables, récidive</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Détection IA des profils à risque, alertes précoces</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 01.1</strong></td>
+                <td>Fatigue non détectée</td>
+                <td>Absence de mesure objective, sous-déclaration</td>
+                <td>Endormissement au volant, accident grave</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Détection des signes de fatigue (trajectoires, réactions)</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 01.2</strong></td>
+                <td>Micro-sommeils imperceptibles</td>
+                <td>Détection humaine impossible, conducteur inconscient</td>
+                <td>Perte de contrôle, collision</td>
+                <td>4</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Analyse des micro-écarts de trajectoire, alertes cabine</td>
+            </tr>
+            <tr>
+                <td><strong>PRE 01.1</strong></td>
+                <td>Prédiction impossible des hotspots</td>
+                <td>Analyse a posteriori, absence d'anticipation</td>
+                <td>Actions correctives trop tardives, accidents récurrents</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Modèles prédictifs de hotspots (trafic + météo + comportements)</td>
+            </tr>
+            <tr>
+                <td><strong>MAI 01.1</strong></td>
+                <td>Défaillance mécanique non anticipée</td>
+                <td>Maintenance calendaire, usure non détectée</td>
+                <td>Panne en cours d'opération, accident</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Maintenance prédictive par analyse des données capteurs</td>
+            </tr>
+            <tr>
+                <td><strong>MAI 01.2</strong></td>
+                <td>Freins défaillants non détectés</td>
+                <td>Absence de mesure de l'usure en continu</td>
+                <td>Collision par impossibilité de freinage</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Analyse des distances de freinage, alertes maintenance</td>
+            </tr>
+            <tr>
+                <td><strong>DIS 01.1</strong></td>
+                <td>Distraction au volant</td>
+                <td>Téléphone, fatigue, inattention</td>
+                <td>Non-détection des dangers, collision</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Détection des écarts de conduite, alertes en temps réel</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.1</strong></td>
+                <td>Accidents liés à la vitesse</td>
+                <td>Excès de vitesse récurrents, absence de sanction immédiate</td>
+                <td>Collisions, dommages matériels et corporels</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Analyse des profils de vitesse, coaching ciblé avant accident</td>
+            </tr>
+            <tr>
+                <td><strong>ANA 01.1</strong></td>
+                <td>Absence d'analyse des signaux faibles</td>
+                <td>Données non exploitées, pas de corrélation</td>
+                <td>Non-détection des tendances dangereuses</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Machine Learning sur données historiques, détection d'anomalies</td>
+            </tr>
+            <tr>
+                <td><strong>SUP 01.1</strong></td>
+                <td>Supervision humaine inefficace</td>
+                <td>Impossible de surveiller tous les conducteurs en continu</td>
+                <td>Comportements dangereux non corrigés</td>
+                <td>2</td>
+                <td>A</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Dashboard superviseur avec alertes prioritaires</td>
+            </tr>
+            <tr>
+                <td><strong>FOR 01.1</strong></td>
+                <td>Formation non ciblée</td>
+                <td>Programmes génériques, non adaptés aux besoins individuels</td>
+                <td>Manque d'efficacité des formations</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Recommandations e-learning personnalisées via IA</td>
+            </tr>
+            <tr>
+                <td><strong>NUI 01.1</strong></td>
+                <td>Accidents de nuit</td>
+                <td>Visibilité réduite, fatigue, moins de contrôles</td>
+                <td>Accidents graves</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Détection fatigue, alertes spécifiques pour conducteurs nuit</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité <span style="color:#dc2626; font-weight:700;">rouge</span> (conduite à risque, fatigue, micro-sommeils, vitesse) sont ceux que l'IA peut détecter en amont. Les <span style="color:#f97316; font-weight:700;">7 risques orange</span> concernent l'anticipation et la supervision. L'IA prédictive transforme l'approche : passer du réactif au proactif.
+    </div>
+
+    
+    <h2>Architecture technique de la solution IA</h2>
+
+    <div class="arch-grid">
+        <div class="arch-card">
+            <h4>COUCHE 1 - COLLECTE</h4>
+            <p>Boîtier télématique</p>
+            <p>Capteurs : vitesse, accélération, freinage, GPS</p>
+            <p>Caméras embarquées (option)</p>
+        </div>
+        <div class="arch-card">
+            <h4>COUCHE 2 - STOCKAGE</h4>
+            <p>Data Lake centralisé</p>
+            <p>Cloud privé / HDS</p>
+            <p>Streaming temps réel</p>
+        </div>
+        <div class="arch-card">
+            <h4>COUCHE 3 - TRAITEMENT</h4>
+            <p>Modèles supervisés</p>
+            <p>LSTM (séries temporelles)</p>
+            <p>Seuils adaptatifs</p>
+        </div>
+        <div class="arch-card">
+            <h4>COUCHE 4 - ALERTE</h4>
+            <p>Alertes embarquées</p>
+            <p>Notifications superviseurs</p>
+            <p>API vers GMAO / P3</p>
+        </div>
+    </div>
+
+    
+    <h2>Cas d'usage : Détection de conduite à risque</h2>
+
+    <div class="ia-alert">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <i class="fa-solid fa-triangle-exclamation" style="color: #dc2626; font-size: 24px;"></i>
+            <div>
+                <strong style="font-size: 14px;">ALERTE CONDUITE À RISQUE</strong><br>
+                <span style="font-size: 11px;">Jean D. - PUSH #247 - 14/02/2026 - 08:47</span>
+            </div>
+        </div>
+        <div style="background: white; padding: 10px; border-radius: var(--radius);">
+            <p style="margin: 0 0 5px 0;"><strong>📊 ANALYSE COMPORTEMENTALE - DERNIÈRES 48H</strong></p>
+            <ul style="margin: 0 0 10px 15px; font-size: 11px;">
+                <li>Vitesse moyenne zone parking : 18 km/h (limite 15) ▶ <strong>ÉCART : +20%</strong></li>
+                <li>Accélérations brusques (>5km/s²) : 12 ▶ <strong>MOYENNE ÉQUIPE : 4</strong></li>
+                <li>Distance sécurité < 2m : 8 occurrences ▶ <strong>MOYENNE ÉQUIPE : 2</strong></li>
+            </ul>
+            <div class="risk-bar" style="width: 78%;">RISQUE PRÉDIT : COLLISION - Probabilité 78%</div>
+        </div>
+    </div>
+
+    
+    <h2>Les bénéfices de l'IA prédictive</h2>
+
+    <div class="benefits-grid">
+        <div class="benefit-card">
+            <h4><i class="fa-solid fa-user"></i> Conducteur</h4>
+            <ul>
+                <li>Stress réduit : assistance, pas surveillance</li>
+                <li>Fatigue anticipée : pause avant épuisement</li>
+                <li>Compétences renforcées : feedback objectif</li>
+                <li>Fierté de conduire un engin intelligent</li>
+            </ul>
+        </div>
+        <div class="benefit-card">
+            <h4><i class="fa-solid fa-building"></i> Entreprise</h4>
+            <ul>
+                <li>Réduction des accidents (-45% vitesse M36)</li>
+                <li>Maintenance prédictive (-30% immobilisation)</li>
+                <li>Disponibilité engins (+15%)</li>
+                <li>Image innovante</li>
+            </ul>
+        </div>
+    </div>
+
+ 
+</body>
+</html>

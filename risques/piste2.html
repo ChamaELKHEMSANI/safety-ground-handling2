@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 2 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 12px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 12px 8px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 12px;
+        }
+        .risk-table td {
+            padding: 10px 8px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .criticality-black {
+            background-color: #800000 !important;
+            color: white;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+        }
+        .badge {
+            background-color: var(--c-primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+ 
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        LA CERTITUDE DE LA SANCTION EST PLUS DISSUASIVE QUE SA SÉVÉRITÉ
+    </div>
+
+    
+    <h1>
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Gravité</th>
+                <th>Probabilité</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>DGR 05.1</strong></td>
+                <td>Conduite sous emprise alcool</td>
+                <td>Addiction, méconnaissance des risques, absence de contrôle perçu</td>
+                <td>Perte de contrôle, accident mortel, dommages majeurs</td>
+                <td>4 (Catastrophique)</td>
+                <td>C (Rare)</td>
+                <td class="criticality-black risk-criticality">NOIR</td>
+                <td>Éthylotests anti-démarrage, EMPS</td>
+            </tr>
+            <tr>
+                <td><strong>DGR 05.2</strong></td>
+                <td>Conduite sous emprise stupéfiants</td>
+                <td>Addiction, altération des facultés, sous-estimation des risques</td>
+                <td>Perte de contrôle, accident mortel, dommages majeurs</td>
+                <td>4 (Catastrophique)</td>
+                <td>D (Très rare)</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Tests salivaires EMPS, dépistage inopiné</td>
+            </tr>
+            <tr>
+                <td><strong>DGR 05.3</strong></td>
+                <td>Médicaments psychoactifs non déclarés</td>
+                <td>Méconnaissance des effets, absence de contrôle</td>
+                <td>Somnolence, baisse de vigilance, accident</td>
+                <td>3 (Majeure)</td>
+                <td>C (Rare)</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Sensibilisation EMPS, lien médecine du travail</td>
+            </tr>
+            <tr>
+                <td><strong>DGR 05.4</strong></td>
+                <td>Mix alcool + stupéfiants</td>
+                <td>Polyconsommation, altération majeure des facultés</td>
+                <td>Accident grave ou mortel quasi-certain</td>
+                <td>4 (Catastrophique)</td>
+                <td>E (Extrêmement rare)</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Dépistage combiné EMPS, élimination directe</td>
+            </tr>
+            <tr>
+                <td><strong>HUM 08</strong></td>
+                <td>Alcoolémie résiduelle post-consommation</td>
+                <td>Consommation J-1 mal évaluée, méconnaissance du métabolisme</td>
+                <td>Prise de poste positive, accident</td>
+                <td>3 (Majeure)</td>
+                <td>B (Occasionnelle)</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Éthylotests systématiques, sensibilisation</td>
+            </tr>
+            <tr>
+                <td><strong>HUM 09</strong></td>
+                <td>Dépendance à l'alcool non traitée</td>
+                <td>Absence de détection, non-prise en charge</td>
+                <td>Récidive, accident grave</td>
+                <td>3 (Majeure)</td>
+                <td>D (Très rare)</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Orientation service santé, accompagnement</td>
+            </tr>
+            <tr>
+                <td><strong>ORG 01</strong></td>
+                <td>Absence de culture de contrôle</td>
+                <td>Contrôles trop rares et prévisibles, sentiment d'impunité</td>
+                <td>Banalisation de la prise de risque</td>
+                <td>2 (Mineure)</td>
+                <td>B (Occasionnelle)</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Présence dissuasive EMPS, communication</td>
+            </tr>
+            <tr>
+                <td><strong>ORG 02</strong></td>
+                <td>Absence de procédure post-positif</td>
+                <td>Pas de protocole clair après un test positif</td>
+                <td>Perte de chance d'accompagnement, récidive</td>
+                <td>2 (Mineure)</td>
+                <td>C (Rare)</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Protocole gradué (retrait → accompagnement)</td>
+            </tr>
+            <tr>
+                <td><strong>TEC 04</strong></td>
+                <td>Contournement des éthylotests</td>
+                <td>Soufflage assisté, utilisation de tiers</td>
+                <td>Faux négatif, prise de risque non détectée</td>
+                <td>3 (Majeure)</td>
+                <td>D (Très rare)</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Éthylotests anti-fraude, contrôles inopinés</td>
+            </tr>
+            <tr>
+                <td><strong>EVN 03</strong></td>
+                <td>Accident mortel lié à l'alcool</td>
+                <td>Cumul de défaillances, absence de détection</td>
+                <td>Décès, conséquences judiciaires, image</td>
+                <td>4 (Catastrophique)</td>
+                <td>E (Extrêmement rare)</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Barrières multiples (tech + humain)</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :<br/>
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé (intolérable)</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #800000;"></div> <strong>Noir</strong> — Risque intolérable (tolérance zéro)</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé (actions nécessaires)</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen (tolérable)</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible (acceptable)</div>
+    </div>
+
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+                <li><strong>E</strong> — Extrêmement rare (jamais observé)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité 
+        <span style="color:#800000; font-weight:700;">noire</span> (conduite sous alcool) et 
+        <span style="color:#dc2626; font-weight:700;">rouge</span> (stupéfiants, mix, accident mortel) sont la cible prioritaire de cette piste. 
+        La combinaison des barrières technologiques (éthylotests anti-démarrage) et humaines (EMPS) vise à rendre ces événements 
+        <strong>extrêmement improbables</strong>.
+    </div>
+
+    
+    <h2>Synthèse des barrières apportées par la Piste 2</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+        <div style="background: var(--c-surface-alt); padding: 20px; border-radius: var(--radius); border: 1px solid var(--c-border);">
+            <h3 style="margin-top: 0; color: var(--c-primary); display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-microchip"></i> Barrières technologiques
+            </h3>
+            <ul style="margin-left: 20px;">
+                <li>Éthylotests anti-démarrage connectés</li>
+                <li>Impossibilité physique de démarrer en cas de positivité</li>
+                <li>Alerte immédiate à la supervision</li>
+                <li>Traçabilité infaillible</li>
+            </ul>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 20px; border-radius: var(--radius); border: 1px solid var(--c-border);">
+            <h3 style="margin-top: 0; color: var(--c-primary); display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-people-group"></i> Barrières humaines (EMPS)
+            </h3>
+            <ul style="margin-left: 20px;">
+                <li>30 tests aléatoires par jour</li>
+                <li>Couverture de toutes les zones et horaires</li>
+                <li>Dépistage stupéfiants systématique</li>
+                <li>Présence dissuasive permanente</li>
+            </ul>
+        </div>
+    </div>
+ 
+
+</body>
+</html>

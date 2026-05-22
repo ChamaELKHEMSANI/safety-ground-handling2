@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 17 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .comparison-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 15px;
+        }
+        .comparison-box h4 {
+            margin: 0 0 10px 0;
+            text-align: center;
+            padding: 5px;
+            border-radius: var(--radius);
+        }
+        .comparison-box.visible h4 {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .comparison-box.invisible h4 {
+            background: #dcfce7;
+            color: #10b981;
+        }
+        .comparison-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .comparison-box li {
+            margin-bottom: 5px;
+        }
+        .marqueurs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .marqueur-card {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 15px;
+            text-align: center;
+        }
+        .marqueur-emoji {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .marqueur-titre {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .marqueur-desc {
+            font-size: 10px;
+            color: var(--c-text-muted);
+        }
+        .pin-argent { color: #a0a0a0; }
+        .pin-or { color: #ffd700; }
+        .pin-couronne { color: #ffa500; }
+        .bandeau-preview {
+            height: 30px;
+            border-radius: var(--radius);
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 11px;
+        }
+        .bandeau-blanc { background: white; color: #333; border: 1px solid #ccc; }
+        .bandeau-vert { background: #10b981; color: white; }
+        .bandeau-bleu { background: #2563eb; color: white; }
+        .bandeau-argent { background: #c0c0c0; color: #333; }
+        .bandeau-or { background: #ffd700; color: #333; }
+        .bracelet-table td {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+ 
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        LA SÉCURITÉ COMME MARQUEUR D'IDENTITÉ
+    </div>
+
+    
+    <div class="comparison-grid">
+        <div class="comparison-box visible">
+            <h4>🔴 Ce qui est visible aujourd'hui</h4>
+            <ul>
+                <li>Le grade (épaulettes)</li>
+                <li>L'ancienneté (médailles)</li>
+                <li>La fonction (badge, casque)</li>
+                <li>L'entreprise (logo)</li>
+            </ul>
+        </div>
+        <div class="comparison-box invisible">
+            <h4>🟢 Ce qui reste invisible</h4>
+            <ul>
+                <li>L'exemplarité sécurité</li>
+                <li>Le nombre d'accidents évités</li>
+                <li>Les near-miss signalés</li>
+                <li>Les comportements vertueux</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <h1>
+        <i class="fa-solid fa-award"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 17</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>REC 01.1</strong></td>
+                <td>Invisibilité des comportements exemplaires</td>
+                <td>Absence de marqueurs visuels, pas de reconnaissance des accomplissements</td>
+                <td>Démotivation, perte de sens, absence de modèles</td>
+                <td>2</td>
+                <td>A</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Pin's d'ancienneté (étoiles, couronnes), galons de manche</td>
+            </tr>
+            <tr>
+                <td><strong>REC 01.2</strong></td>
+                <td>Absence de modèles identificatoires pour les nouveaux</td>
+                <td>Pas de distinction visible des conducteurs expérimentés</td>
+                <td>Nouveaux sans repères, difficulté d'intégration</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Bandeaux de casque par niveau (blanc, vert, bleu, argent, or)</td>
+            </tr>
+            <tr>
+                <td><strong>REC 01.3</strong></td>
+                <td>Non-valorisation des signalements de near-miss</td>
+                <td>Pas de reconnaissance des contributeurs à la prévention</td>
+                <td>Sous-déclaration, perte d'information sécurité</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Bracelets "Œil de lynx", "Sentinelle", "Vigie", "Légende"</td>
+            </tr>
+            <tr>
+                <td><strong>REC 01.4</strong></td>
+                <td>Non-reconnaissance des formateurs et buddies</td>
+                <td>Rôle de transmission invisible, pas de distinction</td>
+                <td>Démotivation des formateurs, transmission insuffisante</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Écusson "🤝" pour buddies, écusson "🎓" pour formateurs</td>
+            </tr>
+            <tr>
+                <td><strong>REC 01.5</strong></td>
+                <td>Absence de fierté d'appartenance</td>
+                <td>Pas de marqueurs identitaires, pas de signes de reconnaissance</td>
+                <td>Turnover, désengagement</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Marqueurs visibles, fierté individuelle et collective</td>
+            </tr>
+            <tr>
+                <td><strong>REC 02.1</strong></td>
+                <td>Méconnaissance des spécialités des conducteurs</td>
+                <td>Pas de signe distinctif pour les compétences spécifiques</td>
+                <td>Sous-utilisation des compétences, inefficacité</td>
+                <td>1</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Écussons par spécialité (🛩️ PUSH, 📦 LOADER, 🚌 BUS, ❄️ DÉGIVREUSE)</td>
+            </tr>
+            <tr>
+                <td><strong>REC 02.2</strong></td>
+                <td>Absence de valorisation des innovations</td>
+                <td>Propositions d'amélioration non reconnues</td>
+                <td>Démotivation à proposer, perte d'idées</td>
+                <td>1</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Écusson "💡" pour innovateurs, pin's spécial pour gains mesurés</td>
+            </tr>
+            <tr>
+                <td><strong>CUL 01.1</strong></td>
+                <td>Culture de l'anonymat et de l'indifférence</td>
+                <td>Personne ne sait ce que les autres accomplissent</td>
+                <td>Absence d'émulation, faible engagement</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Visibilité des accomplissements, création de référents</td>
+            </tr>
+            <tr>
+                <td><strong>CUL 01.2</strong></td>
+                <td>Transmission insuffisante entre générations</td>
+                <td>Jeunes ne savent pas vers qui se tourner</td>
+                <td>Perte de savoir-faire, erreurs évitables</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Identification visible des mentors et experts</td>
+            </tr>
+            <tr>
+                <td><strong>MOT 01.1</strong></td>
+                <td>Manque de motivation intrinsèque</td>
+                <td>Pas d'objectifs visibles à atteindre, pas de progression visible</td>
+                <td>Baisse de vigilance, accidents</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Progressivité des marqueurs, envie d'obtenir le suivant</td>
+            </tr>
+            <tr>
+                <td><strong>TURN 01.1</strong></td>
+                <td>Turnover élevé</td>
+                <td>Manque de reconnaissance, absence de fierté</td>
+                <td>Perte de compétences, coûts de recrutement</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Réduction turnover 25% → 19% (fierté, reconnaissance, appartenance)</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Le risque <span style="color:#dc2626; font-weight:700;">rouge</span> (non-valorisation des signalements) et les 
+        <span style="color:#f97316; font-weight:700;">3 risques orange</span> (invisibilité des comportements exemplaires, culture de l'anonymat, turnover) 
+        sont au cœur de cette piste. Le tatouage sécurité transforme l'invisible en visible pour 25€ par conducteur.
+    </div>
+
+    
+    <h2>Exemples de marqueurs visuels</h2>
+
+    <div class="marqueurs-grid">
+        <div class="marqueur-card">
+            <div class="marqueur-emoji pin-argent">⭐</div>
+            <div class="marqueur-titre">1 an sans accident</div>
+            <div class="marqueur-desc">Étoile argent - Pin's</div>
+        </div>
+        <div class="marqueur-card">
+            <div class="marqueur-emoji pin-or">⭐⭐</div>
+            <div class="marqueur-titre">5 ans sans accident</div>
+            <div class="marqueur-desc">Étoiles or - Pin's</div>
+        </div>
+        <div class="marqueur-card">
+            <div class="marqueur-emoji pin-couronne">👑</div>
+            <div class="marqueur-titre">10 ans sans accident</div>
+            <div class="marqueur-desc">Couronne - Pin's</div>
+        </div>
+    </div>
+
+    <h3>Bandeaux de casque par niveau</h3>
+
+    <div class="marqueurs-grid">
+        <div class="marqueur-card">
+            <div class="bandeau-preview bandeau-blanc">Débutant (<1 an)</div>
+            <div class="marqueur-desc">Conducteur en période probatoire</div>
+        </div>
+        <div class="marqueur-card">
+            <div class="bandeau-preview bandeau-vert">Confirmé (1-5 ans)</div>
+            <div class="marqueur-desc">Conducteur autonome</div>
+        </div>
+        <div class="marqueur-card">
+            <div class="bandeau-preview bandeau-bleu">Expert (5-10 ans)</div>
+            <div class="marqueur-desc">Référent technique</div>
+        </div>
+        <div class="marqueur-card">
+            <div class="bandeau-preview bandeau-argent">Élite (10-15 ans)</div>
+            <div class="marqueur-desc">Formateur / Buddy</div>
+        </div>
+        <div class="marqueur-card">
+            <div class="bandeau-preview bandeau-or">Légende (>15 ans)</div>
+            <div class="marqueur-desc">Mentor, ambassadeur</div>
+        </div>
+    </div>
+
+    <h3>Bracelets pour signaleurs</h3>
+
+    <table style="width: 100%; margin: 20px 0;">
+        <tr><th>Accomplissement</th><th>Couleur</th><th>Message</th></tr>
+        <tr><td>10 signalements</td><td>Bleu clair</td><td>"ŒIL DE LYNX"</td></tr>
+        <tr><td>25 signalements</td><td>Bleu foncé</td><td>"SENTINELLE"</td></tr>
+        <tr><td>50 signalements</td><td>Violet</td><td>"VIGIE"</td></tr>
+        <tr><td>100 signalements</td><td>Or</td><td>"LÉGENDE"</td></tr>
+    </table>
+
+    
+    <h2>Bénéfices attendus</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0;">
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">75%</div>
+            <div>Taux d'adoption (M36)</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">70%</div>
+            <div>Fierté déclarée</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">65%</div>
+            <div>Reconnaissance perçue</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">19%</div>
+            <div>Turnover (vs 25%)</div>
+        </div>
+    </div>
+
+ 
+</body>
+</html>

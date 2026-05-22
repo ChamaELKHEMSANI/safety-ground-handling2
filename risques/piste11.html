@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 11 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .kss-scale {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            margin: 20px 0;
+        }
+        .kss-item {
+            padding: 8px 3px;
+            text-align: center;
+            font-size: 9px;
+            border-radius: var(--radius);
+            font-weight: 600;
+        }
+        .kss-1 { background: #00e676; color: black; }
+        .kss-2 { background: #69f0ae; color: black; }
+        .kss-3 { background: #b9f6ca; color: black; }
+        .kss-4 { background: #ccff90; color: black; }
+        .kss-5 { background: #ffff8d; color: black; }
+        .kss-6 { background: #ffd180; color: black; }
+        .kss-7 { background: #ffb74d; color: black; }
+        .kss-8 { background: #ff8a65; color: white; }
+        .kss-9 { background: #ff5252; color: white; }
+        .kss-10 { background: #d50000; color: white; }
+        .sieste-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid var(--c-primary);
+        }
+        .pvt-test {
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid var(--c-border);
+        }
+        .progress-pvt {
+            height: 20px;
+            background: var(--c-border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-pvt-fill {
+            height: 100%;
+            width: 84%;
+            background: var(--c-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .benefit-card {
+            background: var(--c-surface-alt);
+            padding: 12px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--c-primary);
+        }
+        .benefit-card h4 {
+            margin: 0 0 8px 0;
+            color: var(--c-primary);
+            font-size: 13px;
+        }
+        .benefit-card ul {
+            margin: 0 0 0 15px;
+            padding: 0;
+        }
+        .benefit-card li {
+            margin-bottom: 3px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+ 
+
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        LUTTER CONTRE LE PREMIER FACTEUR D'INATTENTION
+    </div>
+
+    
+    <h1>
+        <i class="fa-solid fa-bed"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 11</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>FAT 01.1</strong></td>
+                <td>Travail de nuit sans mesure de vigilance</td>
+                <td>Absence de suivi, planning sans limitation</td>
+                <td>Accidents de nuit multipliés par 3</td>
+                <td>3</td>
+                <td>A</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Mesure vigilance PVT, échelle Karolinska, suivi individualisé</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 01.2</strong></td>
+                <td>Cumul de nuits consécutives</td>
+                <td>Organisation du travail sans limite, pression opérationnelle</td>
+                <td>Risque x5 à la 3e nuit, accidents graves</td>
+                <td>4</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Limitation à 3 nuits consécutives, négociation accords</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 01.3</strong></td>
+                <td>Fin de vacation (7e+ heure)</td>
+                <td>Amplitude horaire trop longue, absence de pause</td>
+                <td>Baisse de vigilance, erreurs, accidents</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Pauses obligatoires (15/30/45 min), salles sieste</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 02.1</strong></td>
+                <td>Non-détection des signes de fatigue</td>
+                <td>Absence d'outil de mesure, sous-estimation personnelle</td>
+                <td>Conduite en état de fatigue, accidents</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Échelle Karolinska, tests PVT, sensibilisation</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 02.2</strong></td>
+                <td>Méconnaissance des mécanismes du sommeil</td>
+                <td>Absence de formation, culture du "je tiens le coup"</td>
+                <td>Mauvaise gestion de la fatigue personnelle</td>
+                <td>2</td>
+                <td>A</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Formation "Sommeil et vigilance" obligatoire</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 03.1</strong></td>
+                <td>Absence de récupération pendant le poste</td>
+                <td>Pas de salle de repos adaptée, environnement inconfortable</td>
+                <td>Fatigue accumulée, baisse de performance</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Salles de sieste avec fauteuils relax, obscurité, silence</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 03.2</strong></td>
+                <td>Déshydratation et mauvaise alimentation</td>
+                <td>Absence de fontaines, distributeurs de boissons sucrées</td>
+                <td>Baisse de vigilance, coups de fatigue</td>
+                <td>1</td>
+                <td>B</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Fontaines à eau, gourdes, collations saines nuit</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 04.1</strong></td>
+                <td>Perturbation du cycle circadien</td>
+                <td>Éclairage inadapté dans les locaux sociaux</td>
+                <td>Difficultés d'endormissement post-postes</td>
+                <td>1</td>
+                <td>B</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Éclairage dynamique (bleu nuit, blanc jour, chaud fin)</td>
+            </tr>
+            <tr>
+                <td><strong>FAT 05.1</strong></td>
+                <td>Temps de trajet domicile-travail</td>
+                <td>Éloignement, absence de transport adapté nuit</td>
+                <td>Fatigue supplémentaire, risques routiers</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Plateforme covoiturage, navettes nuit renforcées</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.1</strong></td>
+                <td>Accidents de nuit</td>
+                <td>Cumul des facteurs de fatigue</td>
+                <td>Accidents corporels et matériels</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Réduction ciblée de -50% grâce aux actions combinées</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.2</strong></td>
+                <td>Endormissement au volant</td>
+                <td>Fatigue extrême non détectée</td>
+                <td>Accident grave ou mortel</td>
+                <td>4</td>
+                <td>D</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Détection précoce, pauses obligatoires, salles sieste</td>
+            </tr>
+            <tr>
+                <td><strong>ORG 01.1</strong></td>
+                <td>Absence de données sur la fatigue</td>
+                <td>Non-mesure, non-exploitation</td>
+                <td>Impossibilité d'agir efficacement</td>
+                <td>2</td>
+                <td>A</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Étude scientifique 6 mois, corrélation accidents/horaires</td>
+            </tr>
+        </tbody>
+    </table>
+
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité <span style="color:#dc2626; font-weight:700;">rouge</span> sont nombreux et graves : travail de nuit sans mesure, cumul de nuits consécutives (risque x5), non-détection de la fatigue, accidents de nuit, endormissement au volant. La Piste 11 apporte une réponse systémique avec mesure, prévention et organisation.
+    </div>
+
+    
+    <h2>Échelle de somnolence de Karolinska (KSS)</h2>
+
+    <div class="kss-scale">
+        <div class="kss-item kss-1"><span style="font-weight: 800;">1</span><br>Extrêmement alerte</div>
+        <div class="kss-item kss-2"><span style="font-weight: 800;">2</span><br>Très alerte</div>
+        <div class="kss-item kss-3"><span style="font-weight: 800;">3</span><br>Alerte</div>
+        <div class="kss-item kss-4"><span style="font-weight: 800;">4</span><br>Plutôt alerte</div>
+        <div class="kss-item kss-5"><span style="font-weight: 800;">5</span><br>Ni alerte ni somnolent</div>
+        <div class="kss-item kss-6"><span style="font-weight: 800;">6</span><br>Quelques signes</div>
+        <div class="kss-item kss-7"><span style="font-weight: 800;">7</span><br>Somnolent</div>
+        <div class="kss-item kss-8"><span style="font-weight: 800;">8</span><br>⚠️ Somnolent (effort)</div>
+        <div class="kss-item kss-9"><span style="font-weight: 800;">9</span><br>🔴 Très somnolent</div>
+        <div class="kss-item kss-10"><span style="font-weight: 800;">10</span><br>⛔ Extrêmement somnolent</div>
+    </div>
+
+    
+    <h2>Test de vigilance psychomotrice (PVT)</h2>
+
+    <div class="pvt-test">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <i class="fa-solid fa-clock" style="color: var(--c-primary); font-size: 24px;"></i>
+            <div>
+                <strong>CONDUCTEUR : Jean D. - POSTE DE NUIT - 22h00</strong>
+            </div>
+        </div>
+        <div style="background: white; padding: 10px; border-radius: var(--radius);">
+            <p><strong>Temps de réaction moyen :</strong> 0,42s (seuil 0,45s)</p>
+            <p><strong>Laps (>500ms) :</strong> 1 | <strong>Anticipations :</strong> 0</p>
+            <div class="progress-pvt">
+                <div class="progress-pvt-fill" style="width: 84%;">SCORE 84/100</div>
+            </div>
+            <p style="color: #10b981; font-weight: 700;"><i class="fa-solid fa-circle-check"></i> VIGILANCE NORMALE - POSTE AUTORISÉ</p>
+        </div>
+    </div>
+
+    
+    <h2>Salle de sieste - Type</h2>
+
+    <div class="sieste-box">
+        <ul>
+            <li><i class="fa-solid fa-chair"></i> Fauteuil relax inclinable</li>
+            <li><i class="fa-solid fa-moon"></i> Obscurité totale (volets occultants)</li>
+            <li><i class="fa-solid fa-ear-deaf"></i> Silence (isolation phonique)</li>
+            <li><i class="fa-solid fa-wind"></i> Ventilation individuelle</li>
+            <li><i class="fa-solid fa-clock"></i> Durée maximale : 20 minutes</li>
+        </ul>
+        <p><strong>Objectif :</strong> 5 salles CDG → 65 k€</p>
+    </div>
+
+    
+    <h2>Bénéfices attendus</h2>
+
+    <div class="benefits-grid">
+        <div class="benefit-card">
+            <h4><i class="fa-solid fa-shield"></i> Sécurité</h4>
+            <ul>
+                <li>Accidents de nuit : -50% à M36</li>
+                <li>Accidents 3e nuit : -70% à M36</li>
+                <li>Accidents 7e heure : -60% à M36</li>
+            </ul>
+        </div>
+        <div class="benefit-card">
+            <h4><i class="fa-solid fa-euro-sign"></i> Économies</h4>
+            <ul>
+                <li>Accidents évités : 360 k€/an</li>
+                <li>Absentéisme -15% : 150 k€/an</li>
+                <li>Turnover -10% : 200 k€/an</li>
+                <li><strong>ROI : 3-4 mois</strong></li>
+            </ul>
+        </div>
+    </div>
+ 
+
+</body>
+</html>

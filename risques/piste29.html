@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 29 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .criticality-purple {
+            background-color: #9333ea !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .competences-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .competences-table th {
+            background: var(--c-primary-light);
+            padding: 10px;
+            text-align: left;
+        }
+        .competences-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .badge-ambassadeur {
+            background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+            border: 2px solid #10b981;
+            border-radius: 30px;
+            padding: 20px;
+            max-width: 300px;
+            margin: 20px auto;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+        }
+        .badge-ambassadeur .titre {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .badge-ambassadeur .sous-titre {
+            font-size: 14px;
+            color: #10b981;
+        }
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .module-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 12px;
+            border-left: 4px solid var(--c-primary);
+        }
+        .module-card h4 {
+            margin-top: 0;
+            color: var(--c-primary);
+        }
+    </style>
+</head>
+<body>
+
+ 
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        DONNER LA PAROLE À LA NOUVELLE GÉNÉRATION
+    </div>
+
+
+    <h1>
+        <i class="fa-solid fa-users"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 29</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>GEN 01.1</strong></td>
+                <td>Fracture numérique générationnelle</td>
+                <td>Anciens non formés aux outils digitaux, absence de transmission ascendante</td>
+                <td>Sous-utilisation des outils (appli, QR codes), inefficacité, frustration</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Ateliers de formation par les ambassadeurs jeunes, tutoriels personnalisés</td>
+            </tr>
+            <tr>
+                <td><strong>GEN 01.2</strong></td>
+                <td>Non-valorisation des jeunes talents</td>
+                <td>Absence de canal de remontée dédié, culture descendante</td>
+                <td>Démotivation des jeunes, perte d'idées innovantes, turn-over élevé</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Mission de remontée des idées jeunes, réunion mensuelle avec responsable sécurité</td>
+            </tr>
+            <tr>
+                <td><strong>GEN 01.3</strong></td>
+                <td>Sentiment d'inutilité des jeunes conducteurs</td>
+                <td>Rôle passif, pas de responsabilité, pas de reconnaissance</td>
+                <td>Désengagement, baisse de vigilance, turn-over, accidents</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Statut valorisé (badge, prime), missions concrètes, participation aux décisions</td>
+            </tr>
+            <tr>
+                <td><strong>GEN 01.4</strong></td>
+                <td>Défaut d'appropriation des outils par les anciens</td>
+                <td>Résistance au changement, manque de pédagogie adaptée</td>
+                <td>Outils de sécurité non utilisés, risques accrus</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Formation par les pairs (jeunes), approche bienveillante et adaptée</td>
+            </tr>
+            <tr>
+                <td><strong>COM 04.4</strong></td>
+                <td>Communication sécurité inefficace auprès des jeunes</td>
+                <td>Messages trop formels, formats inadaptés, absence de codes générationnels</td>
+                <td>Faible impact des campagnes, non-respect des règles</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Création de contenus par les jeunes (vidéos courtes, quiz, infos)</td>
+            </tr>
+            <tr>
+                <td><strong>COM 04.5</strong></td>
+                <td>Absence de relais auprès des nouvelles générations</td>
+                <td>Pas de porte-parole, pas de représentation jeune</td>
+                <td>Messages non relayés, incompréhension, rejet</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Rubrique "Le regard du jeune" dans les points sécurité, ambassadeurs comme relais</td>
+            </tr>
+            <tr>
+                <td><strong>FOR 04.1</strong></td>
+                <td>Formation des anciens inadaptée</td>
+                <td>Modules trop techniques, pas de formateurs de la même génération</td>
+                <td>Progression lente, frustration, abandon</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Formation ascendante par les ambassadeurs, approche terrain et pratique</td>
+            </tr>
+            <tr>
+                <td><strong>INN 01.1</strong></td>
+                <td>Innovations non testées par le public cible</td>
+                <td>Déploiement sans retour utilisateur, outils conçus sans les jeunes</td>
+                <td>Outils inadaptés, faible adoption, échec des projets</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Bêta-testeurs prioritaires (appli, VR, IA), retour structuré</td>
+            </tr>
+            <tr>
+                <td><strong>RH 04.1</strong></td>
+                <td>Difficulté à fidéliser les jeunes talents</td>
+                <td>Absence de perspective d'évolution, manque de reconnaissance</td>
+                <td>Turn-over, perte de compétences, coûts de recrutement</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Parcours valorisé (mandat, réseau national, événement "Génération sécurité")</td>
+            </tr>
+            <tr>
+                <td><strong>RH 04.2</strong></td>
+                <td>Manque d'attractivité du métier pour les jeunes</td>
+                <td>Image vieillotte, absence de dimension innovante</td>
+                <td>Pénurie de candidats, vieillissement des effectifs</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Présence d'ambassadeurs, image moderne et dynamique du métier</td>
+            </tr>
+            <tr>
+                <td><strong>HUM 06.1</strong></td>
+                <td>Tension intergénérationnelle</td>
+                <td>Incompréhension mutuelle, absence de dialogue, préjugés</td>
+                <td>Conflits, ambiance dégradée, perte de cohésion</td>
+                <td>2</td>
+                <td>D</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Binôme intergénérationnel (ambassadeur/buddy), missions communes</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.5</strong></td>
+                <td>Accidents liés à la méconnaissance des usages numériques par les anciens</td>
+                <td>Non-utilisation des alertes, mauvaise manipulation des outils connectés</td>
+                <td>Accidents évitables, perte de chance de prévention</td>
+                <td>3</td>
+                <td>D</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Formation systématique des anciens par les ambassadeurs</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>Les compétences uniques des jeunes conducteurs</h2>
+
+    <table class="competences-table">
+        <tr><th>Compétence</th><th>Pourquoi c'est utile</th></tr>
+        <tr><td>Maîtrise du numérique</td><td>Applications, QR codes, outils connectés</td></tr>
+        <tr><td>Réflexes vidéo/ludiques</td><td>Création de contenus engageants</td></tr>
+        <tr><td>Regard neuf</td><td>Ils voient ce que les anciens ne voient plus</td></tr>
+        <tr><td>Créativité</td><td>Idées non formatées, hors sentiers battus</td></tr>
+        <tr><td>Réseaux sociaux</td><td>Capacité à diffuser des messages à leur génération</td></tr>
+        <tr><td>Adaptabilité</td><td>Nés avec le changement, pas de résistance</td></tr>
+    </table>
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité <span style="color:#f97316; font-weight:700;">orange</span> (accidents par méconnaissance numérique) et 
+        <span style="color:#eab308; font-weight:700;">jaune</span> (fracture numérique, non-valorisation, défaut d'appropriation, communication inefficace, fidélisation) 
+        sont au cœur de cette piste. L'ambassadeur jeune crée une transmission ascendante pour 1 000€ par ambassadeur.
+    </div>
+
+    
+    <h2>Badge de l'ambassadeur</h2>
+
+    <div class="badge-ambassadeur">
+        <div class="titre">🌟 AMBASSADEUR</div>
+        <div class="sous-titre">SÉCURITÉ JEUNE</div>
+        <div style="margin-top: 10px;">Thomas D.</div>
+        <div style="font-size: 12px; margin-top: 5px;">Génération sécurité 2026</div>
+    </div>
+
+    
+    <h2>Formation des ambassadeurs (3 jours)</h2>
+
+    <div class="modules-grid">
+        <div class="module-card">
+            <h4>Module 1</h4>
+            <strong>Prise de parole et animation</strong>
+            <p style="font-size: 11px;">Techniques de base, animation de réunion, gestion des objections</p>
+        </div>
+        <div class="module-card">
+            <h4>Module 2</h4>
+            <strong>Outils numériques</strong>
+            <p style="font-size: 11px;">Maîtrise Safety Hub, création de contenus, réseaux sociaux</p>
+        </div>
+        <div class="module-card">
+            <h4>Module 3</h4>
+            <strong>Pédagogie inversée</strong>
+            <p style="font-size: 11px;">Transmission ascendante, posture du "jeune qui forme"</p>
+        </div>
+    </div>
+
+    
+    <h2>Bénéfices attendus (M36)</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0;">
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">100</div>
+            <div>Ambassadeurs actifs</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">250</div>
+            <div>Idées jeunes/an</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">400</div>
+            <div>Anciens formés au numérique</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">75%</div>
+            <div>Satisfaction jeunes</div>
+        </div>
+    </div>
+
+ 
+</body>
+</html>

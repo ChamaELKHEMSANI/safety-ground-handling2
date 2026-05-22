@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 1 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 13px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 12px 8px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 13px;
+        }
+        .risk-table td {
+            padding: 10px 8px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .criticality-black {
+            background-color: #800000 !important;
+            color: white;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 12px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+
+    <h1>
+        <i class="fa-solid fa-triangle-exclamation" style="margin-right: 10px;"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Gravité</th>
+                <th>Probabilité</th>
+                <th>Criticité</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>DGR 01</strong></td>
+                <td>Excès de vitesse récurrent en zone parking</td>
+                <td>Précipitation, pression temporelle, absence de sanction perçue</td>
+                <td>Collision engin/avion, dommages matériels</td>
+                <td>3 (Majeure)</td>
+                <td>B (Occasionnelle)</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+            </tr>
+            <tr>
+                <td><strong>DGR 02</strong></td>
+                <td>Usage du téléphone au volant</td>
+                <td>Distraction, addiction, "pour regarder vite fait"</td>
+                <td>Inattention, non-vérification angle mort, heurt piéton</td>
+                <td>3 (Majeure)</td>
+                <td>B (Occasionnelle)</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+            </tr>
+            <tr>
+                <td><strong>DGR 03</strong></td>
+                <td>Non-respect signalisation prioritaire</td>
+                <td>Méconnaissance, inattention, volonté de gagner du temps</td>
+                <td>Conflit circulation, collision avec avion</td>
+                <td>4 (Catastrophique)</td>
+                <td>C (Rare)</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+            </tr>
+            <tr>
+                <td><strong>DGR 04</strong></td>
+                <td>Non-port de la ceinture de sécurité</td>
+                <td>Inconfort, oubli, "pour 50 mètres"</td>
+                <td>Blessure grave du conducteur en cas de choc</td>
+                <td>2 (Mineure)</td>
+                <td>B (Occasionnelle)</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+            </tr>
+            <tr>
+                <td><strong>DGR 05</strong></td>
+                <td>Conduite sous emprise alcool/stupéfiants</td>
+                <td>Problème personnel, addiction, méconnaissance des risques</td>
+                <td>Perte totale de contrôle, accident mortel</td>
+                <td>4 (Catastrophique)</td>
+                <td>E (Extrêmement rare)</td>
+                <td class="criticality-black risk-criticality">NOIR</td>
+            </tr>
+            <tr>
+                <td><strong>DGR 06</strong></td>
+                <td>Violation volontaire des règles</td>
+                <td>Gain de temps, habitude, pression hiérarchique</td>
+                <td>Accident grave, non-respect systématique</td>
+                <td>4 (Catastrophique)</td>
+                <td>C (Rare)</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+            </tr>
+            <tr>
+                <td><strong>HUM 01</strong></td>
+                <td>Baisse d'attention / vigilance</td>
+                <td>Fatigue (nuits consécutives), stress, monotonie</td>
+                <td>Erreur de jugement, non-détection d'un danger</td>
+                <td>3 (Majeure)</td>
+                <td>B (Occasionnelle)</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+            </tr>
+            <tr>
+                <td><strong>HUM 02</strong></td>
+                <td>Compétence insuffisante</td>
+                <td>Formation initiale incomplète, absence de recyclage</td>
+                <td>Mauvaise manipulation, non-respect procédures</td>
+                <td>3 (Majeure)</td>
+                <td>C (Rare)</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+            </tr>
+            <tr>
+                <td><strong>HUM 03</strong></td>
+                <td>Formation sécurité inadéquate</td>
+                <td>Contenu non adapté, format non engageant, formation trop espacée</td>
+                <td>Méconnaissance des risques et des bonnes pratiques</td>
+                <td>3 (Majeure)</td>
+                <td>B (Occasionnelle)</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+            </tr>
+            <tr>
+                <td><strong>EVN 01</strong></td>
+                <td>Accident corporel</td>
+                <td>Cumul des défaillances comportementales</td>
+                <td>Blessure, incapacité permanente, décès</td>
+                <td>4 (Catastrophique)</td>
+                <td>C (Rare)</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+            </tr>
+            <tr>
+                <td><strong>EVN 02</strong></td>
+                <td>Collision véhicule/avion</td>
+                <td>Non-respect priorité, excès vitesse, incursion</td>
+                <td>Dommages majeurs à l'avion, coût énorme, retard</td>
+                <td>4 (Catastrophique)</td>
+                <td>D (Très rare)</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #800000;"></div> <strong>Noir</strong> — Risque intolérable</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging" style="margin-right: 8px;"></i>Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line" style="margin-right: 8px;"></i>Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+                <li><strong>E</strong> — Extrêmement rare (jamais observé)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité <span style="color:#dc2626; font-weight:700;">rouge</span> et <span style="color:#800000; font-weight:700;">noir</span> doivent faire l'objet d'un traitement prioritaire. 
+        Le permis à points cible directement les causes comportementales (DGR 01 à 06) en instaurant un système progressif de responsabilisation individuelle.
+    </div>
+
+
+</body>
+</html>

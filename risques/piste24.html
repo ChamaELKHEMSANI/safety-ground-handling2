@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 24 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .hotspot-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .hotspot-table th {
+            background: var(--c-primary-light);
+            padding: 10px;
+            text-align: left;
+        }
+        .hotspot-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .panneau-memorial {
+            background: var(--c-surface-alt);
+            border: 2px solid var(--c-primary);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .panneau-titre {
+            font-size: 20px;
+            font-weight: 800;
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .panneau-date {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 15px;
+            color: var(--c-text-muted);
+        }
+        .panneau-contenu {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .panneau-image-placeholder {
+            width: 120px;
+            height: 80px;
+            background: var(--c-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+        }
+        .panneau-lecon {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px;
+            border-radius: var(--radius);
+            margin: 10px 0;
+        }
+        .qr-sim {
+            width: 50px;
+            height: 50px;
+            background: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            margin-top: 10px;
+        }
+        .niveaux-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .niveau-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 12px;
+            text-align: center;
+        }
+        .niveau-card .niveau {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--c-primary);
+        }
+    </style>
+</head>
+<body>
+
+   
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        LA MÉMOIRE VIVE DES HOTSPOTS
+    </div>
+
+ 
+    <h1>
+        <i class="fa-regular fa-rectangle-ad"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 24</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>MEM 01.1</strong></td>
+                <td>Mémoire accidentologique non transmise</td>
+                <td>Absence de capitalisation, départs en retraite, oubli</td>
+                <td>Répétition des mêmes erreurs, accidents évitables</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Panneaux mémoriels, récits d'accidents, transmission</td>
+            </tr>
+            <tr>
+                <td><strong>MEM 01.2</strong></td>
+                <td>Méconnaissance des hotspots par les nouveaux</td>
+                <td>Absence de signalétique mémorielle, apprentissage tardif</td>
+                <td>Accidents évitables, découverte du risque après l'incident</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Panneaux visibles, histoires marquantes, QR code</td>
+            </tr>
+            <tr>
+                <td><strong>MEM 01.3</strong></td>
+                <td>Hotspots perçus comme abstraits</td>
+                <td>Statistiques sans visage, "zone rouge" sans signification</td>
+                <td>Sous-estimation du risque, comportements inadaptés</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Récits personnalisés, conséquences humaines, photos</td>
+            </tr>
+            <tr>
+                <td><strong>MEM 02.1</strong></td>
+                <td>Absence de transmission émotionnelle</td>
+                <td>Chiffres froids, pas d'impact émotionnel</td>
+                <td>Messages non retenus, comportements inchangés</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Témoignages audio/vidéo, émotion authentique, mémorisation +60%</td>
+            </tr>
+            <tr>
+                <td><strong>MEM 02.2</strong></td>
+                <td>Non-identification aux victimes</td>
+                <td>Récits impersonnels, pas de projection</td>
+                <td>"Ça n'arrive qu'aux autres", pas de prise de conscience</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Histoires vraies, conducteurs comme nous, "ça pourrait m'arriver"</td>
+            </tr>
+            <tr>
+                <td><strong>MEM 03.1</strong></td>
+                <td>Banalisation des risques en zone hotspot</td>
+                <td>Routine quotidienne, absence de rappel émotionnel</td>
+                <td>Perte de vigilance, accidents</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Présence permanente du panneau, rappel à chaque passage</td>
+            </tr>
+            <tr>
+                <td><strong>MEM 03.2</strong></td>
+                <td>Oubli des leçons du passé</td>
+                <td>Pas de trace, pas de mémoire collective</td>
+                <td>Erreurs répétées, absence de progrès</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Capitalisation durable, mémoire vivante des accidents</td>
+            </tr>
+            <tr>
+                <td><strong>MEM 04.1</strong></td>
+                <td>Manque de respect des zones à risque</td>
+                <td>Lieux anonymes, pas de conscience du drame passé</td>
+                <td>Comportements dangereux, irrespect</td>
+                <td>1</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Panneaux sobres et respectueux, recueillement implicite</td>
+            </tr>
+            <tr>
+                <td><strong>MEM 05.1</strong></td>
+                <td>Perception morbide du dispositif</td>
+                <td>Mauvaise interprétation, ton inadapté</td>
+                <td>Rejet, contre-productivité</td>
+                <td>1</td>
+                <td>D</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Ton sobre, focus sur la leçon, pas de sensationnalisme</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.1</strong></td>
+                <td>Accidents en zone hotspot</td>
+                <td>Méconnaissance des risques spécifiques</td>
+                <td>Blessures, dommages</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Réduction ciblée de -30% grâce à la sensibilisation mémorielle</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+            </ul>
+        </div>
+    </div>
+   
+    <h2>Hotspots CDG 2024-2025</h2>
+
+    <table class="hotspot-table">
+        <tr><th>Hotspot CDG</th><th>Accidents</th><th>Cause principale</th></tr>
+        <tr><td>Parking T2E</td><td>15</td><td>Densité trafic, vitesse</td></tr>
+        <tr><td>Zone Fret Nord</td><td>12</td><td>Co-activité, angles morts</td></tr>
+        <tr><td>Taxiway B</td><td>8</td><td>Visibilité, priorité</td></tr>
+        <tr><td>Zone Catering</td><td>4</td><td>Piétons, recul</td></tr>
+    </table>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité <span style="color:#dc2626; font-weight:700;">rouge</span> (méconnaissance des hotspots, accidents en zone hotspot) et 
+        <span style="color:#f97316; font-weight:700;">orange</span> (mémoire non transmise) sont au cœur de cette piste. Le parking à histoires donne une mémoire aux lieux d'accidents pour 1 500€ par panneau.
+    </div>
+
+    
+    <h2>Modèle de panneau mémoriel</h2>
+
+    <div class="panneau-memorial">
+        <div class="panneau-titre">⚠️ ZONE MÉMOIRE - HOTSPOT</div>
+        <div class="panneau-date">15 JANVIER 2025 - 08h47</div>
+        
+        <div class="panneau-contenu">
+            <div class="panneau-image-placeholder">[IMAGE]</div>
+            <div>
+                <strong>PUSH heurte LOADER</strong><br>
+                Cause : vitesse excessive (18 km/h)<br>
+                Conséquences : conducteur blessé (6 mois ITT), 180k€ dommages
+            </div>
+        </div>
+        
+        <div class="panneau-lecon">
+            <strong>LA LEÇON :</strong> ✔ RALENTISSEZ (10 KM/H MAX) ✔ VÉRIFIEZ VOS ANGLES MORTS ✔ PRENEZ VOTRE TEMPS
+        </div>
+        
+        <div class="qr-sim">QR</div>
+    </div>
+
+    
+    <h2>Les 3 niveaux d'information</h2>
+
+    <div class="niveaux-grid">
+        <div class="niveau-card">
+            <div class="niveau">NIVEAU 1</div>
+            <div><strong>Panneau</strong></div>
+            <div style="font-size:11px;">30 sec - Date, accident, causes, 3 règles d'or</div>
+        </div>
+        <div class="niveau-card">
+            <div class="niveau">NIVEAU 2</div>
+            <div><strong>QR Code</strong></div>
+            <div style="font-size:11px;">3 min - Récit détaillé, photos, témoignage</div>
+        </div>
+        <div class="niveau-card">
+            <div class="niveau">NIVEAU 3</div>
+            <div><strong>Application</strong></div>
+            <div style="font-size:11px;">10 min - E-learning, quiz, vidéo</div>
+        </div>
+    </div>
+
+    
+    <h2>Bénéfices attendus</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0;">
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">85%</div>
+            <div>Connaissance hotspots</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">75%</div>
+            <div>Mémorisation accidents</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">5 000</div>
+            <div>Scans QR code/an</div>
+        </div>
+        <div style="background: var(--c-surface-alt); padding: 12px; border-radius: var(--radius); text-align: center;">
+            <div style="font-size: 24px; font-weight: 800; color: var(--c-primary);">-30%</div>
+            <div>Accidents zones équipées</div>
+        </div>
+    </div>
+
+  
+</body>
+</html>

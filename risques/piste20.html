@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 20 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .formation-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .formation-table th {
+            background: var(--c-primary-light);
+            padding: 10px;
+            text-align: left;
+        }
+        .formation-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .scenario-box {
+            background: var(--c-surface-alt);
+            border-left: 4px solid;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .scenario-1 { border-left-color: #dc2626; }
+        .scenario-2 { border-left-color: #f97316; }
+        .scenario-3 { border-left-color: #eab308; }
+        .scenario-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .schedule-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .schedule-table th {
+            background: var(--c-primary);
+            color: white;
+            padding: 8px;
+        }
+        .schedule-table td {
+            padding: 8px;
+            border: 1px solid var(--c-border);
+        }
+        .schedule-table tr:nth-child(even) {
+            background: var(--c-surface-alt);
+        }
+        .crash-highlight {
+            background: #fee2e2;
+            font-weight: 600;
+        }
+        .benefits-pedago {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .pedago-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 15px;
+            text-align: center;
+        }
+        .pedago-card .label {
+            font-size: 11px;
+            color: var(--c-text-muted);
+            margin-bottom: 5px;
+        }
+        .pedago-card .value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+        }
+        .pedago-card .comparison {
+            font-size: 11px;
+            color: var(--c-text-muted);
+        }
+        .pedago-card .gain {
+            color: #10b981;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+ 
+
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        LE CHOC ÉMOTIONNEL AU SERVICE DE LA MÉMOIRE
+    </div>
+
+    
+    <h2>Les limites des formations actuelles</h2>
+
+    <table class="formation-table">
+        <tr>
+            <th>Format de formation</th>
+            <th>Caractéristique</th>
+            <th>Limite</th>
+        </tr>
+        <tr><td>Cours en salle</td><td>Diapositives, discours</td><td>Passif, faible mémorisation</td></tr>
+        <tr><td>E-learning</td><td>Vidéos, quiz</td><td>Solitaire, peu engageant</td></tr>
+        <tr><td>Formation pratique</td><td>Conduite supervisée</td><td>Pas de mise en situation d'échec</td></tr>
+        <tr><td>Retour d'expérience</td><td>Témoignages, chiffres</td><td>Abstrait, pas d'immersion</td></tr>
+    </table>
+
+    
+    <h1>
+        <i class="fa-solid fa-car-crash"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 20</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>PED 01.1</strong></td>
+                <td>Mémorisation insuffisante des risques réels</td>
+                <td>Formation trop théorique, absence d'impact émotionnel</td>
+                <td>Oubli des règles, reproduction des erreurs</td>
+                <td>2</td>
+                <td>A</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Impact émotionnel fort, mémorisation 85% à 3 mois (+65pts)</td>
+            </tr>
+            <tr>
+                <td><strong>PED 01.2</strong></td>
+                <td>Inconscience des conséquences réelles des accidents</td>
+                <td>Chiffres abstraits, témoignages dépersonnalisés</td>
+                <td>Sous-estimation des risques, comportements dangereux</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Visualisation des conséquences réelles, témoignage conducteur</td>
+            </tr>
+            <tr>
+                <td><strong>PED 01.3</strong></td>
+                <td>Banalisation des accidents du travail</td>
+                <td>Routine, absence de rappel émotionnel</td>
+                <td>Perte de vigilance, accidents</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Choc émotionnel annuel, rupture de la routine</td>
+            </tr>
+            <tr>
+                <td><strong>PED 02.1</strong></td>
+                <td>Méconnaissance des procédures d'urgence</td>
+                <td>Formation théorique, pas de mise en situation</td>
+                <td>Mauvaise réaction en cas d'accident réel</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Intervention secours en conditions réelles, démonstration</td>
+            </tr>
+            <tr>
+                <td><strong>PED 02.2</strong></td>
+                <td>Non-assimilation des règles d'or</td>
+                <td>Messages dilués, pas de répétition émotionnelle</td>
+                <td>Règles oubliées, non-appliquées</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>3 règles d'or martelées, ancrage émotionnel</td>
+            </tr>
+            <tr>
+                <td><strong>PED 03.1</strong></td>
+                <td>Absence de prise de conscience collective</td>
+                <td>Formation individuelle, pas de partage d'expérience</td>
+                <td>Chacun se sent isolé face aux risques</td>
+                <td>1</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Émotion partagée, cohésion d'équipe, engagement collectif</td>
+            </tr>
+            <tr>
+                <td><strong>PSY 01.1</strong></td>
+                <td>Traumatisme psychologique potentiel</td>
+                <td>Scènes trop réalistes, participants sensibles</td>
+                <td>Mal-être, anxiété</td>
+                <td>1</td>
+                <td>D</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Information préalable, possibilité de quitter, psychologue présent</td>
+            </tr>
+            <tr>
+                <td><strong>EFF 01.1</strong></td>
+                <td>Risque de banalisation de l'événement</td>
+                <td>Répétition, mise en scène trop "spectaculaire"</td>
+                <td>Perte d'efficacité pédagogique</td>
+                <td>1</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Changement de scénario chaque année, épaves authentiques</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.1</strong></td>
+                <td>Accidents liés au scénario reproduit (push trop rapide)</td>
+                <td>Manque de sensibilisation spécifique</td>
+                <td>Accidents évitables</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Réduction ciblée de -50% grâce à la sensibilisation émotionnelle</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.2</strong></td>
+                <td>Accidents liés aux angles morts (piéton invisible)</td>
+                <td>Méconnaissance des risques de co-activité</td>
+                <td>Heurts de piétons</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Scénario spécifique, prise de conscience collective</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.3</strong></td>
+                <td>Accidents liés à la charge instable (loader)</td>
+                <td>Non-respect procédures de chargement</td>
+                <td>Basculement, écrasement</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Démonstration des conséquences, ancrage des procédures</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité <span style="color:#dc2626; font-weight:700;">rouge</span> (inconscience des conséquences, accidents push, angles morts) et 
+        <span style="color:#f97316; font-weight:700;">orange</span> (mémorisation, procédures d'urgence, charge instable) sont directement liés à l'absence d'impact émotionnel. 
+        Le crash test pédagogique porte la mémorisation de 20% à 85% (+65 points).
+    </div>
+
+    
+    <h2>Les 3 scénarios prioritaires</h2>
+
+    <div class="scenario-box scenario-1">
+        <div class="scenario-title">🔴 Scénario 1 - "Le push trop rapide"</div>
+        <p><strong>Accident :</strong> PUSH heurte loader - Dommages 180k€ - ITT 6 mois</p>
+        <p><strong>Causes :</strong> Vitesse excessive (18/10 km/h) - Angle mort non vérifié - Pression temporelle</p>
+    </div>
+
+    <div class="scenario-box scenario-2">
+        <div class="scenario-title">🟠 Scénario 2 - "Le piéton invisible"</div>
+        <p><strong>Accident :</strong> Bus en marche arrière - Agent heurté - Fracture bassin - 8 mois arrêt</p>
+        <p><strong>Causes :</strong> Absence vérification angle mort - Co-activité - Signalétique insuffisante</p>
+    </div>
+
+    <div class="scenario-box scenario-3">
+        <div class="scenario-title">🟡 Scénario 3 - "La charge instable"</div>
+        <p><strong>Accident :</strong> Basculement loader - Amputation partielle - Coût 450k€</p>
+        <p><strong>Causes :</strong> Non-respect procédure chargement - Stabilité non vérifiée</p>
+    </div>
+
+    
+    <h2>Déroulé d'une journée crash test</h2>
+
+    <table class="schedule-table">
+        <tr><th>Horaire</th><th>Activité</th></tr>
+        <tr><td>08h30</td><td>Accueil des participants</td></tr>
+        <tr><td>09h00</td><td>Discours d'ouverture</td></tr>
+        <tr><td>09h15</td><td>Présentation du scénario</td></tr>
+        <tr class="crash-highlight"><td><strong>09h30</strong></td><td><strong>CRASH TEST - Reconstitution</strong></td></tr>
+        <tr class="crash-highlight"><td><strong>10h00</strong></td><td><strong>CRASH TEST - Intervention secours</strong></td></tr>
+        <tr><td>10h20</td><td>Pause</td></tr>
+        <tr class="crash-highlight"><td><strong>10h35</strong></td><td><strong>CRASH TEST - Analyse pédagogique</strong></td></tr>
+        <tr><td>11h15</td><td>Témoignage du conducteur impliqué</td></tr>
+        <tr><td>11h35</td><td>Questions-réponses</td></tr>
+        <tr><td>12h05</td><td>Engagement collectif</td></tr>
+        <tr><td>12h15</td><td>Clôture</td></tr>
+    </table>
+
+    
+    <h2>Bénéfices pédagogiques</h2>
+
+    <div class="benefits-pedago">
+        <div class="pedago-card">
+            <div class="label">Mémorisation à 3 mois</div>
+            <div class="value">85%</div>
+            <div class="comparison">vs 20% en formation classique</div>
+            <div class="gain">+65 pts</div>
+        </div>
+        <div class="pedago-card">
+            <div class="label">Mémorisation à 1 an</div>
+            <div class="value">70%</div>
+            <div class="comparison">vs 10% en formation classique</div>
+            <div class="gain">+60 pts</div>
+        </div>
+        <div class="pedago-card">
+            <div class="label">Impact émotionnel</div>
+            <div class="value">9/10</div>
+            <div class="comparison">vs 2/10</div>
+            <div class="gain">+7 pts</div>
+        </div>
+    </div>
+ 
+</body>
+</html>

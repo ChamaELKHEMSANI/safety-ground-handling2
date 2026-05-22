@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 3 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .criticality-blue {
+            background-color: #2563eb !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .badge {
+            background-color: var(--c-primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .features-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .feature-mini-card {
+            background: var(--c-surface-alt);
+            padding: 12px;
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+        }
+        .feature-mini-card i {
+            color: var(--c-primary);
+            font-size: 16px;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .feature-mini-card strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--c-text);
+        }
+    </style>
+</head>
+<body>
+ 
+
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        UNE COMMUNICATION QUI TOUCHE PERSONNELLEMENT LE CONDUCTEUR
+    </div>
+
+    
+    <h1>
+        <i class="fa-solid fa-map"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>COM 01.1</strong></td>
+                <td>Banalisation des risques</td>
+                <td>Habituation, routine, absence de rappels percutants</td>
+                <td>Non-respect des règles, prise de risque inconsciente</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Campagnes choc renouvelées, affichage changeant</td>
+            </tr>
+            <tr>
+                <td><strong>COM 01.2</strong></td>
+                <td>Déficit d'attention / distraction</td>
+                <td>Sollicitations externes, fatigue, usage téléphone</td>
+                <td>Non-détection danger, collision, heurt piéton</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Vidéos choc sur conséquences distraction, rappels ciblés</td>
+            </tr>
+            <tr>
+                <td><strong>COM 01.3</strong></td>
+                <td>Méconnaissance des conséquences réelles</td>
+                <td>Formation théorique abstraite, absence de visibilité</td>
+                <td>Sous-estimation des risques, comportements inadaptés</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Vidéos réelles d'accidents, témoignages, immersion VR</td>
+            </tr>
+            <tr>
+                <td><strong>COM 02.1</strong></td>
+                <td>Sous-déclaration des near-miss</td>
+                <td>Manque de temps, peur de la sanction, absence de retour</td>
+                <td>Non-remontée d'information, perte d'opportunité prévention</td>
+                <td>2</td>
+                <td>A</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Appli reporting < 60s, feedback systématique</td>
+            </tr>
+            <tr>
+                <td><strong>COM 02.2</strong></td>
+                <td>Non-remontée des incidents matériels</td>
+                <td>Procédure complexe, sentiment d'inutilité</td>
+                <td>Dégradation non traitée, accident secondaire</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Reporting simplifié avec photo, suivi visible</td>
+            </tr>
+            <tr>
+                <td><strong>COM 02.3</strong></td>
+                <td>Absence de feedback après signalement</td>
+                <td>Processus non bouclé, manque de ressources</td>
+                <td>Démotivation, arrêt des signalements</td>
+                <td>2</td>
+                <td>A</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Module feedback avec réponse automatique < 48h</td>
+            </tr>
+            <tr>
+                <td><strong>COM 03.1</strong></td>
+                <td>Mauvaise perception des risques par les jeunes</td>
+                <td>Sentiment d'invulnérabilité, manque d'expérience</td>
+                <td>Prise de risque excessive, accidents évitables</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Vidéos ciblées jeunes conducteurs, témoignages pairs</td>
+            </tr>
+            <tr>
+                <td><strong>COM 03.2</strong></td>
+                <td>Routine des conducteurs expérimentés</td>
+                <td>Excès de confiance, automatismes, "j'ai toujours fait comme ça"</td>
+                <td>Non-respect procédures, accident par habitude</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Vidéos "accident par routine", témoignages d'experts</td>
+            </tr>
+            <tr>
+                <td><strong>COM 04.1</strong></td>
+                <td>Méconnaissance des règles d'or</td>
+                <td>Formation trop espacée, absence de rappel</td>
+                <td>Infractions par ignorance</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Quiz quotidiens, rappels personnalisés dans l'appli</td>
+            </tr>
+            <tr>
+                <td><strong>COM 04.2</strong></td>
+                <td>Absence de culture de signalement</td>
+                <td>Culture du "ça ne sert à rien", absence de valorisation</td>
+                <td>Invisibilité des presque-accidents</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Gamification, points, badges, classements</td>
+            </tr>
+            <tr>
+                <td><strong>COM 05.1</strong></td>
+                <td>Fracture numérique générationnelle</td>
+                <td>Non-maîtrise des outils digitaux par les seniors</td>
+                <td>Non-utilisation de l'application, inégalité d'accès</td>
+                <td>1</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Interface ultra-simple, mode dégradé, tutoriels</td>
+            </tr>
+            <tr>
+                <td><strong>INF 01.1</strong></td>
+                <td>Défaut d'information en temps réel</td>
+                <td>Absence de système d'alerte, communication descendante lente</td>
+                <td>Conducteurs non informés des dangers immédiats</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Module alertes push (hotspot, météo, incident)</td>
+            </tr>
+            <tr>
+                <td><strong>INF 01.2</strong></td>
+                <td>Mauvaise connaissance des hotspots</td>
+                <td>Formation initiale non suivie, pas de rappel</td>
+                <td>Surprise, non-anticipation du danger</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Cartographie interactive, alertes à l'approche</td>
+            </tr>
+            <tr>
+                <td><strong>PSY 01.1</strong></td>
+                <td>Stress post-accident non traité</td>
+                <td>Absence de suivi psychologique, isolement</td>
+                <td>Récidive, syndrome de stress post-traumatique</td>
+                <td>2</td>
+                <td>D</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Témoignages de conducteurs accidentés, lien vers P53</td>
+            </tr>
+            <tr>
+                <td><strong>VR 01.1</strong></td>
+                <td>Formation insuffisante aux situations d'urgence</td>
+                <td>Pas d'exposition pratique, scénarios théoriques</td>
+                <td>Mauvaise réaction en situation réelle</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Modules VR immersifs, scénarios réalistes</td>
+            </tr>
+        </tbody>
+    </table>
+
+        
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #2563eb;"></div> <strong>Bleu</strong> — Risque informationnel</div>
+    </div>
+    
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+                <li><strong>E</strong> — Extrêmement rare (jamais observé)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité 
+        <span style="color:#f97316; font-weight:700;">orange</span> sont majoritaires dans cette cartographie. 
+        La Piste 3 apporte des barrières spécifiques pour adresser les causes profondes : 
+        <strong>banalisation, sous-déclaration, distraction et manque d'information en temps réel</strong>.
+    </div>
+
+    
+    <h2>Synthèse des barrières apportées par la Piste 3</h2>
+
+    <div class="features-mini-grid">
+        <div class="feature-mini-card">
+            <i class="fa-solid fa-video"></i>
+            <strong>Campagnes choc</strong>
+            <span>Vidéos réelles, témoignages, affichage dynamique, rotation permanente</span>
+        </div>
+        <div class="feature-mini-card">
+            <i class="fa-solid fa-mobile-screen"></i>
+            <strong>Application Safety Hub</strong>
+            <span>Reporting < 60s, feedback < 48h, gamification, quiz, alertes push</span>
+        </div>
+        <div class="feature-mini-card">
+            <i class="fa-solid fa-vr-cardboard"></i>
+            <strong>Immersion VR</strong>
+            <span>5 scénarios réalistes, apprentissage émotionnel, formation initiale</span>
+        </div>
+        <div class="feature-mini-card">
+            <i class="fa-solid fa-chart-simple"></i>
+            <strong>Indicateurs temps réel</strong>
+            <span>Signalements, délais de réponse, taux d'adoption, satisfaction</span>
+        </div>
+    </div>
+
+    
+    <div class="footer">
+        <i class="fa-regular fa-copyright"></i> PISTE 3 — Document extrait de la fiche projet | Intégration site CDG 2026
+    </div>
+
+</body>
+</html>

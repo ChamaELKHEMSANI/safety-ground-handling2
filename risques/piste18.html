@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISTE 18 - Cartographie des risques</title>
+    
+    <link rel="stylesheet" href="../css/safety-cdg.css">
+    <link href="../css/css2.css?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            padding: 25px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--c-text);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .document-header {
+            border-bottom: 3px solid var(--c-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .document-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--c-primary);
+            letter-spacing: -0.02em;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: var(--c-text-muted);
+            font-style: italic;
+        }
+        .document-meta {
+            text-align: right;
+            color: var(--c-text-muted);
+            font-size: 12px;
+        }
+        .tagline {
+            background-color: var(--c-primary-light);
+            padding: 12px 20px;
+            border-left: 5px solid var(--c-primary);
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius);
+            color: var(--c-primary);
+        }
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0 20px 0;
+            font-size: 11px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .risk-table th {
+            background-color: var(--c-primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 6px;
+            text-align: left;
+            border: 1px solid var(--c-border);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .risk-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--c-border);
+            vertical-align: top;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background-color: var(--c-surface-alt);
+        }
+        .risk-table tbody tr:hover {
+            background-color: var(--c-primary-light);
+        }
+        .risk-criticality {
+            font-weight: 700;
+            text-align: center;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .criticality-red {
+            background-color: #dc2626 !important;
+            color: white;
+        }
+        .criticality-orange {
+            background-color: #f97316 !important;
+            color: white;
+        }
+        .criticality-yellow {
+            background-color: #eab308 !important;
+            color: black;
+        }
+        .criticality-green {
+            background-color: #10b981 !important;
+            color: white;
+        }
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--c-surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--c-border);
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cotation-box {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .cotation-box h4 {
+            background: var(--c-primary);
+            color: white;
+            padding: 12px 15px;
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cotation-box ul {
+            padding: 15px 15px 15px 30px;
+            margin: 0;
+            background: white;
+        }
+        .cotation-box li {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .cotation-box li strong {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--c-text);
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--c-primary);
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--c-text-muted);
+            margin: 20px 0 10px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .important-note {
+            background: var(--c-primary-light);
+            border-left: 4px solid var(--c-primary);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--c-text);
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid var(--c-border);
+            font-size: 11px;
+            color: var(--c-text-muted);
+            text-align: center;
+        }
+        .emotion-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .emotion-table th {
+            background: var(--c-primary-light);
+            padding: 10px;
+            text-align: left;
+        }
+        .emotion-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .mirror-dialog {
+            background: var(--c-surface-alt);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+        .mirror-speaker {
+            color: var(--c-primary);
+            font-weight: 700;
+        }
+        .user-speaker {
+            color: #f97316;
+            font-weight: 700;
+        }
+        .level-box {
+            border-left: 8px solid;
+            padding: 15px;
+            margin: 15px 0;
+            background: var(--c-surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .level-1 { border-left-color: #10b981; }
+        .level-2 { border-left-color: #f97316; }
+        .level-3 { border-left-color: #dc2626; }
+        .benefits-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .benefit-stat {
+            background: var(--c-surface-alt);
+            padding: 12px;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+        .benefit-stat .number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c-primary);
+        }
+        .benefit-stat .label {
+            font-size: 10px;
+            color: var(--c-text-muted);
+        }
+        .ethics-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="tagline">
+        <i class="fa-solid fa-quote-left" style="margin-right: 8px;"></i>
+        L'IA BIENVEILLANTE AU SERVICE DU BIEN-ÊTRE
+    </div>
+
+    
+    <h2>Impact des émotions sur la conduite</h2>
+
+    <table class="emotion-table">
+        <tr>
+            <th>État émotionnel</th>
+            <th>Impact sur la conduite</th>
+        </tr>
+        <tr><td> Fatigue</td><td>Temps de réaction +40%, micro-sommeils</td></tr>
+        <tr><td> Stress</td><td>Prise de risque accrue, irritabilité</td></tr>
+        <tr><td> Préoccupation</td><td>Inattention, distraction, oubli des procédures</td></tr>
+        <tr><td> Colère</td><td>Agressivité, vitesse excessive, non-respect</td></tr>
+        <tr><td> Tristesse</td><td>Lenteur, apathie, désengagement</td></tr>
+    </table>
+
+    
+    <h1>
+        <i class="fa-regular fa-face-smile"></i>
+        Cartographie des risques
+    </h1>
+
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Réf.</th>
+                <th>Danger</th>
+                <th>Causes</th>
+                <th>Conséquences</th>
+                <th>Grav.</th>
+                <th>Prob.</th>
+                <th>Criticité</th>
+                <th>Barrières Piste 18</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>EMO 01.1</strong></td>
+                <td>Conduite en état de fatigue avancée</td>
+                <td>Manque de sommeil, nuits consécutives, absence de détection</td>
+                <td>Micro-sommeils, perte de contrôle, accident</td>
+                <td>3</td>
+                <td>B</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Détection précoce des signes de fatigue, proposition de pause/café</td>
+            </tr>
+            <tr>
+                <td><strong>EMO 01.2</strong></td>
+                <td>Conduite sous stress intense</td>
+                <td>Pression temporelle, conflits, surcharge mentale</td>
+                <td>Prise de risque accrue, irritabilité, erreurs</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Détection stress, exercices respiration, orientation relais bien-être</td>
+            </tr>
+            <tr>
+                <td><strong>EMO 01.3</strong></td>
+                <td>Conduite avec préoccupations personnelles</td>
+                <td>Problèmes familiaux, financiers, santé</td>
+                <td>Inattention, distraction, oubli procédures</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Détection tristesse/préoccupation, orientation service d'aide</td>
+            </tr>
+            <tr>
+                <td><strong>EMO 01.4</strong></td>
+                <td>Conduite en état de colère</td>
+                <td>Conflits, frustration, agressivité</td>
+                <td>Vitesse excessive, non-respect règles, agressivité au volant</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Détection colère, proposition pause calme, exercice apaisement</td>
+            </tr>
+            <tr>
+                <td><strong>EMO 01.5</strong></td>
+                <td>Non-détection des fragilités psychologiques</td>
+                <td>Absence d'outil, non-dit, peur du jugement</td>
+                <td>Burn-out, dépression, accidents graves</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Alerte silencieuse après détections répétées, lien médecine du travail</td>
+            </tr>
+            <tr>
+                <td><strong>EMO 02.1</strong></td>
+                <td>Tabou de la fatigue et du mal-être</td>
+                <td>Culture du "je tiens le coup", peur du jugement</td>
+                <td>Sous-déclaration, non-prise en charge</td>
+                <td>2</td>
+                <td>A</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Déstigmatisation par dispositif neutre et bienveillant</td>
+            </tr>
+            <tr>
+                <td><strong>EMO 02.2</strong></td>
+                <td>Absence de soutien psychologique</td>
+                <td>Pas de dispositif d'écoute, isolement</td>
+                <td>Détresse non traitée, risques psychosociaux</td>
+                <td>2</td>
+                <td>B</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Orientation vers relais bien-être, services sociaux, psychologues</td>
+            </tr>
+            <tr>
+                <td><strong>EMO 03.1</strong></td>
+                <td>Stress chronique non détecté</td>
+                <td>Accumulation quotidienne, absence de régulation</td>
+                <td>Burn-out, absentéisme, turnover</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-yellow risk-criticality">JAUNE</td>
+                <td>Suivi des tendances anonymes, alerte sur situations durables</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.1</strong></td>
+                <td>Accidents liés à la fatigue</td>
+                <td>Conduite en état de somnolence non détecté</td>
+                <td>Collisions, dommages matériels et corporels</td>
+                <td>3</td>
+                <td>C</td>
+                <td class="criticality-red risk-criticality">ROUGE</td>
+                <td>Réduction ciblée de -35% grâce à la détection précoce</td>
+            </tr>
+            <tr>
+                <td><strong>ACC 01.2</strong></td>
+                <td>Accidents liés au stress</td>
+                <td>Prise de risque, irritabilité, inattention</td>
+                <td>Collisions, erreurs</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-orange risk-criticality">ORANGE</td>
+                <td>Réduction ciblée de -30% grâce à la régulation émotionnelle</td>
+            </tr>
+            <tr>
+                <td><strong>ETH 01.1</strong></td>
+                <td>Rejet du dispositif pour raisons éthiques</td>
+                <td>Crainte de surveillance, "Big Brother"</td>
+                <td>Non-utilisation, rejet, méfiance</td>
+                <td>2</td>
+                <td>C</td>
+                <td class="criticality-green risk-criticality">VERT</td>
+                <td>Transparence totale, absence stockage, traitement local, charte éthique</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="color-legend">
+        <span style="font-weight: 600; color: var(--c-text); margin-right: 10px;">
+            <i class="fa-solid fa-info-circle"></i> Légende :
+        </span>
+        <div class="legend-item"><div class="color-box" style="background-color: #dc2626;"></div> <strong>Rouge</strong> — Risque très élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #f97316;"></div> <strong>Orange</strong> — Risque élevé</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #eab308;"></div> <strong>Jaune</strong> — Risque moyen</div>
+        <div class="legend-item"><div class="color-box" style="background-color: #10b981;"></div> <strong>Vert</strong> — Risque faible</div>
+    </div>
+    
+    <h2>Échelle de cotation utilisée</h2>
+
+    <div class="cotation-grid">
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-weight-hanging"></i> Gravité</h4>
+            <ul>
+                <li><strong>1</strong> — Négligeable</li>
+                <li><strong>2</strong> — Mineure</li>
+                <li><strong>3</strong> — Majeure</li>
+                <li><strong>4</strong> — Catastrophique</li>
+            </ul>
+        </div>
+        <div class="cotation-box">
+            <h4><i class="fa-solid fa-chart-line"></i> Probabilité</h4>
+            <ul>
+                <li><strong>A</strong> — Fréquent (quotidien)</li>
+                <li><strong>B</strong> — Occasionnel (hebdo/mensuel)</li>
+                <li><strong>C</strong> — Rare (annuel)</li>
+                <li><strong>D</strong> — Très rare (>1 an)</li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="important-note">
+        <i class="fa-solid fa-lightbulb" style="margin-right: 8px; color: var(--c-primary);"></i>
+        <strong>Analyse :</strong> Les risques de criticité <span style="color:#dc2626; font-weight:700;">rouge</span> (fatigue avancée, fragilités psychologiques, accidents liés à la fatigue) et 
+        <span style="color:#f97316; font-weight:700;">orange</span> (stress, colère, tabou) sont au cœur de cette piste. Le miroir à émotions apporte une réponse bienveillante et confidentielle.
+    </div>
+
+    
+    <h2>Les 3 niveaux d'intervention</h2>
+
+    <div class="level-box level-1">
+        <h3 style="margin-top: 0;">NIVEAU 1 - PRÉVENTION IMMÉDIATE</h3>
+        <p>Café offert • Pause supplémentaire • Exercice de respiration • Étirements guidés • Message de soutien</p>
+    </div>
+
+    <div class="level-box level-2">
+        <h3 style="margin-top: 0;">NIVEAU 2 - ACCOMPAGNEMENT</h3>
+        <p>Orientation vers relais bien-être • Proposition de rencontre avec manager • Information sur services sociaux • Accès à application de méditation</p>
+    </div>
+
+    <div class="level-box level-3">
+        <h3 style="margin-top: 0;">NIVEAU 3 - ALERTE SILENCIEUSE</h3>
+        <p>Signalement anonyme au service de santé • Proposition de visite médicale spontanée • Suivi dans le temps</p>
+    </div>
+
+    
+    <h2>Exemple d'interaction</h2>
+
+    <div class="mirror-dialog">
+        <p><span class="mirror-speaker">[MIROIR]</span> Bonjour Thomas. Je détecte que vous semblez fatigué. Est-ce que ça va ?</p>
+        <p><span class="user-speaker">[THOMAS]</span> ... Oui, ça va. J'ai juste mal dormi.</p>
+        <p><span class="mirror-speaker">[MIROIR]</span> Je comprends. Voulez-vous : 1. Un café offert au self ? 2. 5 minutes de pause ? 3. Discuter avec le relais bien-être ?</p>
+        <p><span class="user-speaker">[THOMAS]</span> Option 1.</p>
+        <p><span class="mirror-speaker">[MIROIR]</span> Code café : ☕ CAFE-8F3Z. Prenez soin de vous.</p>
+    </div>
+
+    
+    <div class="ethics-box">
+        <h3 style="margin-top: 0; color: #f59e0b;">🔐 CONFIDENTIALITÉ ABSOLUE</h3>
+        <ul style="margin: 0;">
+            <li> Aucune image enregistrée, stockée ou transmise</li>
+            <li> Aucune donnée nominative collectée</li>
+            <li> Conducteur libre d'interagir ou non</li>
+            <li> Finalité exclusive d'aide, jamais de sanction</li>
+        </ul>
+    </div>
+
+    
+    <h2>Bénéfices attendus</h2>
+
+    <div class="benefits-stats">
+        <div class="benefit-stat">
+            <div class="number">75%</div>
+            <div class="label">Conducteurs se sentant soutenus (M36)</div>
+        </div>
+        <div class="benefit-stat">
+            <div class="number">5,0/10</div>
+            <div class="label">Stress perçu (vs 6,2)</div>
+        </div>
+        <div class="benefit-stat">
+            <div class="number">-35%</div>
+            <div class="label">Accidents liés fatigue</div>
+        </div>
+        <div class="benefit-stat">
+            <div class="number">-30%</div>
+            <div class="label">Accidents liés stress</div>
+        </div>
+    </div>
+
+ 
+</body>
+</html>

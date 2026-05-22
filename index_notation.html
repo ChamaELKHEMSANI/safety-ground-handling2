@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pistes de sécurité CDG 2026 - Interface de gestion</title>
+  <!--link rel="preconnect" href="https://fonts.googleapis.com"/-->
+  <link href="css/css2.css" rel="stylesheet"/>
+  <link href="css/all.min.css" rel="stylesheet" />
+  <link href="css/safety-cdg.css" rel="stylesheet" >
+  <script src="js/chart.js"></script>
+</head>
+<body>
+
+
+<header class="header">
+  <div class="header__brand">
+    <div class="header__logo"><i class="fa-solid fa-shield-halved"></i></div>
+    <div>
+      <div class="header__title">Pistes de sécurité CDG 2026</div>
+      <div class="header__subtitle">Interface de gestion</div>
+    </div>
+  </div>
+
+
+  <div class="header__controls">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="search-input" placeholder="Filtrer par titre…"/>
+    </div>
+
+    
+    <div class="select-wrap">
+      <select id="priority-filter">
+        <option value="">Priorité : Toutes</option>
+        <option value="Quick Win">Quick Win</option>
+        <option value="Stratégique">Stratégique</option>
+        <option value="Complémentaire">Complémentaire</option>
+        <option value="Long Terme">Long Terme</option>
+      </select>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+    
+    <div class="select-wrap">
+      <select id="category-filter">
+        <option value="">Catégorie : Toutes</option>
+        <option value="Culture">Culture</option>
+        <option value="Technique">Technique</option>
+        <option value="Humain">Humain</option>
+        <option value="Organisationnel">Organisationnel</option>
+        <option value="Formation">Formation</option>
+        <option value="Communication">Communication</option>
+        <option value="Economique">Economique</option>
+      </select>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+    
+    <div class="select-wrap">
+      <select id="rating-filter">
+        <option value="0">Note : Toutes</option>
+        <option value="1">1 étoile et +</option>
+        <option value="2">2 étoiles et +</option>
+        <option value="3">3 étoiles et +</option>
+        <option value="4">4 étoiles et +</option>
+        <option value="5">5 étoiles</option>
+      </select>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+
+    <div class="header__actions">
+      <button class="btn-icon" id="btn-toggle-selector" title="Afficher/Masquer le panneau des diagrammes">
+        <i class="fa-solid fa-table-columns"></i>
+      </button>
+       <button class="btn-icon" id="btn-synthese" title="Voir la synthèse des  pistes">
+        <i class="fa-solid fa-table-list"></i>
+      </button>
+     <button class="btn-icon" id="btn-matrice" title="Matrice de décision multi-critères">
+      <i class="fa-solid fa-table-cells-large"></i>
+     </button>
+      <button class="btn-icon" id="btn-relations" title="Matrice des relations">
+        <i class="fa-solid fa-diagram-project"></i>
+      </button>
+      <button class="btn-icon" id="btn-simulation" title="Simulation">
+        <i class="fa-solid fa-chart-line"></i>
+      </button>
+      <button class="btn-icon" id="btn-selection" title="Sélectionner les pistes à analyser">
+        <i class="fa-solid fa-check-double"></i>
+      </button>
+      
+      
+      <button class="btn-icon" id="btn-logout" title="Déconnexion">
+        <i class="fa-solid fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+<div class="toast" id="toast"></div>
+
+
+<main class="main">
+ 
+
+  <div class="right-col">
+
+
+  <div class="panel" id="panel_selector" style="display: none">
+    <div class="panel__header">
+      <i class="fa-solid fa-list-ul panel__header-icon"></i>
+      <span class="panel__header-title">Diagrammes des pistes</span>
+      <span class="panel__header-count" id="filter-count">0 pistes</span>
+    </div>
+    
+    
+    <div style="padding: 10px 20px 0 20px;">
+      <div class="chart-tabs" style="display: flex; gap: 4px; border-bottom: 1px solid var(--c-border);">
+        <button class="chart-tab active" data-tab="scores">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Scores</span>
+        </button>
+        <button class="chart-tab" data-tab="histogram">
+          <i class="fa-solid fa-chart-bar"></i>
+          <span>Histogramme</span>
+        </button>
+        <button class="chart-tab" data-tab="bubble">
+          <i class="fa-solid fa-chart-bubble"></i>
+          <span>Coût/Délai/Impact</span>
+        </button>
+        <button class="chart-tab" data-tab="triangle">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>Triangle d'Or</span>
+        </button>
+      </div>
+    </div>
+
+    
+    <div style="padding: 20px; border-top: 1px solid var(--c-border);">
+      
+      <div class="chart-container" id="chart-scores" style="display: block;">
+        <div style="font-size: .78rem; font-weight: 600; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 15px; display: flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-chart-line" style="color: var(--c-primary);"></i>
+          <span>Vue d'ensemble des scores</span>
+        </div>
+        <canvas id="scores-chart" width="400" height="200"></canvas>
+      </div>
+
+      
+      <div class="chart-container" id="chart-histogram" style="display: none;">
+        <div style="font-size: .78rem; font-weight: 600; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 15px; display: flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-chart-bar" style="color: var(--c-primary);"></i>
+          <span>Comparaison des métriques par piste</span>
+        </div>
+        <canvas id="histogram-chart" width="400" height="200"></canvas>
+      </div>
+
+      
+      <div class="chart-container" id="chart-bubble" style="display: none;">
+        <div style="font-size: .78rem; font-weight: 600; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 15px; display: flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-chart-bubble" style="color: var(--c-primary);"></i>
+          <span>Coût / Délai / Impact (taille des bulles)</span>
+        </div>
+        <canvas id="bubble-chart" width="400" height="200"></canvas>
+      </div>
+
+      
+      <div class="chart-container" id="chart-triangle" style="display: none;">
+        <div style="font-size: .78rem; font-weight: 600; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 15px; display: flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-triangle-exclamation" style="color: var(--c-primary);"></i>
+          <span>Triangle d'Or - Équilibre Coût / Délai / Impact</span>
+        </div>
+        <div style="margin-bottom: 10px; font-size:0.8rem; color:var(--c-text-muted); display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+          <span><i class="fa-solid fa-circle" style="color:#059669; font-size:0.6rem;"></i> Quick Win</span>
+          <span><i class="fa-solid fa-circle" style="color:#d97706; font-size:0.6rem;"></i> Stratégique</span>
+          <span><i class="fa-solid fa-circle" style="color:#2563eb; font-size:0.6rem;"></i> Complémentaire</span>
+          <span><i class="fa-solid fa-circle" style="color:#7c3aed; font-size:0.6rem;"></i> Long Terme</span>
+          <span><i class="fa-solid fa-target"></i> Centre = équilibre parfait</span>
+        </div>
+        <canvas id="triangle-chart" width="400" height="300"></canvas>
+        <div id="triangle-legend" style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;"></div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+    
+    <div class="panel" id="track-card">
+      
+        <div class="track-selector">
+          <div class="select-wrap">
+            <select id="track-select" size="1">
+              <option value="">- Sélectionner une piste -</option>
+            </select>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </div>  
+        
+      <div class="track-card__body">
+        <div class="track-card__title" id="card-title">Sélectionner une piste</div>
+        <div class="track-card__meta">
+          <div class="track-card__num" id="card-num">PISTE #-</div>
+          <span class="meta-tag" id="card-categorie">-</span>
+          <span class="meta-tag" id="card-priorite">-</span>
+        </div>
+
+
+        <div id="corps-piste">
+
+          
+          <div style="display: flex; gap: 2px; margin-bottom: 15px; border-bottom: 1px solid var(--c-border);">
+            <button class="piste-tab active" data-tab="image" id="tab-image">
+              <i class="fa-solid fa-image"></i>
+              <span>Présentation</span>
+            </button>
+            <button class="piste-tab" data-tab="details" id="tab-details">
+              <i class="fa-solid fa-file-lines"></i>
+              <span>Détails</span>
+            </button>
+            <button class="piste-tab" data-tab="references" id="tab-references">
+              <i class="fa-solid fa-file-lines"></i>
+              <span>References</span>
+            </button>
+            <button class="piste-tab" data-tab="risques" id="tab-risques">
+              <i class="fa-solid fa-file-lines"></i>
+              <span>Risques</span>
+            </button>
+            <button class="piste-tab" data-tab="relations" id="tab-relations-nav">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span>Relations</span>
+            </button>
+            <button class="piste-tab" data-tab="radar" id="tab-radar">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span>Radar</span>
+            </button>
+            <button class="piste-tab" data-tab="synthese" id="tab-synthese">
+              <i class="fa-solid fa-file-lines"></i>
+              <span>Synthèse</span>
+            </button>
+            <button class="piste-tab" data-tab="edition" id="tab-edition">
+              <i class="fa-solid fa-pen-ruler"></i>
+              <span>Edition</span>
+            </button>
+          </div>
+
+          
+          <div id="tab-image-content" style="display: block;">
+            <div class="track-card__image presentation-image-container">
+              <img id="piste-image" src="" alt="Image de la piste" class="presentation-image" title="Double-cliquez pour afficher en plein écran" style="display: block;width: 50%;height: auto;">
+              <span id="no-image-message" style="font-size: 3rem; color: #9bb5f0;">🛫</span>
+            </div>
+          </div>
+
+          <div id="tab-edition-content" style="display: none;">
+            <div class="edition-actions" id="edition-actions">
+              <button class="btn btn--primary" id="btn-save">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Enregistrer l'évaluation</span>
+              </button>
+              <div class="edition-layout" id="edition-layout" >
+                <div class="edition-top-grid">
+                
+                <div class="panel" id="notation-panel">
+                  <div class="panel__header">
+                    <i class="fa-solid fa-star panel__header-icon"></i>
+                    <span class="panel__header-title"><span id="notation-piste-id"> </span></span>
+                  </div>
+                  <div class="eval-stars-section">
+                    <div class="eval-stars-label">Score de la piste</div>
+                    <div class="stars-widget" id="stars-widget">
+                      <button class="star-btn" data-star="1"><i class="fa-solid fa-star"></i></button>
+                      <button class="star-btn" data-star="2"><i class="fa-solid fa-star"></i></button>
+                      <button class="star-btn" data-star="3"><i class="fa-solid fa-star"></i></button>
+                      <button class="star-btn" data-star="4"><i class="fa-solid fa-star"></i></button>
+                      <button class="star-btn" data-star="5"><i class="fa-solid fa-star"></i></button>
+                    </div>
+                    <div class="eval-score-display" id="score-display">- <span>/ 5</span></div>
+                  </div>
+                </div>
+
+                <div class="panel" id="evaluation-panel">
+                  <div class="panel__header">
+                    <i class="fa-solid fa-sliders panel__header-icon"></i>
+                    <span class="panel__header-title">Evaluation</span>
+                  </div>
+                  <div class="eval-section edition-section-tight">
+                    <div class="edition-mini-grid">
+                      <div class="form-group edition-eval-card">
+                        <label>Niveau d'impact</label>
+                        <div class="edition-inline-rating">
+                          <input type="number" id="q-impact-level-input" min="1" max="5" step="1" placeholder="1-5"/>
+                          <span class="rating-stars" id="impact-stars"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group edition-eval-card">
+                        <label>Niveau de faisabilite</label>
+                        <div class="edition-inline-rating">
+                          <input type="number" id="q-faisabilite-level-input" min="1" max="5" step="1" placeholder="1-5"/>
+                          <span class="rating-stars" id="faisabilite-stars"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group edition-eval-card">
+                        <label>Niveau d'acceptabilite</label>
+                        <div class="edition-inline-rating">
+                          <input type="number" id="q-acceptabilite-level-input" min="1" max="5" step="1" placeholder="1-5"/>
+                          <span class="rating-stars" id="acceptabilite-stars"></span>
+                        </div>
+                      </div>
+
+                      <div class="form-group full">
+                        <label>Remarques</label>
+                        <input type="text" id="q-remarques" placeholder="Informations additionnelles..."/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                
+                <div class="panel" style="display: none">
+                  <div class="panel__header">
+                    <i class="fa-solid fa-pen-to-square panel__header-icon"></i>
+                    <span class="panel__header-title">Annotation personnelle</span>
+                  </div>
+                  <div class="eval-section" style="padding-top:16px;">
+                    <textarea class="annotation-field" id="annotation-field" rows="5" placeholder="Saisissez vos commentaires techniques et observations ici…"></textarea>
+                  </div>
+                </div>
+                
+                <div class="panel" style="display: none">
+                  <div class="progress-panel">
+                    <div class="progress-header">
+                      <span class="progress-title">Progression globale</span>
+                      <span class="progress-count"><span id="rated-count">0</span> / <span id="total-count">0</span> évaluées</span>
+                    </div>
+                    <div class="progress-bar-track">
+                      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+                    </div>
+                    <div class="progress-stats">
+                      <div class="progress-stat">
+                        <span class="progress-stat__val" id="stat-avg">-</span>
+                        <span class="progress-stat__lbl">Note moy.</span>
+                      </div>
+                      <div class="progress-stat">
+                        <span class="progress-stat__val" id="stat-rated">0</span>
+                        <span class="progress-stat__lbl">Notées</span>
+                      </div>
+                      <div class="progress-stat">
+                        <span class="progress-stat__val" id="stat-remaining">0</span>
+                        <span class="progress-stat__lbl">Restantes</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                
+                <div class="panel" id="costs-panel">
+                  <div class="panel__header">
+                    <i class="fa-solid fa-chart-pie panel__header-icon"></i>
+                    <span class="panel__header-title">Critères spécifiques</span>
+                  </div>
+                  <div class="eval-section" style="padding-top:16px;">
+                    <div class="criteria-grid">
+                      
+                      
+                      <div class="form-group full" style="margin-bottom: 5px;">
+                        <label style="font-size: 0.85rem; color: var(--c-primary);">
+                          <i class="fa-solid fa-chart-pie"></i> Indicateurs chiffrés (3 ans)
+                        </label>
+                      </div>
+
+                      
+                      <div class="form-group full">
+                        <label>Coût total 3 ans (€)</label>
+                        <input type="text" id="q-cout-3-ans" readonly class="readonly-field" 
+                              style="background: var(--c-surface-alt); cursor: default; font-weight: 600; color: var(--c-primary);"
+                              placeholder="0 €"/>
+                      </div>
+
+                      
+                      <div class="form-group full">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                          <div>
+                            <label>Coût 2026 (€)</label>
+                            <input type="number" id="q-cout-2026" class="cout-annuel" 
+                                  style="background: var(--c-surface);" 
+                                  placeholder="0" min="0" step="1000"/>
+                          </div>
+                          <div>
+                            <label>Coût 2027 (€)</label>
+                            <input type="number" id="q-cout-2027" class="cout-annuel" 
+                                  style="background: var(--c-surface);" 
+                                  placeholder="0" min="0" step="1000"/>
+                          </div>
+                          <div>
+                            <label>Coût 2028 (€)</label>
+                            <input type="number" id="q-cout-2028" class="cout-annuel" 
+                                  style="background: var(--c-surface);" 
+                                  placeholder="0" min="0" step="1000"/>
+                          </div>
+                        </div>
+                      </div>
+
+                      
+                      <div class="form-group full">
+                        <label>Coût récurrent annuel (€)</label>
+                        <input type="number" id="q-cout-recurrent" style="background: var(--c-surface);" 
+                              placeholder="0" min="0" step="1000"/>
+                      </div>
+
+                      
+                      <div class="form-group full">
+                        <label>Délai (mois) - <span id="delai-json-display">6 mois</span></label>
+                        <div class="range-row">
+                          <input type="range" id="q-delai-json-range" min="1" max="60" value="6"/>
+                          <span class="range-val" id="delai-json-val">6 m</span>
+                        </div>
+                        <div class="range-labels"><span>1 mois</span><span>30 mois</span><span>60 mois</span></div>
+                      </div>
+
+                    </div>
+                    
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+
+          <div id="tab-synthese-content" style="display: none;">
+
+        <div class="track-card__slogan" id="card-slogan">-</div>
+        <div class="track-card__short-desc" id="card-short-desc" style="margin: 10px 0 15px 0; padding: 12px; background: var(--c-surface-alt); border-radius: var(--radius); border-left: 3px solid var(--c-primary); font-size: 0.9rem; line-height: 1.6; color: var(--c-text); display: none;"></div>
+        <div class="track-card__desc" id="card-desc">Les détails de la piste apparaîtront ici après sélection.</div>
+
+        <div class="track-card__conviction" id="conviction-container" style="display: none;">
+              <div class="conviction-header">
+                <i class="fa-solid fa-quote-left"></i>
+                <span>Notre conviction</span>
+              </div>
+              <div class="conviction-content" id="conviction-content"></div>
+            </div>
+
+            
+            <div class="track-card__rex" id="rex-container" style="display: none;">
+              <div class="rex-header">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Retours d'expérience</span>
+                <span class="rex-count" id="rex-count">0</span>
+              </div>
+              <div class="rex-list" id="rex-list"></div>
+            </div>
+
+            
+            <div class="track-card__justificatifs" id="justificatifs-container" style="display: none;">
+              <div class="justificatifs-header">
+                <i class="fa-solid fa-link"></i>
+                <span>Sources et références</span>
+              </div>
+              <div class="justificatifs-list" id="justificatifs-list"></div>
+            </div>
+
+
+            <div class="track-card__summary" id="summary-container" style="display: none;">
+              <div class="summary-header">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>En résumé</span>
+              </div>
+              <div class="summary-content" id="summary-content"></div>
+            </div>
+
+            <div class="track-card__propositions" id="propositions-container" style="display: none;">
+              <div class="propositions-header">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Ce que nous proposons concrètement</span>
+              </div>
+              <ul class="propositions-list" id="propositions-list"></ul>
+            </div>
+
+
+          </div>
+
+          <div id="tab-details-content" style="display: none;">
+            <div class="details-iframe-wrapper">
+              <div class="details-iframe-toolbar" style="display: none;">
+                <span id="details-frame-title">Fiche détaillée</span>
+                <a id="details-frame-open" href="#" target="_blank" rel="noopener noreferrer">Ouvrir dans un nouvel onglet</a>
+              </div>
+              <iframe id="details-content-iframe" src="" title="Fiche détaillée de la piste"></iframe>
+              <div id="details-frame-empty" class="details-iframe-empty" style="display: none;">
+                La fiche détaillée n'est pas disponible pour cette piste.
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-references-content" style="display: none;">
+            <div class="references-iframe-wrapper">
+              <div class="references-iframe-toolbar" style="display: none;">
+                <span id="references-frame-title">References</span>
+                <a id="references-frame-open" href="#" target="_blank" rel="noopener noreferrer">Ouvrir dans un nouvel onglet</a>
+              </div>
+              <iframe id="references-content-iframe" src="" title="Fiche détaillée de la piste"></iframe>
+              <div id="references-frame-empty" class="details-iframe-empty" style="display: none;">
+                La fiche references n'est pas disponible pour cette piste.
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-risques-content" style="display: none;">
+            <div class="risques-iframe-wrapper">
+              <div class="risques-iframe-toolbar" style="display: none;">
+                <span id="risques-frame-title">Risques</span>
+                <a id="risques-frame-open" href="#" target="_blank" rel="noopener noreferrer">Ouvrir dans un nouvel onglet</a>
+              </div>
+              <iframe id="risques-content-iframe" src="" title="Fiche détaillée de la piste"></iframe>
+              <div id="risques-frame-empty" class="details-iframe-empty" style="display: none;">
+                La fiche de risques n'est pas disponible pour cette piste.
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-relations-content" style="display: none;">
+            <div class="track-card__relations" id="relations-container" style="display: none;">
+              <div class="relations-header">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Dépendances et synergies</span>
+                <span class="relations-active-indicator" id="relations-active-count" style="margin-left: auto; font-size: 0.65rem; background: var(--c-primary-light); padding: 2px 8px; border-radius: 12px; color: var(--c-primary); display: none;">
+                  0 actives
+                </span>
+              </div>
+              <div class="relations-list" id="relations-list"></div>
+            </div>
+          </div>
+
+          <div id="tab-radar-content" style="display: none;">
+            <div class="chart-container" id="chart-radar" style="display: block;">
+              <div style="font-size: .78rem; font-weight: 600; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 15px; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-chart-pie" style="color: var(--c-primary);"></i>
+                <span>Profil multi-critères de la piste sélectionnée</span>
+              </div>
+              <canvas id="radar-chart" width="400" height="200"></canvas>
+            </div>
+          </div>
+
+        </div>
+        
+
+    </div>
+
+
+  </div>
+</main>
+
+
+<footer class="footer">
+  <div class="footer__save-info" style="display: none;">
+    <i class="fa-solid fa-floppy-disk"></i>
+    <span id="save-status">Aucune sauvegarde</span>
+  </div>
+  <div class="footer__actions">
+    <button class="btn btn--secondary" id="btn-prev">
+      <i class="fa-solid fa-chevron-left"></i>
+      <span>Précédente</span>
+    </button>
+    <button class="btn btn--secondary" id="btn-next">
+      <i class="fa-solid fa-chevron-right"></i>
+      <span>Piste suivante</span>
+    </button>
+  </div>
+</footer>
+
+
+<div class="modal" id="simulation-modal">
+  <div class="modal-content modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <i class="fa-solid fa-chart-line" style="margin-right: 8px;"></i>
+        Simulation de portefeuille de pistes
+      </h3>
+      <button class="modal-close" id="simulation-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="simulation-container">
+        
+        <div class="view-toggle">
+          <button class="view-toggle-btn active" id="view-params">
+            <i class="fa-solid fa-sliders"></i> Parametres
+          </button>
+          <button class="view-toggle-btn" id="view-results">
+            <i class="fa-solid fa-chart-pie"></i> Resultats
+          </button>
+          <button class="view-toggle-btn" id="view-list">
+            <i class="fa-solid fa-list"></i> Listes
+          </button>
+          <button class="view-toggle-btn" id="view-timeline">
+            <i class="fa-solid fa-timeline"></i> Timeline
+          </button>
+        </div>
+
+        
+        <div class="simulation-params">
+          <div class="params-header">
+            <i class="fa-solid fa-sliders"></i>
+            <span>Paramètres de la simulation</span>
+          </div>
+          
+          <div class="param-row">
+            <div class="param-group">
+              <label for="sim-budget">
+                <i class="fa-solid fa-coins"></i>
+                Budget total (€)
+              </label>
+              <input type="range" id="sim-budget" min="100000" max="10000000" step="100000" value="3000000">
+              <div class="param-range-values">
+                <span>100k</span>
+                <span id="budget-display">3 000 000 €</span>
+                <span>10M</span>
+              </div>
+            </div>
+            
+            <div class="param-group">
+              <label for="sim-max-pistes">
+                <i class="fa-solid fa-layer-group"></i>
+                Nombre max de pistes
+              </label>
+              <input type="range" id="sim-max-pistes" min="1" max="20" value="15">
+              <div class="param-range-values">
+                <span>1</span>
+                <span id="max-pistes-display">15</span>
+                <span id="synthese-total-pistes-range">0</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="param-row">
+            <div class="param-group">
+              <label for="sim-priorite">
+                <i class="fa-solid fa-star"></i>
+                Priorité
+              </label>
+              <select id="sim-priorite">
+                <option value="">Toutes priorités</option>
+                <option value="Quick Win">Quick Win</option>
+                <option value="Stratégique">Stratégique</option>
+                <option value="Complémentaire">Complémentaire</option>
+                <option value="Long Terme">Long Terme</option>
+              </select>
+            </div>
+            
+            <div class="param-group">
+              <label for="sim-categorie">
+                <i class="fa-solid fa-tag"></i>
+                Catégorie
+              </label>
+              <select id="sim-categorie">
+                <option value="">Toutes catégories</option>
+                <option value="Culture">Culture</option>
+                <option value="Technique">Technique</option>
+                <option value="Humain">Humain</option>
+                <option value="Organisationnel">Organisationnel</option>
+                <option value="Formation">Formation</option>
+                <option value="Communication">Communication</option>
+                <option value="Economique">Economique</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="param-row">
+            <div class="param-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="sim-use-scores" checked>
+                <span>Utiliser les scores actuels comme pondération</span>
+              </label>
+            </div>
+            
+            <div class="param-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="sim-ignore-relations">
+                <span>Ignorer les relations (sélection simple)</span>
+              </label>
+            </div>
+          </div>
+          <div class="param-row">
+            <div class="param-group">
+              <label for="sim-max-parallel">
+                <i class="fa-solid fa-layer-group"></i>
+                Maximum de pistes en parallèle
+              </label>
+              <div class="parallel-control">
+                <input type="range" id="sim-max-parallel" min="1" max="10" value="5">
+                <span id="max-parallel-display" class="parallel-value">5</span>
+              </div>
+              <div class="param-range-values">
+                <span>1 (séquentiel)</span>
+                <span>5</span>
+                <span>10 (max parallélisme)</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label for="sim-max-duration">
+                <i class="fa-regular fa-clock"></i>
+                Durée maximale du portefeuille (mois)
+              </label>
+              <input type="range" id="sim-max-duration" min="6" max="120" step="3" value="36">
+              <div class="param-range-values">
+                <span>6 mois</span>
+                <span id="max-duration-display">36 mois</span>
+                <span>120 mois</span>
+              </div>
+            </div>
+          </div>
+          <div class="simulation-actions">
+            <button class="btn btn--secondary" id="sim-run">
+              <i class="fa-solid fa-play"></i>
+              Lancer la simulation
+            </button>
+            <button class="btn btn--secondary" id="sim-reset">
+              <i class="fa-solid fa-rotate"></i>
+              Réinitialiser
+            </button>
+          </div>
+        </div>
+
+        
+        <div class="simulation-results" id="simulation-results" style="display: none;">
+          <div class="results-header">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Résultats de l'optimisation</span>
+          </div>
+          
+          <div class="results-summary">
+            <div class="summary-card">
+              <span class="summary-label">Budget total</span>
+              <span class="summary-value" id="result-budget">0 €</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Budget utilisé</span>
+              <span class="summary-value" id="result-budget-used">0 €</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Pistes sélectionnées</span>
+              <span class="summary-value" id="result-count">0</span>
+            </div>
+          </div>
+          <div id="simulation-results-stats"></div>
+
+          <div class="results-list">
+            <div class="results-list-header">
+              <span>Pistes retenues</span>
+              <span>Score</span>
+            </div>
+            <div id="selected-pistes-list" class="selected-pistes-list"></div>
+          </div>
+       
+
+          <div class="simulation-timeline" id="simulation-timeline" style="display: none;">
+            <div class="timeline-container" id="timeline-container"></div>
+          </div>  
+
+          <div class="simulation-export">
+            <button class="btn btn--primary" id="sim-export">
+              <i class="fa-solid fa-download"></i>
+              Exporter la sélection
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="image-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-title">Image de la piste</h3>
+      <button class="modal-close" id="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <img id="modal-image" src="" alt="Image de la piste" class="modal-image">
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="detail-page-modal">
+  <div class="modal-content modal-xl">
+    <div class="modal-header">
+      <h3 class="modal-title" id="detail-page-modal-title">Fiche détaillée</h3>
+      <div class="modal-header-actions">
+        <button class="modal-action-btn" id="detail-page-print" title="Imprimer">
+          <i class="fa-solid fa-print"></i>
+        </button>
+        <button class="modal-action-btn" id="detail-page-open" title="Ouvrir dans un nouvel onglet">
+          <i class="fa-solid fa-external-link-alt"></i>
+        </button>
+        <button class="modal-close" id="detail-page-close">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" id="detail-page-modal-body" style="padding: 0; overflow: hidden; height: 70vh;">
+      <iframe id="detail-page-iframe" src="" style="width: 100%; height: 100%; border: none; background: white;"></iframe>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="synthese-modal">
+  <div class="modal-content modal-xl">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <i class="fa-solid fa-table-cells-large" style="margin-right: 8px;"></i>
+        Synthèse des <span id="synthese-total-pistes-modale">0</span> pistes
+      </h3>
+      <span style="margin-left: 10px; font-size: 0.7rem; background: var(--c-primary-light); padding: 2px 8px; border-radius: 12px; color: var(--c-primary);">
+        <span id="synthese-active-count">0</span> actives
+      </span>
+      <div class="modal-header-actions">
+        
+        <button class="modal-action-btn" id="synthese-view-grid" title="Vue en vignettes">
+          <i class="fa-solid fa-table-cells-large"></i>
+        </button>
+        <button class="modal-action-btn" id="synthese-view-list" title="Vue en liste">
+          <i class="fa-solid fa-list"></i>
+        </button>
+        <button class="modal-close" id="synthese-close">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" id="synthese-modal-body">
+      
+      <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
+        <div class="search-box" style="flex: 1;">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="synthese-search" placeholder="Rechercher par titre, slogan, catégorie...">
+        </div>
+        <div class="select-wrap">
+          <select id="synthese-priority">
+            <option value="">Toutes priorités</option>
+            <option value="Quick Win">Quick Win</option>
+            <option value="Stratégique">Stratégique</option>
+            <option value="Complémentaire">Complémentaire</option>
+            <option value="Long Terme">Long Terme</option>
+          </select>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="select-wrap">
+          <select id="synthese-category">
+            <option value="">Toutes catégories</option>
+            <option value="Culture">Culture</option>
+            <option value="Technique">Technique</option>
+            <option value="Humain">Humain</option>
+            <option value="Organisationnel">Organisationnel</option>
+            <option value="Formation">Formation</option>
+            <option value="Communication">Communication</option>
+            <option value="Economique">Economique</option>
+          </select>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <span class="total-counter" id="synthese-count"><span id="synthese-total-pistes">0</span> pistes</span>
+      </div>
+
+      
+      <div id="synthese-grid" class="pistes-grid" style="display: grid;"></div>
+      <div id="synthese-list" class="pistes-list" style="display: none;"></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="detail-modal">
+  <div class="modal-content modal-xl">
+    <div class="modal-header">
+      <h3 class="modal-title" id="detail-modal-title">Fiche détaillée de la piste</h3>
+      <div class="modal-header-actions">
+        <button class="modal-action-btn" id="print-details" title="Imprimer">
+          <i class="fa-solid fa-print"></i>
+        </button>
+        <button class="modal-close" id="detail-close">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" id="detail-modal-body">
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="relations-matrix-modal">
+  <div class="modal-content modal-xl">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <i class="fa-solid fa-diagram-project" style="margin-right: 8px;"></i>
+        Matrice des relations entre pistes
+        <span id="relations-active-indicator" style="margin-left: 10px; font-size: 0.7rem; background: var(--c-primary-light); padding: 2px 8px; border-radius: 12px; color: var(--c-primary);">
+          calcul...
+        </span>
+      </h3>
+      <div class="modal-header-actions">
+        <button class="modal-action-btn" id="matrix-refresh" title="Rafraîchir avec la sélection actuelle">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+        <button class="modal-action-btn" id="matrix-export" title="Exporter en CSV">
+          <i class="fa-solid fa-download"></i>
+        </button>
+        <button class="modal-close" id="matrix-close">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" style="overflow: auto; max-height: 80vh;">
+      
+      <div class="matrix-filters">
+        <div class="filter-group">
+          <label><i class="fa-solid fa-filter"></i> Filtrer par type :</label>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="prerequisite" style="border-color: #d97706; color: #d97706;">Prérequis</button>
+            <button class="filter-btn" data-filter="synergy" style="border-color: #059669; color: #059669;">Synergie</button>
+            <button class="filter-btn" data-filter="feeds_data" style="border-color: #2563eb; color: #2563eb;">Fournit données</button>
+            <button class="filter-btn" data-filter="process_flow" style="border-color: #7c3aed; color: #7c3aed;">Processus</button>
+            <button class="filter-btn" data-filter="conflict" style="border-color: #dc2626; color: #dc2626;">Conflit</button>
+            <button class="filter-btn" data-filter="neutral" style="border-color: #9ca3af; color: #9ca3af;">Neutre</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label><i class="fa-solid fa-magnifying-glass"></i> Rechercher une piste :</label>
+          <input type="text" id="matrix-search" placeholder="Numéro ou titre..." class="matrix-search-input">
+        </div>
+        <div class="filter-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="matrix-show-bidirectional">
+            <span><i class="fa-solid fa-arrow-right-arrow-left"></i> Afficher uniquement les relations bidirectionnelles</span>
+          </label>
+        </div>
+      </div>
+
+
+      <div id="relations-matrix-container" style="overflow-x: auto; position: relative;"></div>
+      
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="decision-matrix-modal">
+  <div class="modal-content modal-xl" style="max-width: 1400px;">
+    <div class="modal-header" style="padding: 10px 20px;">
+      <h3 class="modal-title" style="font-size: 1.1rem;">
+        <i class="fa-solid fa-table" style="margin-right: 8px;"></i>
+        Matrice de décision multi-critères
+      </h3>
+      <span style="margin-left: 10px; font-size: 0.7rem; background: var(--c-primary-light); padding: 2px 8px; border-radius: 12px; color: var(--c-primary);">
+        <span id="matrix-active-count">0</span> actives
+      </span>
+      <div class="modal-header-actions">
+        <button class="modal-action-btn" id="matrix-decision-export" title="Exporter en CSV">
+          <i class="fa-solid fa-download"></i>
+        </button>
+        <button class="modal-close" id="matrix-decision-close" style="font-size: 1.5rem;">&times;</button>
+      </div>
+    </div>
+    
+    <div class="modal-body" style="padding: 10px 20px 20px 20px; overflow: hidden; display: flex; flex-direction: column; height: calc(90vh - 60px);">
+      
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center; flex-wrap: wrap; background: var(--c-surface-alt); padding: 8px 12px; border-radius: var(--radius);">
+        <div style="display: flex; align-items: center; gap: 5px;">
+          <i class="fa-solid fa-filter" style="color: var(--c-primary); font-size: 0.8rem;"></i>
+          <span style="font-size: 0.8rem; font-weight: 600;">Filtres:</span>
+        </div>
+        
+        <select id="matrix-decision-priority" style="width: 120px; padding: 5px 8px; border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 0.75rem;">
+          <option value="">Priorité</option>
+          <option value="Quick Win">Quick Win</option>
+          <option value="Stratégique">Stratégique</option>
+          <option value="Complémentaire">Complémentaire</option>
+          <option value="Long Terme">Long Terme</option>
+        </select>
+        
+        <select id="matrix-decision-category" style="width: 120px; padding: 5px 8px; border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 0.75rem;">
+          <option value="">Catégorie</option>
+          <option value="Culture">Culture</option>
+          <option value="Technique">Technique</option>
+          <option value="Humain">Humain</option>
+          <option value="Organisationnel">Organisationnel</option>
+          <option value="Formation">Formation</option>
+          <option value="Communication">Communication</option>
+          <option value="Economique">Economique</option>
+        </select>
+        
+        <div style="position: relative; flex: 1; min-width: 150px;">
+          <i class="fa-solid fa-search" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 0.7rem; color: var(--c-text-light);"></i>
+          <input type="text" id="matrix-decision-search" placeholder="Rechercher..." 
+                 style="width: 100%; padding: 5px 8px 5px 25px; border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 0.75rem;">
+        </div>
+        
+        <label style="display: flex; align-items: center; gap: 4px; font-size: 0.75rem; white-space: nowrap;">
+          <input type="checkbox" id="matrix-show-only-scored"> 
+          <span>Notées seulement</span>
+        </label>
+        
+        <span style="margin-left: auto; font-size: 0.7rem; background: var(--c-primary-light); padding: 2px 8px; border-radius: 12px; color: var(--c-primary); font-weight: 600;" id="matrix-piste-count">0 pistes</span>
+      </div>
+
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 10px; padding: 5px 10px; background: white; border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 0.7rem; flex-wrap: wrap; align-items: center;">
+        <span style="font-weight: 600; color: var(--c-primary);">Pondération:</span>
+        <span><span style="color: #2563eb;">Coût 25%</span> ↕</span>
+        <span><span style="color: #d97706;">Délai 15%</span> ↕</span>
+        <span><span style="color: #059669;">Impact 25%</span></span>
+        <span><span style="color: #7c3aed;">Faisabilité 15%</span></span>
+        <span><span style="color: #f59e0b;">Acceptabilité 10%</span></span>
+        <span><span style="color: #1a56db;">Score 10%</span></span>
+        <span style="margin-left: auto;">
+          <span class="legend-color" style="background: #059669;"> ≥80 </span>
+          <span class="legend-color" style="background: #2563eb;"> 60-79 </span>
+          <span class="legend-color" style="background: #d97706;"> 40-59 </span>
+          <span class="legend-color" style="background: #dc2626;"> ≤39 </span>
+        </span>
+      </div>
+
+      
+      <div id="decision-matrix-container" style="flex: 1; overflow: auto; border: 1px solid var(--c-border); border-radius: var(--radius); background: white; min-height: 0;">
+        
+      </div>
+      
+      
+      <div id="decision-matrix-stats" style="margin-top: 8px; display: flex; gap: 15px; padding: 6px 12px; background: var(--c-surface-alt); border-radius: var(--radius); font-size: 0.7rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="selection-modal">
+  <div class="modal-content modal-xl" style="max-width: 1000px;">
+    <div class="modal-header" style="padding: 10px 20px;">
+      <h3 class="modal-title" style="font-size: 1.1rem;">
+        <i class="fa-solid fa-check-double" style="margin-right: 8px;"></i>
+        Sélection des pistes à analyser
+      </h3>
+      <div class="modal-header-actions">
+        <button class="modal-action-btn" id="selection-save" title="Enregistrer la sélection">
+          <i class="fa-solid fa-check"></i>
+        </button>
+        <button class="modal-close" id="selection-close" style="font-size: 1.5rem;">&times;</button>
+      </div>
+    </div>
+    
+    <div class="modal-body" style="padding: 10px 20px 20px 20px; overflow: hidden; display: flex; flex-direction: column; height: calc(90vh - 60px);">
+      
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center; flex-wrap: wrap; background: var(--c-surface-alt); padding: 8px 12px; border-radius: var(--radius);">
+        <div style="display: flex; align-items: center; gap: 5px;">
+          <i class="fa-solid fa-filter" style="color: var(--c-primary); font-size: 0.8rem;"></i>
+          <span style="font-size: 0.8rem; font-weight: 600;">Sélection:</span>
+        </div>
+        
+        <button class="btn btn--secondary" id="selection-select-all" style="padding: 4px 10px; font-size: 0.75rem;">
+          <i class="fa-solid fa-check-square"></i> Tout sélectionner
+        </button>
+        
+        <button class="btn btn--secondary" id="selection-deselect-all" style="padding: 4px 10px; font-size: 0.75rem;">
+          <i class="fa-solid fa-square"></i> Tout désélectionner
+        </button>
+        
+        <button class="btn btn--secondary" id="selection-invert" style="padding: 4px 10px; font-size: 0.75rem;">
+          <i class="fa-solid fa-exchange-alt"></i> Inverser
+        </button>
+        
+        <div style="margin-left: auto; font-size: 0.7rem; background: var(--c-primary-light); padding: 2px 8px; border-radius: 12px; color: var(--c-primary); font-weight: 600;" id="selection-count">
+          0/0 pistes sélectionnées
+        </div>
+      </div>
+
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center; flex-wrap: wrap;">
+        <select id="selection-priority-filter" style="width: 120px; padding: 5px 8px; border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 0.75rem;">
+          <option value="">Filtrer par priorité</option>
+          <option value="Quick Win">Quick Win</option>
+          <option value="Stratégique">Stratégique</option>
+          <option value="Complémentaire">Complémentaire</option>
+          <option value="Long Terme">Long Terme</option>
+        </select>
+        
+        <select id="selection-category-filter" style="width: 120px; padding: 5px 8px; border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 0.75rem;">
+          <option value="">Filtrer par catégorie</option>
+          <option value="Culture">Culture</option>
+          <option value="Technique">Technique</option>
+          <option value="Humain">Humain</option>
+          <option value="Organisationnel">Organisationnel</option>
+          <option value="Formation">Formation</option>
+          <option value="Communication">Communication</option>
+          <option value="Economique">Economique</option>
+        </select>
+        
+        <div style="position: relative; flex: 1; min-width: 150px;">
+          <i class="fa-solid fa-search" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 0.7rem; color: var(--c-text-light);"></i>
+          <input type="text" id="selection-search" placeholder="Rechercher..." 
+                 style="width: 100%; padding: 5px 8px 5px 25px; border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 0.75rem;">
+        </div>
+        
+        <button class="btn btn--primary" id="selection-apply-filters" style="padding: 5px 12px; font-size: 0.75rem;">
+          <i class="fa-solid fa-filter"></i> Appliquer aux résultats
+        </button>
+      </div>
+
+      
+      <div id="selection-list-container" style="flex: 1; overflow: auto; border: 1px solid var(--c-border); border-radius: var(--radius); background: white; min-height: 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem;">
+          <thead style="position: sticky; top: 0; background: var(--c-surface-alt); z-index: 10;">
+            <tr>
+              <th style="padding: 10px; text-align: center; width: 40px;">
+                <input type="checkbox" id="selection-header-checkbox" style="cursor: pointer;">
+              </th>
+              <th style="padding: 10px; text-align: left;">N°</th>
+              <th style="padding: 10px; text-align: left;">Titre</th>
+              <th style="padding: 10px; text-align: center;">Priorité</th>
+              <th style="padding: 10px; text-align: center;">Catégorie</th>
+              <th style="padding: 10px; text-align: center;">Coût (M€)</th>
+              <th style="padding: 10px; text-align: center;">Délai (mois)</th>
+              <th style="padding: 10px; text-align: center;">Impact</th>
+              <th style="padding: 10px; text-align: center;">Note</th>
+            </tr>
+          </thead>
+          <tbody id="selection-list-body">
+            
+          </tbody>
+        </table>
+      </div>
+      
+      
+      <div style="margin-top: 10px; padding: 8px 12px; background: var(--c-surface-alt); border-radius: var(--radius); font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span id="selection-summary-stats">0 pistes sélectionnées sur 0 totales</span>
+          <span style="margin-left: 15px; color: var(--c-text-muted);" id="selection-budget-summary">Budget total: 0 M€</span>
+        </div>
+        <div>
+          <span class="selection-mode-indicator" style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #059669; margin-right: 5px;"></span>
+          <span id="selection-mode-text">Mode personnalisé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const isAuthenticated = sessionStorage.getItem('cdg2026_authenticated') === 'true';
+    const currentPage = window.location.pathname.split('/').pop();
+    if (!isAuthenticated && currentPage !== 'login.html') {
+      window.location.href = 'login.html';
+    }
+  })();
+</script>
+
+<script src="js/safety-cdg.js"></script>
+
+
+</body>
+</html>
